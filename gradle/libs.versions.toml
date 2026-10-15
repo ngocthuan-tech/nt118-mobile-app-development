@@ -1,0 +1,59 @@
+[versions]
+agp = "8.9.1"
+googleServices = "4.4.2"
+navigation = "2.9.0"
+lifecycle = "2.9.1"
+appcompat = "1.7.1"
+activity = "1.10.1"
+core = "1.16.0"
+splashscreen = "1.0.1"
+material = "1.12.0"
+constraintlayout = "2.2.1"
+recyclerview = "1.4.0"
+firebaseBom = "34.0.0"
+glide = "4.16.0"
+mpandroidchart = "v3.1.0"
+camerax = "1.4.2"
+poseDetection = "18.0.0-beta5"
+desugar = "2.1.5"
+junit = "4.13.2"
+androidxJunit = "1.2.1"
+espresso = "3.6.1"
+
+[libraries]
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+core = { group = "androidx.core", name = "core", version.ref = "core" }
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
+
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
+
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
+
+camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+mlkit-pose = { group = "com.google.mlkit", name = "pose-detection", version.ref = "poseDetection" }
+
+desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }

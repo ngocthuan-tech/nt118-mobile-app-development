@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Ô ngày trong thẻ chuỗi ngày (T2…CN) -->
+    <style name="Widget.AICoach.DayChip" parent="">
+        <item name="android:layout_width">@dimen/day_chip_size</item>
+        <item name="android:layout_height">@dimen/day_chip_size</item>
+        <item name="android:layout_marginEnd">@dimen/space_8</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:backgroundTint">@color/divider</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Chip nền tối nằm trên hình camera -->
+    <style name="Widget.AICoach.ChipDark" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_chip_dark</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:paddingTop">@dimen/space_8</item>
+        <item name="android:paddingBottom">@dimen/space_8</item>
+        <item name="android:textColor">@color/text_on_dark</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- Nút tròn chỉ có icon -->
+    <style name="Widget.AICoach.CircleIconButton" parent="">
+        <item name="android:layout_width">@dimen/circle_button_size</item>
+        <item name="android:layout_height">@dimen/circle_button_size</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+</resources>

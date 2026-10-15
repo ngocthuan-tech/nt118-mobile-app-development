@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        BẢNG MÀU — đang là màu tạm, sẽ đồng bộ đúng mã màu từ Figma.
+        Mọi người chỉ dùng tên màu (@color/brand_primary), không gõ mã #xxxxxx trong layout.
+    -->
+    <color name="brand_primary">#FF5A1F</color>
+    <color name="brand_primary_dark">#E04A12</color>
+    <color name="brand_gradient_end">#FF8A4C</color>
+    <color name="brand_primary_light">#FFE6DB</color>
+    <color name="brand_on_primary">#FFFFFF</color>
+    <color name="brand_secondary">#1F2A44</color>
+
+    <color name="bg_screen">#F7F7FA</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="divider">#E5E7EB</color>
+
+    <color name="text_primary">#14161A</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_on_dark">#FFFFFF</color>
+    <color name="text_on_dark_secondary">#CCFFFFFF</color>
+
+    <color name="state_success">#16A34A</color>
+    <color name="state_success_light">#DCFCE7</color>
+    <color name="state_warning">#F59E0B</color>
+    <color name="state_warning_light">#FEF3C7</color>
+    <color name="state_error">#DC2626</color>
+
+    <!-- Lớp phủ trên camera -->
+    <color name="overlay_chip">#73000000</color>
+    <color name="overlay_card">#B3101318</color>
+    <color name="overlay_scrim">#CC000000</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

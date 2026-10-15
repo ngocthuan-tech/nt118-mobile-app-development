@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Trưởng nhóm: Kiểm tra khung hình → Tập với AI Camera → Kết quả buổi tập -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_workout"
+    app:startDestination="@id/readinessFragment">
+
+    <!-- Tab "Tập AI" mở graph này không kèm tham số → mặc định bài Squat -->
+    <argument
+        android:name="exerciseId"
+        android:defaultValue="squat"
+        app:argType="string" />
+
+    <fragment
+        android:id="@+id/readinessFragment"
+        android:name="com.aicoach.ui.workout.ReadinessFragment"
+        android:label="Readiness">
+        <argument
+            android:name="exerciseId"
+            android:defaultValue="squat"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_readiness_to_live"
+            app:destination="@id/liveWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/liveWorkoutFragment"
+        android:name="com.aicoach.ui.workout.LiveWorkoutFragment"
+        android:label="LiveWorkout">
+        <argument
+            android:name="exerciseId"
+            app:argType="string" />
+        <!-- Tập xong: sang Kết quả, bỏ 2 màn trước khỏi back stack -->
+        <action
+            android:id="@+id/action_live_to_result"
+            app:destination="@id/workoutResultFragment"
+            app:popUpTo="@id/readinessFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/workoutResultFragment"
+        android:name="com.aicoach.ui.workout.WorkoutResultFragment"
+        android:label="WorkoutResult" />
+
+</navigation>

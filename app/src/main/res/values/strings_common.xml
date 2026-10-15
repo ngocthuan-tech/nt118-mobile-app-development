@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Chuỗi dùng chung (tiền tố common_) -->
+    <string name="common_retry">Thử lại</string>
+    <string name="common_loading">Đang tải…</string>
+    <string name="common_empty">Chưa có dữ liệu</string>
+    <string name="common_error_generic">Đã có lỗi xảy ra. Vui lòng thử lại.</string>
+    <string name="common_cancel">Huỷ</string>
+    <string name="common_confirm">Đồng ý</string>
+    <string name="common_close">Đóng</string>
+    <string name="common_see_all">Xem tất cả</string>
+
+    <!-- Chuỗi của màn tạm — xoá khi các thành viên làm màn thật -->
+    <string name="placeholder_owner_a">Phụ trách: Thành viên A</string>
+    <string name="placeholder_owner_b">Phụ trách: Thành viên B</string>
+    <string name="placeholder_owner_lead">Phụ trách: Trưởng nhóm</string>
+    <string name="placeholder_login">Đăng nhập</string>
+    <string name="placeholder_login_skip">Vào app (tạm)</string>
+    <string name="placeholder_exercise_library">Thư viện bài tập</string>
+    <string name="placeholder_progress">Tiến độ</string>
+    <string name="placeholder_challenges">Thử thách</string>
+    <string name="placeholder_readiness">Kiểm tra khung hình\nBài tập: %1$s</string>
+    <string name="placeholder_start_workout">Bắt đầu tập (tạm)</string>
+</resources>

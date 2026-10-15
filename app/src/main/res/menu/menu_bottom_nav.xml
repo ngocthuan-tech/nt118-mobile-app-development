@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    id của mỗi item PHẢI trùng id màn hình trong file navigation
+    để NavigationUI tự chuyển tab và tô sáng đúng tab.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home_24"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/exerciseLibraryFragment"
+        android:icon="@drawable/ic_dumbbell_24"
+        android:title="@string/nav_exercises" />
+    <item
+        android:id="@+id/nav_workout"
+        android:icon="@drawable/ic_camera_24"
+        android:title="@string/nav_train_ai" />
+    <item
+        android:id="@+id/historyFragment"
+        android:icon="@drawable/ic_chart_24"
+        android:title="@string/nav_progress" />
+    <item
+        android:id="@+id/challengeListFragment"
+        android:icon="@drawable/ic_trophy_24"
+        android:title="@string/nav_challenges" />
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nền đầu trang: chuyển màu cam, bo 2 góc dưới -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:endColor="@color/brand_gradient_end"
+        android:startColor="@color/brand_primary" />
+    <corners
+        android:bottomLeftRadius="32dp"
+        android:bottomRightRadius="32dp" />
+</shape>

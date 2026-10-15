@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Graph gốc — CHỈ Trưởng nhóm sửa file này.
+    Mỗi module có graph riêng để 3 người không đụng file của nhau:
+      nav_auth, nav_main  -> Thành viên A
+      nav_workout         -> Trưởng nhóm
+      nav_social          -> Thành viên B
+    Màn bắt đầu là Trang chủ (nav_main) để thanh 5 tab hoạt động đúng.
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_root"
+    app:startDestination="@id/nav_main">
+
+    <include app:graph="@navigation/nav_main" />
+    <include app:graph="@navigation/nav_auth" />
+    <include app:graph="@navigation/nav_workout" />
+    <include app:graph="@navigation/nav_social" />
+
+    <!-- Chưa đăng nhập: sang luồng đăng nhập, bỏ Trang chủ khỏi back stack -->
+    <action
+        android:id="@+id/action_global_to_auth"
+        app:destination="@id/nav_auth"
+        app:popUpTo="@id/nav_main"
+        app:popUpToInclusive="true" />
+
+    <!-- Đăng nhập xong: về Trang chủ, bấm Back không quay lại màn đăng nhập -->
+    <action
+        android:id="@+id/action_global_to_main"
+        app:destination="@id/nav_main"
+        app:popUpTo="@id/nav_auth"
+        app:popUpToInclusive="true" />
+
+    <!-- HỢP ĐỒNG: mọi nút "Bắt đầu tập" (Trang chủ, Chi tiết bài tập, Kế hoạch, Lịch sử) gọi action này kèm exerciseId -->
+    <action
+        android:id="@+id/action_global_to_readiness"
+        app:destination="@id/nav_workout">
+        <argument
+            android:name="exerciseId"
+            app:argType="string" />
+    </action>
+
+</navigation>

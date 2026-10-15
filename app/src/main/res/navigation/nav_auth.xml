@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thành viên A: Onboarding, Đăng nhập, Đăng ký, Quên mật khẩu, Thiết lập hồ sơ -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_auth"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.aicoach.ui.auth.LoginFragment"
+        android:label="Login" />
+
+</navigation>
