@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Nút "BẮT ĐẦU TẬP" trên Trang chủ: 2 vòng sáng + nút tròn cam ở giữa (Figma 08) -->
+<!-- Nút tròn lớn "BẮT ĐẦU TẬP": 2 vòng sáng + nút gradient xanh ở giữa (Figma 21, 28) -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/white_10" />
+            <stroke
+                android:width="1dp"
+                android:color="@color/white_20" />
+        </shape>
+    </item>
+    <item
+        android:bottom="14dp"
+        android:left="14dp"
+        android:right="14dp"
+        android:top="14dp">
         <shape android:shape="oval">
             <solid android:color="@color/white_20" />
         </shape>
     </item>
     <item
-        android:bottom="16dp"
-        android:left="16dp"
-        android:right="16dp"
-        android:top="16dp">
-        <shape android:shape="oval">
-            <solid android:color="@color/white_40" />
-        </shape>
-    </item>
-    <item
-        android:bottom="30dp"
-        android:left="30dp"
-        android:right="30dp"
-        android:top="30dp">
+        android:bottom="26dp"
+        android:left="26dp"
+        android:right="26dp"
+        android:top="26dp">
         <shape android:shape="oval">
             <gradient
                 android:angle="315"
                 android:endColor="@color/brand_gradient_end"
-                android:startColor="@color/brand_primary_dark" />
+                android:startColor="@color/brand_gradient_start" />
         </shape>
     </item>
 </layer-list>

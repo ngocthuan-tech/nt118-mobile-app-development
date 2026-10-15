@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aicoach.R;
 import com.aicoach.databinding.ItemAiFeedbackBinding;
 
-/** Danh sách nhận xét của AI sau buổi tập. Cảnh báo = vàng, làm tốt = xanh. */
+/** Danh sách nhận xét của AI sau buổi tập. Lỗi nhẹ = vàng, lỗi nặng = đỏ, làm tốt = xanh. */
 public class AiFeedbackAdapter extends ListAdapter<AiFeedbackItem, AiFeedbackAdapter.ViewHolder> {
 
     public AiFeedbackAdapter() {
@@ -34,9 +34,24 @@ public class AiFeedbackAdapter extends ListAdapter<AiFeedbackItem, AiFeedbackAda
         AiFeedbackItem item = getItem(position);
         Context ctx = holder.binding.getRoot().getContext();
         boolean good = item.type == AiFeedbackItem.Type.GOOD;
-
-        int accent = ContextCompat.getColor(ctx, good ? R.color.state_success : R.color.state_warning);
-        int accentLight = ContextCompat.getColor(ctx, good ? R.color.state_success_light : R.color.state_warning_light);
+        int accentRes;
+        int accentLightRes;
+        switch (item.type) {
+            case GOOD:
+                accentRes = R.color.state_success;
+                accentLightRes = R.color.state_success_light;
+                break;
+            case ERROR:
+                accentRes = R.color.state_error;
+                accentLightRes = R.color.state_error_light;
+                break;
+            default:
+                accentRes = R.color.state_warning;
+                accentLightRes = R.color.state_warning_light;
+                break;
+        }
+        int accent = ContextCompat.getColor(ctx, accentRes);
+        int accentLight = ContextCompat.getColor(ctx, accentLightRes);
 
         holder.binding.viewAccent.setBackgroundColor(accent);
         holder.binding.iconBg.setBackgroundTintList(ColorStateList.valueOf(accentLight));

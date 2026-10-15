@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 32 "Nghỉ giữa hiệp" (Trưởng nhóm). -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/space_20">
+
+        <TextView
+            android:id="@+id/chipSetDone"
+            style="@style/Widget.AICoach.ChipDark"
+            android:drawableStart="@drawable/ic_check_24"
+            android:textSize="12sp"
+            app:drawableTint="@color/state_success"
+            tools:text="Squat • Xong hiệp 2/3" />
+
+        <!-- Chỉ báo hiệp: đã xong / đang nghỉ / chưa tới -->
+        <LinearLayout
+            android:id="@+id/rowSetIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:orientation="horizontal">
+
+            <View style="@style/Widget.AICoach.SetDash" android:backgroundTint="@color/accent_cyan" />
+            <View style="@style/Widget.AICoach.SetDash" android:backgroundTint="@color/accent_cyan" />
+            <View style="@style/Widget.AICoach.SetDash" android:backgroundTint="@color/white_20" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:text="@string/workout_rest_title"
+            android:textAppearance="@style/TextAppearance.AICoach.OnDark.Title" />
+
+        <!-- Vòng đếm ngược nghỉ -->
+        <FrameLayout
+            android:layout_width="@dimen/rest_ring_size"
+            android:layout_height="@dimen/rest_ring_size"
+            android:layout_marginTop="@dimen/space_20">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressRest"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:indicatorColor="@color/brand_sky"
+                app:indicatorSize="@dimen/rest_ring_size"
+                app:trackColor="@color/white_20"
+                app:trackCornerRadius="6dp"
+                app:trackThickness="12dp"
+                tools:progress="60" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRestTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="44sp"
+                    android:textStyle="bold"
+                    tools:text="00:18" />
+
+                <TextView
+                    android:id="@+id/tvRestTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+                    tools:text="còn lại / 30 giây" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- +10 giây / Bỏ qua nghỉ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddTime"
+                style="@style/Widget.AICoach.Button.OnDark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_weight="1"
+                android:text="@string/workout_rest_add" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSkip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:layout_weight="1"
+                android:text="@string/workout_rest_skip"
+                app:icon="@drawable/ic_chevron_right_24" />
+        </LinearLayout>
+
+        <!-- Hiệp vừa rồi -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@drawable/bg_card_dark"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/workout_last_set"
+                android:textColor="@color/accent_cyan"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvLastReps"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        android:textSize="22sp"
+                        tools:text="15/15" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_stat_reps" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvLastScore"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        android:textColor="@color/state_success"
+                        android:textSize="22sp"
+                        tools:text="90" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_stat_score" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvLastErrors"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        android:textColor="@color/state_warning"
+                        android:textSize="22sp"
+                        tools:text="1" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_stat_errors" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Tiếp theo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12">
+
+            <ImageView
+                android:id="@+id/imgNextExercise"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_icon_box"
+                android:backgroundTint="@color/brand_primary"
+                android:importantForAccessibility="no"
+                android:padding="@dimen/space_8"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workout_next_up"
+                    android:textColor="@color/accent_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvNextTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Hiệp 3/3 – Squat" />
+
+                <TextView
+                    android:id="@+id/tvNextMeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+                    tools:text="15 lần • Giữ nhịp 2 giây/lần" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Mẹo hồi phục -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_card_dark"
+            android:drawableStart="@drawable/ic_sparkle_24"
+            android:drawablePadding="@dimen/space_12"
+            android:padding="@dimen/space_16"
+            android:text="@string/workout_breath_tip"
+            android:textColor="@color/text_on_dark_secondary"
+            android:textSize="13sp"
+            app:drawableTint="@color/accent_cyan" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 36 "Chia sẻ thành tích" (Trưởng nhóm). Thẻ cardShare sẽ được chụp thành ảnh để chia sẻ. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_20">
+
+        <!-- Thanh trên -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnClose"
+                style="@style/Widget.AICoach.CircleIconButton"
+                android:backgroundTint="@color/white_10"
+                android:contentDescription="@string/common_close"
+                android:src="@drawable/ic_close_24"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/share_title"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- ===== Thẻ thành tích ===== -->
+        <LinearLayout
+            android:id="@+id/cardShare"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@drawable/bg_share_card"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="@dimen/space_20">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_icon_box"
+                    android:backgroundTint="@color/navy_900"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_launcher_foreground" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_weight="1"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvShareDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_on_dark_secondary"
+                    android:textSize="11sp"
+                    tools:text="10/10/2026" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_8"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/accent_cyan" />
+
+            <TextView
+                android:id="@+id/tvShareHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:textColor="@color/text_on_dark_secondary"
+                android:textSize="13sp"
+                tools:text="Hôm nay mình đã squat" />
+
+            <TextView
+                android:id="@+id/tvShareReps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                tools:text="45 lần" />
+
+            <LinearLayout
+                android:id="@+id/rowShareStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvShareScore"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        android:textColor="@color/state_success"
+                        tools:text="92" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/share_score" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvShareTime"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        tools:text="08:24" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/share_time" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.AICoach.MiniStat"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/tvShareStreak"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        tools:text="7 ngày" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/share_streak" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:gravity="center"
+                android:text="@string/share_footer"
+                android:textColor="@color/text_on_dark_secondary"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Công tắc hiện chỉ số -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_16"
+            android:paddingEnd="@dimen/space_8">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share_show_stats"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switchShowStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+        </LinearLayout>
+
+        <!-- 4 cách chia sẻ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/actionSend"
+                layout="@layout/view_share_action" />
+
+            <include
+                android:id="@+id/actionSave"
+                layout="@layout/view_share_action" />
+
+            <include
+                android:id="@+id/actionCopyLink"
+                layout="@layout/view_share_action" />
+
+            <include
+                android:id="@+id/actionMore"
+                layout="@layout/view_share_action" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

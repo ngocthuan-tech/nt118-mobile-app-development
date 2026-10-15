@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 34 "Xác nhận kết thúc" — hộp thoại trắng đè lên màn tập (Trưởng nhóm). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/overlay_scrim"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_dialog_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/space_24">
+
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/state_warning_light">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_alert_24"
+                app:tint="@color/state_warning" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:text="@string/workout_finish_confirm_title"
+            android:textAppearance="@style/TextAppearance.AICoach.Title" />
+
+        <TextView
+            android:id="@+id/tvConfirmBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            android:textSize="13sp"
+            tools:text="Bạn đã hoàn thành 27/45 lần (60%). Kết quả vẫn được lưu, nhưng chuỗi ngày chỉ được tính khi đạt từ 50% giáo án trở lên." />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressSession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            app:indicatorColor="@color/brand_primary"
+            app:trackColor="@color/divider"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="8dp"
+            tools:progress="60" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvProgressCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/brand_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="27/45" />
+
+            <TextView
+                android:id="@+id/tvProgressPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/brand_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="60%" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnKeepGoing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:text="@string/workout_keep_going" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinishSave"
+            style="@style/Widget.AICoach.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="@string/workout_finish_and_save"
+            android:textColor="@color/state_error" />
+    </LinearLayout>
+</FrameLayout>

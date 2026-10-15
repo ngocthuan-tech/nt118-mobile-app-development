@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_screen"
+    android:clipChildren="false"
     android:orientation="vertical">
 
     <androidx.fragment.app.FragmentContainerView
@@ -16,16 +17,36 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_root" />
 
-    <!-- Thanh điều hướng 5 tab theo Figma: Trang chủ • Bài tập • Tập AI • Tiến độ • Thử thách -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
+    <!-- Thanh 5 tab theo Figma: Trang chủ • Bài tập • [Tập AI nổi giữa] • Tiến độ • Thử thách -->
+    <FrameLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_card"
-        app:itemActiveIndicatorStyle="@null"
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_nav" />
+        android:clipChildren="false">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_card"
+            app:elevation="8dp"
+            app:itemActiveIndicatorStyle="@null"
+            app:itemIconTint="@color/selector_bottom_nav"
+            app:itemTextColor="@color/selector_bottom_nav"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_bottom_nav" />
+
+        <ImageButton
+            android:id="@+id/fabTrain"
+            android:layout_width="@dimen/fab_train_size"
+            android:layout_height="@dimen/fab_train_size"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/bg_fab_train"
+            android:contentDescription="@string/nav_train_ai"
+            android:elevation="10dp"
+            android:src="@drawable/ic_camera_24"
+            android:translationY="-22dp"
+            app:tint="@color/white" />
+    </FrameLayout>
 
 </LinearLayout>

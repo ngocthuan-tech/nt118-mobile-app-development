@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 dòng kiểm tra trên nền tối: ô icon + tên + mô tả + trạng thái (Figma 27, 28) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_8"
+    android:paddingBottom="@dimen/space_8">
+
+    <FrameLayout
+        android:id="@+id/iconBox"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_icon_box"
+        android:backgroundTint="@color/navy_stroke">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/state_success"
+            tools:src="@drawable/ic_frame_24" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_8"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_on_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Khung hình" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_on_dark_secondary"
+            android:textSize="12sp"
+            tools:text="Toàn thân đã vào khung" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgStatus"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/state_success"
+        android:importantForAccessibility="no"
+        android:padding="4dp"
+        android:src="@drawable/ic_check_24"
+        app:tint="@color/white" />
+</LinearLayout>

@@ -16,6 +16,7 @@
     <dimen name="radius_button">12dp</dimen>
     <dimen name="radius_card">16dp</dimen>
     <dimen name="radius_card_large">20dp</dimen>
+    <dimen name="radius_pill">100dp</dimen>
 
     <!-- Kích thước thường dùng -->
     <dimen name="icon_size">24dp</dimen>
@@ -43,4 +44,13 @@
     <dimen name="result_header_height">372dp</dimen>
     <dimen name="result_score_ring_size">124dp</dimen>
     <dimen name="result_score_ring_thickness">10dp</dimen>
+
+    <!-- Màn camera của Trưởng nhóm (Figma 18, 27–36) -->
+    <dimen name="permission_illustration_size">220dp</dimen>
+    <dimen name="readiness_start_button_size">132dp</dimen>
+    <dimen name="countdown_ring_size">200dp</dimen>
+    <dimen name="rest_ring_size">180dp</dimen>
+    <dimen name="share_card_radius">24dp</dimen>
+    <dimen name="share_action_size">52dp</dimen>
+    <dimen name="fab_train_size">60dp</dimen>
 </resources>

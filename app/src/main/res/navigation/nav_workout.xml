@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Trưởng nhóm: Kiểm tra khung hình → Tập với AI Camera → Kết quả buổi tập -->
+<!--
+    Trưởng nhóm — luồng tập AI theo Figma:
+    18 Xin quyền camera → 27/28 Kiểm tra sẵn sàng → 29 Đếm ngược → 30/31 Tập với AI Camera
+      ⇄ 32 Nghỉ giữa hiệp            (33 Tạm dừng, 34 Xác nhận kết thúc là lớp phủ trong màn tập)
+    → 35 Kết quả buổi tập → 36 Chia sẻ thành tích
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_workout"
-    app:startDestination="@id/readinessFragment">
+    app:startDestination="@id/cameraPermissionFragment">
 
     <!-- Tab "Tập AI" mở graph này không kèm tham số → mặc định bài Squat -->
     <argument
@@ -11,19 +16,49 @@
         android:defaultValue="squat"
         app:argType="string" />
 
+    <!-- 18 Xin quyền camera (đã có quyền thì tự chuyển tiếp) -->
+    <fragment
+        android:id="@+id/cameraPermissionFragment"
+        android:name="com.aicoach.ui.workout.CameraPermissionFragment"
+        android:label="CameraPermission">
+        <argument
+            android:name="exerciseId"
+            android:defaultValue="squat"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_permission_to_readiness"
+            app:destination="@id/readinessFragment" />
+    </fragment>
+
+    <!-- 27, 28 Kiểm tra sẵn sàng -->
     <fragment
         android:id="@+id/readinessFragment"
         android:name="com.aicoach.ui.workout.ReadinessFragment"
         android:label="Readiness">
         <argument
             android:name="exerciseId"
-            android:defaultValue="squat"
             app:argType="string" />
         <action
-            android:id="@+id/action_readiness_to_live"
-            app:destination="@id/liveWorkoutFragment" />
+            android:id="@+id/action_readiness_to_countdown"
+            app:destination="@id/countdownFragment" />
     </fragment>
 
+    <!-- 29 Đếm ngược: xong thì thay chính nó bằng màn tập -->
+    <fragment
+        android:id="@+id/countdownFragment"
+        android:name="com.aicoach.ui.workout.CountdownFragment"
+        android:label="Countdown">
+        <argument
+            android:name="exerciseId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_countdown_to_live"
+            app:destination="@id/liveWorkoutFragment"
+            app:popUpTo="@id/countdownFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 30, 31, 33, 34 Tập với AI Camera -->
     <fragment
         android:id="@+id/liveWorkoutFragment"
         android:name="com.aicoach.ui.workout.LiveWorkoutFragment"
@@ -31,7 +66,10 @@
         <argument
             android:name="exerciseId"
             app:argType="string" />
-        <!-- Tập xong: sang Kết quả, bỏ 2 màn trước khỏi back stack -->
+        <action
+            android:id="@+id/action_live_to_rest"
+            app:destination="@id/restFragment" />
+        <!-- Tập xong: sang Kết quả, bỏ các màn tập khỏi back stack -->
         <action
             android:id="@+id/action_live_to_result"
             app:destination="@id/workoutResultFragment"
@@ -39,9 +77,30 @@
             app:popUpToInclusive="true" />
     </fragment>
 
+    <!-- 32 Nghỉ giữa hiệp -->
+    <fragment
+        android:id="@+id/restFragment"
+        android:name="com.aicoach.ui.workout.RestFragment"
+        android:label="Rest">
+        <argument
+            android:name="exerciseId"
+            app:argType="string" />
+    </fragment>
+
+    <!-- 35 Kết quả buổi tập -->
     <fragment
         android:id="@+id/workoutResultFragment"
         android:name="com.aicoach.ui.workout.WorkoutResultFragment"
-        android:label="WorkoutResult" />
+        android:label="WorkoutResult">
+        <action
+            android:id="@+id/action_result_to_share"
+            app:destination="@id/shareAchievementFragment" />
+    </fragment>
+
+    <!-- 36 Chia sẻ thành tích -->
+    <fragment
+        android:id="@+id/shareAchievementFragment"
+        android:name="com.aicoach.ui.workout.ShareAchievementFragment"
+        android:label="ShareAchievement" />
 
 </navigation>

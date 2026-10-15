@@ -1,35 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--
-        BẢNG MÀU — đang là màu tạm, sẽ đồng bộ đúng mã màu từ Figma.
+        BẢNG MÀU — lấy đúng từ Figma "AI Coach – Nhom8".
         Mọi người chỉ dùng tên màu (@color/brand_primary), không gõ mã #xxxxxx trong layout.
     -->
-    <color name="brand_primary">#FF5A1F</color>
-    <color name="brand_primary_dark">#E04A12</color>
-    <color name="brand_gradient_end">#FF8A4C</color>
-    <color name="brand_primary_light">#FFE6DB</color>
+
+    <!-- Xanh thương hiệu -->
+    <color name="brand_primary">#1E5EFF</color>
+    <color name="brand_primary_dark">#1546D6</color>
+    <color name="brand_gradient_start">#2061FF</color>
+    <color name="brand_gradient_end">#3AA1FF</color>
+    <color name="brand_sky">#33B0F8</color>
+    <color name="brand_primary_light">#E3ECFF</color>
     <color name="brand_on_primary">#FFFFFF</color>
-    <color name="brand_secondary">#1F2A44</color>
+    <color name="accent_cyan">#3DD6F5</color>
 
-    <color name="bg_screen">#F7F7FA</color>
+    <!-- Navy — nền tối (Splash, màn camera, header) -->
+    <color name="navy_950">#061A3B</color>
+    <color name="navy_900">#0B2A5A</color>
+    <color name="navy_800">#0C1F3E</color>
+    <color name="navy_700">#133C89</color>
+    <color name="navy_card">#0C1D3B</color>
+    <color name="navy_stroke">#1E3A66</color>
+    <color name="camera_bg">#141C2E</color>
+
+    <!-- Nền & viền màn sáng -->
+    <color name="bg_screen">#F4F7FC</color>
     <color name="bg_card">#FFFFFF</color>
-    <color name="divider">#E5E7EB</color>
+    <color name="bg_input_disabled">#ECEFF5</color>
+    <color name="divider">#E3E7EF</color>
 
-    <color name="text_primary">#14161A</color>
-    <color name="text_secondary">#6B7280</color>
+    <!-- Chữ -->
+    <color name="text_primary">#0B2A5B</color>
+    <color name="text_secondary">#6B7A99</color>
     <color name="text_on_dark">#FFFFFF</color>
-    <color name="text_on_dark_secondary">#CCFFFFFF</color>
+    <color name="text_on_dark_secondary">#A9B8D6</color>
 
-    <color name="state_success">#16A34A</color>
+    <!-- Trạng thái -->
+    <color name="state_success">#22C55E</color>
     <color name="state_success_light">#DCFCE7</color>
     <color name="state_warning">#F59E0B</color>
-    <color name="state_warning_light">#FEF3C7</color>
-    <color name="state_error">#DC2626</color>
+    <color name="state_warning_light">#FDF1DC</color>
+    <color name="state_error">#EF4444</color>
+    <color name="state_error_light">#FDECEC</color>
+    <color name="gold_light">#FFE8B3</color>
+    <color name="medal_orange">#F97316</color>
 
-    <!-- Lớp phủ trên camera -->
-    <color name="overlay_chip">#73000000</color>
-    <color name="overlay_card">#B3101318</color>
+    <!-- Lớp phủ -->
+    <color name="overlay_chip">#80000000</color>
+    <color name="overlay_card">#E60C1F3E</color>
     <color name="overlay_scrim">#CC000000</color>
+    <color name="overlay_dim">#B3061A3B</color>
+    <color name="overlay_error">#99EF4444</color>
+    <color name="white_10">#1AFFFFFF</color>
     <color name="white_20">#33FFFFFF</color>
     <color name="white_40">#66FFFFFF</color>
     <color name="transparent">#00000000</color>
