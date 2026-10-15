@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
 
         NavigationUI.setupWithNavController(binding.bottomNav, navController);
+        // Nút tròn "Tập AI" nổi giữa thanh tab = chọn tab giữa
+        binding.fabTrain.setOnClickListener(v -> binding.bottomNav.setSelectedItemId(R.id.nav_workout));
 
         // Ẩn thanh tab ở luồng đăng nhập và khi đang tập với camera
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             boolean hideBottomNav = isInsideGraph(destination, R.id.nav_auth)
                     || isInsideGraph(destination, R.id.nav_workout);
-            binding.bottomNav.setVisibility(hideBottomNav ? View.GONE : View.VISIBLE);
+            binding.bottomBar.setVisibility(hideBottomNav ? View.GONE : View.VISIBLE);
         });
 
         // TODO (Thành viên A): khi đã có google-services.json, nếu chưa đăng nhập thì

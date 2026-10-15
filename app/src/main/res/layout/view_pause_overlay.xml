@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 33 "Tạm dừng" — lớp phủ đè lên màn tập (Trưởng nhóm). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/overlay_dim"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_dark"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/space_24">
+
+            <FrameLayout
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_circle_outline">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_pause_24"
+                    app:tint="@color/white" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:text="@string/workout_paused"
+                android:textAppearance="@style/TextAppearance.AICoach.OnDark.Title" />
+
+            <TextView
+                android:id="@+id/tvPauseMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+                tools:text="Squat • Hiệp 2/3" />
+
+            <!-- 3 chỉ số -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/Widget.AICoach.MiniStat">
+
+                    <TextView
+                        android:id="@+id/tvPauseReps"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        tools:text="12/15" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_rep_unit" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.AICoach.MiniStat">
+
+                    <TextView
+                        android:id="@+id/tvPauseTime"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        tools:text="02:14" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_stat_time" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.AICoach.MiniStat">
+
+                    <TextView
+                        android:id="@+id/tvPauseScore"
+                        style="@style/Widget.AICoach.MiniStat.Value"
+                        android:textColor="@color/state_success"
+                        tools:text="92%" />
+
+                    <TextView
+                        style="@style/Widget.AICoach.MiniStat.Label"
+                        android:text="@string/workout_stat_posture" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_20"
+                android:text="@string/workout_resume"
+                app:icon="@drawable/ic_play_24" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRedoSet"
+                style="@style/Widget.AICoach.Button.OnDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="@string/workout_redo_set"
+                app:icon="@drawable/ic_replay_24"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEndSession"
+                style="@style/Widget.AICoach.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:text="@string/workout_end_session"
+                android:textColor="@color/state_error" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chipVoice"
+                style="@style/Widget.AICoach.ChipDark"
+                android:drawableStart="@drawable/ic_volume_24"
+                android:text="@string/workout_voice_on"
+                android:textSize="12sp"
+                app:drawableTint="@color/accent_cyan" />
+
+            <TextView
+                android:id="@+id/chipSwitchCamera"
+                style="@style/Widget.AICoach.ChipDark"
+                android:layout_marginStart="@dimen/space_8"
+                android:drawableStart="@drawable/ic_switch_camera_24"
+                android:text="@string/workout_switch_camera"
+                android:textSize="12sp"
+                app:drawableTint="@color/accent_cyan" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
-/** 1 dòng "Phân tích từ AI" trên màn Kết quả: lỗi cần sửa (WARNING) hoặc điểm làm tốt (GOOD). */
+/** 1 dòng "Phân tích từ AI" trên màn Kết quả: lỗi nhẹ (WARNING), lỗi nặng (ERROR) hoặc điểm làm tốt (GOOD). */
 public final class AiFeedbackItem {
 
-    public enum Type { WARNING, GOOD }
+    public enum Type { WARNING, ERROR, GOOD }
 
     public final Type type;
     public final String title;

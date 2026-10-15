@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nền tối navy dọc cho các màn camera / nghỉ / chia sẻ (Figma 01, 27–36) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/navy_900"
+        android:endColor="@color/navy_950"
+        android:startColor="@color/navy_700" />
+</shape>

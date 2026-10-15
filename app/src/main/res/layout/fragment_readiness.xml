@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Figma 27 "Kiểm tra sẵn sàng – chưa thấy người" + 28 "Kiểm tra sẵn sàng" (Trưởng nhóm).
+    Cùng 1 layout, đổi trạng thái bằng code: khung vàng + thẻ gợi ý khi chưa thấy người,
+    khung xanh khi đã sẵn sàng.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/camera_bg">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scaleType="fillCenter" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_dim"
+        android:alpha="0.5" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/space_20">
+
+        <!-- ===== Thanh trên ===== -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.AICoach.CircleIconButton"
+            android:backgroundTint="@color/white_10"
+            android:contentDescription="@string/workout_back"
+            android:src="@drawable/ic_chevron_left_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/workout_readiness_title"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+        <ImageButton
+            android:id="@+id/btnRefresh"
+            style="@style/Widget.AICoach.CircleIconButton"
+            android:backgroundTint="@color/white_10"
+            android:contentDescription="@string/workout_retry"
+            android:src="@drawable/ic_refresh_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <!-- Chip trạng thái: "Đứng toàn thân trong khung" / "Không phát hiện người trong khung" -->
+        <TextView
+            android:id="@+id/chipStatus"
+            style="@style/Widget.AICoach.ChipDark"
+            android:layout_marginTop="@dimen/space_16"
+            app:drawableTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            tools:drawableStart="@drawable/ic_frame_24"
+            tools:text="Đứng toàn thân trong khung" />
+
+        <!-- Khung nét đứt toàn thân -->
+        <FrameLayout
+            android:id="@+id/bodyFrame"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_16"
+            android:background="@drawable/bg_body_frame"
+            android:backgroundTint="@color/accent_cyan"
+            app:layout_constraintBottom_toTopOf="@id/cardChecks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chipStatus">
+
+            <ImageView
+                android:id="@+id/imgBodyGuide"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_16"
+                android:alpha="0.85"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/accent_cyan" />
+        </FrameLayout>
+
+        <!-- Thẻ gợi ý "Lùi ra xa…" — chỉ hiện khi chưa thấy người (Figma 27) -->
+        <LinearLayout
+            android:id="@+id/cardStepBack"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/bodyFrame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bodyFrame"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_circle_size"
+                    android:layout_height="@dimen/icon_circle_size"
+                    android:background="@drawable/bg_icon_box"
+                    android:backgroundTint="@color/navy_stroke"
+                    android:importantForAccessibility="no"
+                    android:padding="@dimen/space_8"
+                    android:src="@drawable/ic_phone_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/workout_readiness_distance"
+                    android:textColor="@color/accent_cyan"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_circle_size"
+                    android:layout_height="@dimen/icon_circle_size"
+                    android:background="@drawable/bg_icon_box"
+                    android:backgroundTint="@color/navy_stroke"
+                    android:importantForAccessibility="no"
+                    android:padding="@dimen/space_8"
+                    android:src="@drawable/ic_person_24"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:gravity="center"
+                android:text="@string/workout_readiness_step_back"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- ===== Thẻ checklist 3 mục ===== -->
+        <LinearLayout
+            android:id="@+id/cardChecks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_12"
+            android:background="@drawable/bg_card_dark"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/space_12"
+            android:paddingTop="@dimen/space_4"
+            android:paddingEnd="@dimen/space_12"
+            android:paddingBottom="@dimen/space_4"
+            app:layout_constraintBottom_toTopOf="@id/btnStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <include
+                android:id="@+id/rowFrame"
+                layout="@layout/view_check_row" />
+
+            <include
+                android:id="@+id/rowLight"
+                layout="@layout/view_check_row" />
+
+            <include
+                android:id="@+id/rowOrientation"
+                layout="@layout/view_check_row" />
+        </LinearLayout>
+
+        <!-- ===== Nút tròn BẮT ĐẦU TẬP ===== -->
+        <FrameLayout
+            android:id="@+id/btnStart"
+            android:layout_width="@dimen/readiness_start_button_size"
+            android:layout_height="@dimen/readiness_start_button_size"
+            android:background="@drawable/bg_start_button"
+            android:clickable="true"
+            android:contentDescription="@string/workout_start"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_play_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/workout_start"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

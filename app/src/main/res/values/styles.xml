@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ===== Nút (Figma: nút chính gradient xanh, bo tròn hết cỡ) ===== -->
+
+    <!-- Nút chính: "Đăng nhập", "Bắt đầu tập", "Về trang chủ"… — đây là style mặc định của MaterialButton -->
+    <style name="Widget.AICoach.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:background">@drawable/bg_button_primary</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!-- Nút phụ nền trắng viền xám: "Huỷ", "Quay lại đăng nhập", "Chia sẻ" -->
+    <style name="Widget.AICoach.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="strokeColor">@color/divider</item>
+        <item name="cornerRadius">@dimen/radius_pill</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="iconTint">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Nút phụ trên nền tối: "+10 giây", "Làm lại hiệp này" -->
+    <style name="Widget.AICoach.Button.OnDark" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="backgroundTint">@color/white_10</item>
+        <item name="strokeColor">@color/white_20</item>
+        <item name="cornerRadius">@dimen/radius_pill</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="iconTint">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Nút đỏ: "Kết thúc", "Đăng xuất" -->
+    <style name="Widget.AICoach.Button.Danger" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="backgroundTint">@color/state_error</item>
+        <item name="cornerRadius">@dimen/radius_pill</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Nút chữ: "Để sau", "Huỷ", "Kết thúc buổi tập" -->
+    <style name="Widget.AICoach.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- ===== Thành phần nhỏ ===== -->
+
     <!-- Ô ngày trong thẻ chuỗi ngày (T2…CN) -->
     <style name="Widget.AICoach.DayChip" parent="">
         <item name="android:layout_width">@dimen/day_chip_size</item>
@@ -27,6 +89,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/space_8</item>
     </style>
 
     <!-- Nút tròn chỉ có icon -->
@@ -35,6 +98,52 @@
         <item name="android:layout_height">@dimen/circle_button_size</item>
         <item name="android:background">@drawable/bg_circle</item>
         <item name="android:scaleType">center</item>
+    </style>
+
+    <!-- Ô chỉ số nhỏ trên nền tối (Tạm dừng, Nghỉ giữa hiệp) -->
+    <style name="Widget.AICoach.MiniStat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.AICoach.MiniStat.Value" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.AICoach.MiniStat.Label" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_on_dark_secondary</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Vạch chỉ báo hiệp (Nghỉ giữa hiệp) -->
+    <style name="Widget.AICoach.SetDash" parent="">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+        <item name="android:background">@drawable/bg_voice_bar</item>
+    </style>
+
+    <!-- 1 vạch sóng âm trong thẻ nhắc giọng nói -->
+    <style name="Widget.AICoach.VoiceBar" parent="">
+        <item name="android:layout_width">3dp</item>
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:background">@drawable/bg_voice_bar</item>
+    </style>
+
+    <!-- Thẻ tối viền xanh trên màn camera (thẻ checklist, thẻ nhắc giọng nói) -->
+    <style name="Widget.AICoach.DarkCard" parent="">
+        <item name="android:background">@drawable/bg_card_dark</item>
+        <item name="android:padding">@dimen/space_12</item>
     </style>
 
 </resources>

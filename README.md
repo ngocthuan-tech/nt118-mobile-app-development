@@ -40,15 +40,14 @@ app/src/main/java/com/aicoach
 
 Tài liệu phân công chi tiết: [`docs/PHAN_CONG_THANH_VIEN_A.md`](docs/PHAN_CONG_THANH_VIEN_A.md), [`docs/PHAN_CONG_THANH_VIEN_B.md`](docs/PHAN_CONG_THANH_VIEN_B.md).
 
-## Màn hình đã dựng theo Figma
+## Màn hình theo Figma
 
-| Figma | Màn | Trạng thái |
-|---|---|---|
-| 08 Trang chủ | `HomeFragment` | Đã dựng giao diện, dữ liệu mẫu — A nối Firestore |
-| 12 Tập với AI Camera | `LiveWorkoutFragment` | Đã dựng giao diện — Trưởng nhóm làm camera + AI |
-| 13 Kết quả buổi tập | `WorkoutResultFragment` | Đã dựng giao diện, dữ liệu mẫu |
-| Thanh điều hướng 5 tab | `MainActivity` | Trang chủ • Bài tập • Tập AI • Tiến độ • Thử thách |
-| Các màn còn lại | `fragment_placeholder` | Màn tạm, mỗi người thay theo Figma |
+Toàn bộ 55 màn (ảnh + người phụ trách + trạng thái) nằm ở [`docs/MAN_HINH.md`](docs/MAN_HINH.md), ảnh gốc trong [`docs/figma/`](docs/figma/).
+
+- Hệ màu, kiểu chữ, style nút, icon dùng chung đã khớp Figma (`res/values/`, `res/drawable/`).
+- Thanh 5 tab có nút tròn "Tập AI" nổi ở giữa đúng như Figma.
+- Luồng tập AI của Trưởng nhóm (Figma 18, 27–36) đã dựng đủ giao diện, chạy được bằng dữ liệu mẫu.
+- Các màn của Thành viên A và B: mỗi người tự dựng theo ảnh trong `docs/figma/`.
 
 ## Quy trình làm việc với Git
 

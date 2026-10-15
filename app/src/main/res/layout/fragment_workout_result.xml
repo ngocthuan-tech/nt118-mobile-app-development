@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Kết quả buổi tập — dựng theo frame "13 Kết quả buổi tập" trong Figma (Trưởng nhóm). -->
+<!-- Figma 35 "Kết quả buổi tập" (Trưởng nhóm). -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/space_24">
 
-        <!-- ===== Header chúc mừng ===== -->
+        <!-- ===== Header navy → xanh ===== -->
         <View
             android:id="@+id/headerBg"
             android:layout_width="0dp"
@@ -26,8 +26,8 @@
         <ImageButton
             android:id="@+id/btnClose"
             style="@style/Widget.AICoach.CircleIconButton"
-            android:layout_marginStart="@dimen/space_16"
-            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
             android:backgroundTint="@color/white_20"
             android:contentDescription="@string/common_close"
             android:src="@drawable/ic_close_24"
@@ -37,32 +37,33 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_20"
             android:text="@string/result_title"
-            android:textAppearance="@style/TextAppearance.AICoach.Title"
-            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.AICoach.OnDark.Title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnClose" />
+            app:layout_constraintStart_toEndOf="@id/btnClose"
+            app:layout_constraintTop_toTopOf="@id/btnClose" />
 
         <TextView
             android:id="@+id/tvSessionMeta"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_4"
-            android:textAppearance="@style/TextAppearance.AICoach.Body"
-            android:textColor="@color/text_on_dark_secondary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             tools:text="Squat • 3 hiệp • Hôm nay 19:30" />
 
+        <!-- Vòng điểm tư thế -->
         <FrameLayout
             android:id="@+id/scoreRing"
             android:layout_width="@dimen/result_score_ring_size"
             android:layout_height="@dimen/result_score_ring_size"
-            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSessionMeta">
@@ -71,7 +72,7 @@
                 android:id="@+id/progressScore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:indicatorColor="@color/white"
+                app:indicatorColor="@color/state_success"
                 app:indicatorSize="@dimen/result_score_ring_size"
                 app:trackColor="@color/white_20"
                 app:trackCornerRadius="5dp"
@@ -100,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/result_score_label"
                     android:textColor="@color/text_on_dark_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </FrameLayout>
 
@@ -109,15 +110,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textColor="@color/text_on_dark_secondary"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scoreRing"
             tools:text="Xuất sắc! Tốt hơn 12% so với lần trước" />
 
-        <!-- ===== Thẻ 4 chỉ số, nằm đè mép dưới header ===== -->
+        <!-- ===== Thẻ 4 chỉ số, đè mép dưới header ===== -->
         <Space
             android:id="@+id/anchorStats"
             android:layout_width="0dp"
@@ -130,14 +130,14 @@
             android:id="@+id/cardStats"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_16"
-            android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             app:cardBackgroundColor="@color/bg_card"
             app:cardCornerRadius="@dimen/radius_card"
             app:cardElevation="2dp"
-            app:layout_constraintTop_toTopOf="@id/anchorStats"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/anchorStats"
             app:strokeWidth="0dp">
 
             <LinearLayout
@@ -170,7 +170,7 @@
             android:id="@+id/tvAnalysisTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_24"
             android:text="@string/result_ai_analysis"
             android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
@@ -181,9 +181,9 @@
             android:id="@+id/rvAiFeedback"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_12"
-            android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_20"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -197,16 +197,17 @@
             android:id="@+id/cardNewBadge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginEnd="@dimen/space_16"
-            app:cardBackgroundColor="@color/brand_primary_light"
+            android:layout_marginEnd="@dimen/space_20"
+            app:cardBackgroundColor="@color/gold_light"
             app:cardCornerRadius="@dimen/radius_card"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvAiFeedback"
-            app:strokeWidth="0dp">
+            app:strokeColor="@color/state_warning"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -219,7 +220,7 @@
                     android:layout_width="@dimen/avatar_size"
                     android:layout_height="@dimen/avatar_size"
                     android:background="@drawable/bg_circle"
-                    android:backgroundTint="@color/brand_primary">
+                    android:backgroundTint="@color/state_warning">
 
                     <ImageView
                         android:layout_width="@dimen/icon_size"
@@ -241,7 +242,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/result_new_badge"
-                        android:textAppearance="@style/TextAppearance.AICoach.Caption" />
+                        android:textColor="@color/medal_orange"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvBadgeName"
@@ -256,22 +258,23 @@
         <!-- ===== Nút ===== -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnShare"
-            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            style="@style/Widget.AICoach.Button.Secondary"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginStart="@dimen/space_16"
-            android:layout_marginTop="@dimen/space_20"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_24"
             android:text="@string/result_share"
             app:icon="@drawable/ic_share_24"
+            app:iconTint="@color/brand_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardNewBadge" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBackHome"
             android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginStart="@dimen/space_8"
-            android:layout_marginEnd="@dimen/space_16"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_marginEnd="@dimen/space_20"
             android:text="@string/result_back_home"
             app:layout_constraintBottom_toBottomOf="@id/btnShare"
             app:layout_constraintEnd_toEndOf="parent"

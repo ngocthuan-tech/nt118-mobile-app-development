@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Module tập AI (Figma 12, 13) — tiền tố workout_ -->
+    <!-- Module tập AI của Trưởng nhóm (Figma 18, 27–36) — tiền tố workout_ / result_ / share_ -->
+
+    <!-- 18 Xin quyền camera -->
+    <string name="workout_permission_title">Cho phép AI Coach\ndùng camera</string>
+    <string name="workout_permission_desc">Camera giúp AI nhận diện 33 điểm khớp, đếm số lần và sửa tư thế cho bạn theo thời gian thực.</string>
+    <string name="workout_permission_on_device">Xử lý ngay trên điện thoại</string>
+    <string name="workout_permission_on_device_desc">Không tải video lên máy chủ</string>
+    <string name="workout_permission_no_storage">Không lưu hình ảnh, video</string>
+    <string name="workout_permission_no_storage_desc">Khung hình bị huỷ ngay sau khi phân tích</string>
+    <string name="workout_permission_control">Bạn toàn quyền kiểm soát</string>
+    <string name="workout_permission_control_desc">Tắt quyền trong Cài đặt bất cứ lúc nào</string>
+    <string name="workout_permission_allow">Cho phép dùng camera</string>
+    <string name="workout_permission_later">Để sau</string>
+    <string name="workout_permission_denied">Cần quyền camera để AI theo dõi tư thế. Bạn có thể bật lại trong Cài đặt.</string>
+
+    <!-- 27, 28 Kiểm tra sẵn sàng -->
+    <string name="workout_readiness_title">Kiểm tra sẵn sàng</string>
+    <string name="workout_readiness_in_frame">Đứng toàn thân trong khung</string>
+    <string name="workout_readiness_no_person">Không phát hiện người trong khung</string>
+    <string name="workout_readiness_distance">2 – 3 m</string>
+    <string name="workout_readiness_step_back">Lùi ra xa để camera thấy toàn thân</string>
+    <string name="workout_check_frame">Khung hình</string>
+    <string name="workout_check_frame_ok">Toàn thân đã vào khung</string>
+    <string name="workout_check_frame_bad">Chưa thấy toàn thân cơ thể</string>
+    <string name="workout_check_light">Ánh sáng</string>
+    <string name="workout_check_light_ok">Đủ sáng</string>
+    <string name="workout_check_light_low">Hơi tối – hãy bật thêm đèn</string>
+    <string name="workout_check_orientation">Hướng đứng</string>
+    <string name="workout_check_orientation_ok">Đứng nghiêng 45° so với camera</string>
+    <string name="workout_check_orientation_wait">Đang chờ phát hiện người…</string>
+    <string name="workout_start">BẮT ĐẦU\nTẬP</string>
+    <string name="workout_back">Quay lại</string>
+    <string name="workout_retry">Kiểm tra lại</string>
+
+    <!-- 29 Đếm ngược -->
+    <string name="workout_ready_count">Sẵn sàng %1$d/%2$d</string>
+    <string name="workout_get_ready">Chuẩn bị…</string>
+    <string name="workout_countdown_meta">%1$s • Hiệp %2$d/%3$d • Mục tiêu %4$d lần</string>
+    <string name="workout_tip_side">Đứng nghiêng 45°</string>
+    <string name="workout_tip_feet">Hai chân rộng bằng vai</string>
+    <string name="workout_cancel">Huỷ</string>
+
+    <!-- 30, 31 Tập với AI Camera -->
     <string name="workout_exit">Thoát buổi tập</string>
     <string name="workout_exercise_set">%1$s • Hiệp %2$d/%3$d</string>
     <string name="workout_rep_target">/ %1$d</string>
@@ -8,12 +50,43 @@
     <string name="workout_posture_score">Tư thế %1$d%%</string>
     <string name="workout_joint_angle">Góc gối %1$d°</string>
     <string name="workout_rep_feedback_good">Lần %1$d – Đúng tư thế</string>
+    <string name="workout_rep_not_counted">Lần này không được tính</string>
+    <string name="workout_form_error">Sai tư thế – %1$s</string>
     <string name="workout_voice_label">Đang nhắc bằng giọng nói</string>
     <string name="workout_sound">Bật/tắt giọng nói</string>
     <string name="workout_pause">Tạm dừng</string>
     <string name="workout_finish">Kết thúc</string>
 
-    <!-- Kết quả buổi tập -->
+    <!-- 32 Nghỉ giữa hiệp -->
+    <string name="workout_set_done">%1$s • Xong hiệp %2$d/%3$d</string>
+    <string name="workout_rest_title">Nghỉ ngơi</string>
+    <string name="workout_rest_left">còn lại / %1$d giây</string>
+    <string name="workout_rest_add">+10 giây</string>
+    <string name="workout_rest_skip">Bỏ qua nghỉ</string>
+    <string name="workout_last_set">HIỆP VỪA RỒI</string>
+    <string name="workout_stat_reps">số lần</string>
+    <string name="workout_stat_score">điểm tư thế</string>
+    <string name="workout_stat_errors">lỗi gối chụm</string>
+    <string name="workout_next_up">TIẾP THEO</string>
+    <string name="workout_breath_tip">Hít sâu bằng mũi, thở ra bằng miệng để nhịp tim hồi phục nhanh hơn</string>
+
+    <!-- 33 Tạm dừng -->
+    <string name="workout_paused">Đã tạm dừng</string>
+    <string name="workout_stat_time">thời gian</string>
+    <string name="workout_stat_posture">tư thế</string>
+    <string name="workout_resume">Tiếp tục tập</string>
+    <string name="workout_redo_set">Làm lại hiệp này</string>
+    <string name="workout_end_session">Kết thúc buổi tập</string>
+    <string name="workout_voice_on">Giọng nói: Bật</string>
+    <string name="workout_switch_camera">Đổi camera</string>
+
+    <!-- 34 Xác nhận kết thúc -->
+    <string name="workout_finish_confirm_title">Kết thúc buổi tập?</string>
+    <string name="workout_finish_confirm_body">Bạn đã hoàn thành %1$d/%2$d lần (%3$d%%). Kết quả vẫn được lưu, nhưng chuỗi ngày chỉ được tính khi đạt từ 50%% giáo án trở lên.</string>
+    <string name="workout_keep_going">Tập tiếp</string>
+    <string name="workout_finish_and_save">Kết thúc &amp; lưu kết quả</string>
+
+    <!-- 35 Kết quả buổi tập -->
     <string name="result_title">Hoàn thành buổi tập!</string>
     <string name="result_score_label">Điểm tư thế</string>
     <string name="result_stat_reps">Số lần</string>
@@ -24,4 +97,19 @@
     <string name="result_new_badge">Mở khoá huy hiệu mới!</string>
     <string name="result_share">Chia sẻ</string>
     <string name="result_back_home">Về trang chủ</string>
+
+    <!-- 36 Chia sẻ thành tích -->
+    <string name="share_title">Chia sẻ thành tích</string>
+    <string name="share_today_did">Hôm nay mình đã %1$s</string>
+    <string name="share_reps">%1$d lần</string>
+    <string name="share_score">điểm tư thế</string>
+    <string name="share_time">thời gian</string>
+    <string name="share_streak">chuỗi</string>
+    <string name="share_streak_days">%1$d ngày</string>
+    <string name="share_footer">Tập cùng AI Coach – huấn luyện viên AI tại nhà</string>
+    <string name="share_show_stats">Hiện điểm tư thế &amp; chuỗi ngày</string>
+    <string name="share_send_friends">Gửi bạn bè</string>
+    <string name="share_save_image">Lưu ảnh</string>
+    <string name="share_copy_link">Sao chép link</string>
+    <string name="share_more">Khác</string>
 </resources>

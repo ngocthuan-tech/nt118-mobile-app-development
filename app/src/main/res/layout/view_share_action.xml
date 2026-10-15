@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 nút chia sẻ: vòng tròn icon + nhãn (Figma 36). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/actionCircle"
+        android:layout_width="@dimen/share_action_size"
+        android:layout_height="@dimen/share_action_size"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white_10">
+
+        <ImageView
+            android:id="@+id/imgAction"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/white"
+            tools:src="@drawable/ic_send_24" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        tools:text="Gửi bạn bè" />
+</LinearLayout>

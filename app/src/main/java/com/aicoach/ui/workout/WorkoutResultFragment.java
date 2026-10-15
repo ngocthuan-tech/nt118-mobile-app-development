@@ -38,6 +38,8 @@ public class WorkoutResultFragment extends BaseFragment<FragmentWorkoutResultBin
                 NavHostFragment.findNavController(this).popBackStack(R.id.nav_workout, true);
         binding.btnClose.setOnClickListener(backHome);
         binding.btnBackHome.setOnClickListener(backHome);
+        binding.btnShare.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(WorkoutResultFragmentDirections.actionResultToShare()));
 
         bindDemoData();
     }
@@ -53,11 +55,13 @@ public class WorkoutResultFragment extends BaseFragment<FragmentWorkoutResultBin
         setStat(binding.statTime.tvValue, binding.statTime.tvLabel, "08:24", R.string.result_stat_time);
         setStat(binding.statKcal.tvValue, binding.statKcal.tvLabel, "62", R.string.result_stat_kcal);
         setStat(binding.statAccuracy.tvValue, binding.statAccuracy.tvLabel, "89%", R.string.result_stat_accuracy);
+        binding.statAccuracy.tvValue.setTextColor(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.state_success));
 
         feedbackAdapter.submitList(Arrays.asList(
                 new AiFeedbackItem(AiFeedbackItem.Type.WARNING,
                         "Gối hơi chụm vào trong", "Xuất hiện 4 lần • chủ yếu ở hiệp 3"),
-                new AiFeedbackItem(AiFeedbackItem.Type.WARNING,
+                new AiFeedbackItem(AiFeedbackItem.Type.ERROR,
                         "Lưng cong khi xuống sâu", "2 lần • hiệp 2"),
                 new AiFeedbackItem(AiFeedbackItem.Type.GOOD,
                         "Độ sâu squat đạt chuẩn", "39/45 lần đạt góc gối ≤ 90°")));
