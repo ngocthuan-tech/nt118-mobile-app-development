@@ -16,12 +16,13 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/space_24">
 
-        <!-- ===== Header cam ===== -->
+        <!-- ===== Header xanh: tự kéo dài tới dưới nút BẮT ĐẦU TẬP (mốc headerEnd) ===== -->
         <View
             android:id="@+id/headerBg"
             android:layout_width="0dp"
-            android:layout_height="@dimen/home_header_height"
+            android:layout_height="0dp"
             android:background="@drawable/bg_header_gradient"
+            app:layout_constraintBottom_toBottomOf="@id/headerEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -103,25 +104,25 @@
             android:layout_marginStart="@dimen/space_20"
             android:layout_marginEnd="@dimen/space_20"
             android:layout_marginTop="@dimen/space_16"
-            app:cardBackgroundColor="@color/bg_card"
+            app:cardBackgroundColor="@color/white_10"
             app:cardCornerRadius="@dimen/radius_card_large"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGreetingSub"
-            app:strokeWidth="0dp">
+            app:strokeColor="@color/white_20"
+            app:strokeWidth="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/space_12">
+                android:padding="@dimen/space_16">
 
                 <FrameLayout
                     android:id="@+id/iconStreak"
                     android:layout_width="@dimen/avatar_size"
                     android:layout_height="@dimen/avatar_size"
-                    android:background="@drawable/bg_circle"
-                    android:backgroundTint="@color/brand_primary_light"
+                    android:background="@drawable/bg_streak_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -131,7 +132,7 @@
                         android:layout_gravity="center"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_fire_24"
-                        app:tint="@color/brand_primary" />
+                        app:tint="@color/white" />
                 </FrameLayout>
 
                 <TextView
@@ -140,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_12"
                     android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+                    android:textColor="@color/text_on_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iconStreak"
                     app:layout_constraintTop_toTopOf="parent"
@@ -150,6 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                    android:textColor="@color/text_on_dark_secondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tvStreakTitle"
                     app:layout_constraintTop_toBottomOf="@id/tvStreakTitle"
@@ -241,11 +244,22 @@
             </LinearLayout>
         </FrameLayout>
 
+        <!-- Mốc đáy header: nằm dưới nút tròn 12dp -->
+        <Space
+            android:id="@+id/headerEnd"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnStartWorkout" />
+
         <TextView
             android:id="@+id/tvMinutesValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AICoach.Title"
+            android:includeFontPadding="false"
+            android:textColor="@color/text_on_dark"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tvMinutesLabel"
             app:layout_constraintEnd_toStartOf="@id/btnStartWorkout"
             app:layout_constraintStart_toStartOf="parent"
@@ -260,6 +274,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_minutes_today"
             android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            android:textColor="@color/text_on_dark_secondary"
             app:layout_constraintBottom_toBottomOf="@id/btnStartWorkout"
             app:layout_constraintEnd_toEndOf="@id/tvMinutesValue"
             app:layout_constraintStart_toStartOf="@id/tvMinutesValue"
@@ -269,7 +284,10 @@
             android:id="@+id/tvKcalValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AICoach.Title"
+            android:includeFontPadding="false"
+            android:textColor="@color/text_on_dark"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tvKcalLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnStartWorkout"
@@ -284,6 +302,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_kcal_burned"
             android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            android:textColor="@color/text_on_dark_secondary"
             app:layout_constraintBottom_toBottomOf="@id/btnStartWorkout"
             app:layout_constraintEnd_toEndOf="@id/tvKcalValue"
             app:layout_constraintStart_toStartOf="@id/tvKcalValue"
@@ -295,11 +314,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_20"
-            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_20"
             android:text="@string/home_your_plan"
             android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnStartWorkout" />
+            app:layout_constraintTop_toBottomOf="@id/headerEnd" />
 
         <TextView
             android:id="@+id/btnSeeAllPlans"
@@ -338,9 +357,9 @@
                     android:id="@+id/imgPlan"
                     android:layout_width="@dimen/home_plan_image_size"
                     android:layout_height="@dimen/home_plan_image_size"
-                    android:background="@drawable/bg_rounded_placeholder"
+                    android:background="@drawable/bg_exercise_photo"
                     android:importantForAccessibility="no"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

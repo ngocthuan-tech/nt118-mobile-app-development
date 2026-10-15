@@ -29,12 +29,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bg_card"
-            app:elevation="8dp"
+            app:elevation="0dp"
             app:itemActiveIndicatorStyle="@null"
             app:itemIconTint="@color/selector_bottom_nav"
             app:itemTextColor="@color/selector_bottom_nav"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu_bottom_nav" />
+
+        <!-- Đường kẻ mảnh phía trên thanh tab (thay cho bóng đổ: bóng M3 làm nền ám xanh) -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
 
         <ImageButton
             android:id="@+id/fabTrain"
