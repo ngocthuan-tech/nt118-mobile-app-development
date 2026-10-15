@@ -32,3 +32,13 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Android Studio
+.idea/
+.DS_Store
+/captures
+
+# Bí mật — không đưa lên repo công khai
+app/google-services.json
+*.jks
+*.keystore

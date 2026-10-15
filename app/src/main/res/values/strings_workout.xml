@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Module tập AI (Figma 12, 13) — tiền tố workout_ -->
+    <string name="workout_exit">Thoát buổi tập</string>
+    <string name="workout_exercise_set">%1$s • Hiệp %2$d/%3$d</string>
+    <string name="workout_rep_target">/ %1$d</string>
+    <string name="workout_rep_unit">lần</string>
+    <string name="workout_posture_score">Tư thế %1$d%%</string>
+    <string name="workout_joint_angle">Góc gối %1$d°</string>
+    <string name="workout_rep_feedback_good">Lần %1$d – Đúng tư thế</string>
+    <string name="workout_voice_label">Đang nhắc bằng giọng nói</string>
+    <string name="workout_sound">Bật/tắt giọng nói</string>
+    <string name="workout_pause">Tạm dừng</string>
+    <string name="workout_finish">Kết thúc</string>
+
+    <!-- Kết quả buổi tập -->
+    <string name="result_title">Hoàn thành buổi tập!</string>
+    <string name="result_score_label">Điểm tư thế</string>
+    <string name="result_stat_reps">Số lần</string>
+    <string name="result_stat_time">Thời gian</string>
+    <string name="result_stat_kcal">kcal</string>
+    <string name="result_stat_accuracy">Đúng tư thế</string>
+    <string name="result_ai_analysis">Phân tích từ AI</string>
+    <string name="result_new_badge">Mở khoá huy hiệu mới!</string>
+    <string name="result_share">Chia sẻ</string>
+    <string name="result_back_home">Về trang chủ</string>
+</resources>

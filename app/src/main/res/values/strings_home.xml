@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Trang chủ (Figma 08) — tiền tố home_ -->
+    <string name="home_greeting">Xin chào, %1$s</string>
+    <string name="home_greeting_sub">Hôm nay mình tập gì nhỉ?</string>
+    <string name="home_notifications">Thông báo</string>
+    <string name="home_streak_title">Chuỗi %1$d ngày</string>
+    <string name="home_streak_sub">Còn %1$d buổi để đạt mục tiêu tuần</string>
+    <string name="home_start_workout">BẮT ĐẦU TẬP</string>
+    <string name="home_minutes_today">phút hôm nay</string>
+    <string name="home_kcal_burned">kcal đã đốt</string>
+    <string name="home_your_plan">Giáo án của bạn</string>
+    <string name="home_today_exercises">Bài tập hôm nay</string>
+    <string name="home_today_summary">%1$d bài • ~%2$d phút</string>
+    <string name="home_ai_chip">AI</string>
+
+    <string name="day_mon">T2</string>
+    <string name="day_tue">T3</string>
+    <string name="day_wed">T4</string>
+    <string name="day_thu">T5</string>
+    <string name="day_fri">T6</string>
+    <string name="day_sat">T7</string>
+    <string name="day_sun">CN</string>
+</resources>

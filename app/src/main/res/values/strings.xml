@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Coach</string>
+
+    <!-- Thanh điều hướng dưới (theo Figma) -->
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_exercises">Bài tập</string>
+    <string name="nav_train_ai">Tập AI</string>
+    <string name="nav_progress">Tiến độ</string>
+    <string name="nav_challenges">Thử thách</string>
+</resources>

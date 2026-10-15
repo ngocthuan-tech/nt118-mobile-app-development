@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Trang chủ — dựng theo frame "08 Trang chủ" trong Figma.
+    Giao diện: Trưởng nhóm dựng sẵn. Dữ liệu thật (tên, streak, giáo án…): Thành viên A nối qua ViewModel.
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/space_24">
+
+        <!-- ===== Header cam ===== -->
+        <View
+            android:id="@+id/headerBg"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_header_height"
+            android:background="@drawable/bg_header_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_12"
+            android:textAppearance="@style/TextAppearance.AICoach.Title"
+            android:textColor="@color/text_on_dark"
+            app:layout_constraintEnd_toStartOf="@id/btnNotifications"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Xin chào, Minh" />
+
+        <TextView
+            android:id="@+id/tvGreetingSub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_greeting_sub"
+            android:textAppearance="@style/TextAppearance.AICoach.Body"
+            android:textColor="@color/text_on_dark_secondary"
+            app:layout_constraintEnd_toEndOf="@id/tvGreeting"
+            app:layout_constraintStart_toStartOf="@id/tvGreeting"
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
+
+        <FrameLayout
+            android:id="@+id/btnNotifications"
+            android:layout_width="@dimen/circle_button_size"
+            android:layout_height="@dimen/circle_button_size"
+            android:layout_marginEnd="@dimen/space_8"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/white_20"
+            android:contentDescription="@string/home_notifications"
+            app:layout_constraintEnd_toStartOf="@id/tvAvatar"
+            app:layout_constraintTop_toTopOf="@id/tvAvatar">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_bell_24"
+                app:tint="@color/white" />
+
+            <View
+                android:id="@+id/dotUnread"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/space_8"
+                android:background="@drawable/bg_dot"
+                android:backgroundTint="@color/state_error" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvAvatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:background="@drawable/bg_circle"
+            android:gravity="center"
+            android:textColor="@color/brand_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="M" />
+
+        <!-- ===== Thẻ chuỗi ngày ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStreak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_16"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="@dimen/radius_card_large"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGreetingSub"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_12">
+
+                <FrameLayout
+                    android:id="@+id/iconStreak"
+                    android:layout_width="@dimen/avatar_size"
+                    android:layout_height="@dimen/avatar_size"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/brand_primary_light"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_fire_24"
+                        app:tint="@color/brand_primary" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvStreakTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iconStreak"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Chuỗi 7 ngày" />
+
+                <TextView
+                    android:id="@+id/tvStreakSub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvStreakTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvStreakTitle"
+                    tools:text="Còn 1 buổi để đạt mục tiêu tuần" />
+
+                <LinearLayout
+                    android:id="@+id/rowWeekDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@id/tvStreakTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvStreakSub">
+
+                    <TextView
+                        android:id="@+id/dayMon"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_mon" />
+
+                    <TextView
+                        android:id="@+id/dayTue"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_tue" />
+
+                    <TextView
+                        android:id="@+id/dayWed"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_wed" />
+
+                    <TextView
+                        android:id="@+id/dayThu"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_thu" />
+
+                    <TextView
+                        android:id="@+id/dayFri"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_fri" />
+
+                    <TextView
+                        android:id="@+id/daySat"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_sat" />
+
+                    <TextView
+                        android:id="@+id/daySun"
+                        style="@style/Widget.AICoach.DayChip"
+                        android:text="@string/day_sun" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Nút BẮT ĐẦU TẬP + 2 chỉ số hai bên ===== -->
+        <FrameLayout
+            android:id="@+id/btnStartWorkout"
+            android:layout_width="@dimen/home_start_button_size"
+            android:layout_height="@dimen/home_start_button_size"
+            android:layout_marginTop="@dimen/space_8"
+            android:background="@drawable/bg_start_button"
+            android:clickable="true"
+            android:contentDescription="@string/home_start_workout"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardStreak">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_play_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/home_start_workout"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvMinutesValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AICoach.Title"
+            app:layout_constraintBottom_toTopOf="@id/tvMinutesLabel"
+            app:layout_constraintEnd_toStartOf="@id/btnStartWorkout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnStartWorkout"
+            app:layout_constraintVertical_bias="0.62"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="18" />
+
+        <TextView
+            android:id="@+id/tvMinutesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_minutes_today"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            app:layout_constraintBottom_toBottomOf="@id/btnStartWorkout"
+            app:layout_constraintEnd_toEndOf="@id/tvMinutesValue"
+            app:layout_constraintStart_toStartOf="@id/tvMinutesValue"
+            app:layout_constraintTop_toBottomOf="@id/tvMinutesValue" />
+
+        <TextView
+            android:id="@+id/tvKcalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AICoach.Title"
+            app:layout_constraintBottom_toTopOf="@id/tvKcalLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnStartWorkout"
+            app:layout_constraintTop_toTopOf="@id/btnStartWorkout"
+            app:layout_constraintVertical_bias="0.62"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="320" />
+
+        <TextView
+            android:id="@+id/tvKcalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_kcal_burned"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            app:layout_constraintBottom_toBottomOf="@id/btnStartWorkout"
+            app:layout_constraintEnd_toEndOf="@id/tvKcalValue"
+            app:layout_constraintStart_toStartOf="@id/tvKcalValue"
+            app:layout_constraintTop_toBottomOf="@id/tvKcalValue" />
+
+        <!-- ===== Giáo án của bạn ===== -->
+        <TextView
+            android:id="@+id/tvPlanSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_16"
+            android:text="@string/home_your_plan"
+            android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnStartWorkout" />
+
+        <TextView
+            android:id="@+id/btnSeeAllPlans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_20"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/space_4"
+            android:text="@string/common_see_all"
+            android:textColor="@color/brand_primary"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvPlanSection"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPlan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_12"
+            app:cardBackgroundColor="@color/bg_card"
+            app:cardCornerRadius="@dimen/radius_card"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPlanSection"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_12">
+
+                <ImageView
+                    android:id="@+id/imgPlan"
+                    android:layout_width="@dimen/home_plan_image_size"
+                    android:layout_height="@dimen/home_plan_image_size"
+                    android:background="@drawable/bg_rounded_placeholder"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPlanTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgPlan"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Đốt mỡ toàn thân – 4 tuần" />
+
+                <TextView
+                    android:id="@+id/tvPlanMeta"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvPlanTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvPlanTitle"
+                    tools:text="Tuần 2 • Ngày 5/28 • 25 phút/buổi" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressPlan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_8"
+                    app:indicatorColor="@color/brand_primary"
+                    app:layout_constraintEnd_toStartOf="@id/tvPlanPercent"
+                    app:layout_constraintStart_toStartOf="@id/tvPlanTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvPlanMeta"
+                    app:trackColor="@color/brand_primary_light"
+                    app:trackCornerRadius="4dp"
+                    app:trackThickness="8dp"
+                    tools:progress="18" />
+
+                <TextView
+                    android:id="@+id/tvPlanPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brand_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/progressPlan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/progressPlan"
+                    tools:text="18%" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Bài tập hôm nay ===== -->
+        <TextView
+            android:id="@+id/tvTodaySection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            android:text="@string/home_today_exercises"
+            android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPlan" />
+
+        <TextView
+            android:id="@+id/tvTodaySummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_20"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvTodaySection"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="3 bài • ~18 phút" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTodayExercises"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_20"
+            android:paddingEnd="@dimen/space_20"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTodaySection"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_exercise_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

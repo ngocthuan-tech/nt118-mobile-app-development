@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Tập với AI Camera — dựng theo frame "12 Tập với AI Camera" trong Figma (Trưởng nhóm).
+    Lớp dưới: PreviewView (CameraX) + PoseOverlayView (vẽ khung xương ML Kit).
+    Lớp trên: các chip/nút hiển thị số rep, điểm tư thế, nhắc giọng nói.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scaleType="fillCenter" />
+
+    <com.aicoach.pose.PoseOverlayView
+        android:id="@+id/poseOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/workout_scrim_height"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_scrim_top" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/workout_scrim_height"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_scrim_bottom" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/space_20">
+
+        <!-- ===== Hàng trên: Thoát • Bài/Hiệp • Đồng hồ ===== -->
+        <ImageButton
+            android:id="@+id/btnClose"
+            style="@style/Widget.AICoach.CircleIconButton"
+            android:backgroundTint="@color/overlay_chip"
+            android:contentDescription="@string/workout_exit"
+            android:src="@drawable/ic_close_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/chipExerciseSet"
+            style="@style/Widget.AICoach.ChipDark"
+            app:layout_constraintBottom_toBottomOf="@id/btnClose"
+            app:layout_constraintEnd_toStartOf="@id/chipTimer"
+            app:layout_constraintStart_toEndOf="@id/btnClose"
+            app:layout_constraintTop_toTopOf="@id/btnClose"
+            tools:text="Squat • Hiệp 2/3" />
+
+        <LinearLayout
+            android:id="@+id/chipTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_chip_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_12"
+            android:paddingTop="@dimen/space_8"
+            android:paddingEnd="@dimen/space_12"
+            android:paddingBottom="@dimen/space_8"
+            app:layout_constraintBottom_toBottomOf="@id/btnClose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnClose">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_dot"
+                android:backgroundTint="@color/state_error" />
+
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="02:14" />
+        </LinearLayout>
+
+        <!-- ===== Bộ đếm rep lớn ===== -->
+        <TextView
+            android:id="@+id/tvRepCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="96sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnClose"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/tvRepTarget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8"
+            android:textColor="@color/text_on_dark_secondary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvRepUnit"
+            app:layout_constraintStart_toEndOf="@id/tvRepCount"
+            tools:text="/ 15" />
+
+        <TextView
+            android:id="@+id/tvRepUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/workout_rep_unit"
+            android:textColor="@color/text_on_dark_secondary"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvRepCount"
+            app:layout_constraintStart_toStartOf="@id/tvRepTarget" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressReps"
+            android:layout_width="@dimen/workout_rep_progress_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            app:indicatorColor="@color/brand_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRepCount"
+            app:trackColor="@color/white_20"
+            app:trackCornerRadius="3dp"
+            app:trackThickness="6dp"
+            tools:progress="80" />
+
+        <!-- Điểm tư thế hiện tại -->
+        <LinearLayout
+            android:id="@+id/chipPostureScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:background="@drawable/bg_chip_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_12"
+            android:paddingTop="@dimen/space_8"
+            android:paddingEnd="@dimen/space_12"
+            android:paddingBottom="@dimen/space_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chipTimer">
+
+            <View
+                android:id="@+id/dotPosture"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_dot"
+                android:backgroundTint="@color/state_success" />
+
+            <TextView
+                android:id="@+id/tvPostureScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="Tư thế 92%" />
+        </LinearLayout>
+
+        <!-- Góc khớp đang đo (đặt cạnh khớp gối khi có dữ liệu thật) -->
+        <TextView
+            android:id="@+id/chipJointAngle"
+            style="@style/Widget.AICoach.ChipDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.52"
+            tools:text="Góc gối 94°" />
+
+        <!-- ===== Phản hồi từng rep ===== -->
+        <LinearLayout
+            android:id="@+id/chipRepFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_12"
+            android:background="@drawable/bg_chip_dark"
+            android:backgroundTint="@color/state_success"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_12"
+            android:paddingTop="@dimen/space_8"
+            android:paddingEnd="@dimen/space_16"
+            android:paddingBottom="@dimen/space_8"
+            app:layout_constraintBottom_toTopOf="@id/cardVoice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_check_24"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvRepFeedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Lần 12 – Đúng tư thế" />
+        </LinearLayout>
+
+        <!-- ===== Thẻ nhắc giọng nói ===== -->
+        <LinearLayout
+            android:id="@+id/cardVoice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_20"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12"
+            app:layout_constraintBottom_toTopOf="@id/btnPause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/icon_circle_size"
+                android:layout_height="@dimen/icon_circle_size"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/brand_primary">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_volume_24"
+                    app:tint="@color/white" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/workout_voice_label"
+                    android:textColor="@color/text_on_dark_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvVoicePrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="“Hạ hông thấp hơn một chút”" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== Hàng nút điều khiển ===== -->
+        <ImageButton
+            android:id="@+id/btnSound"
+            android:layout_width="@dimen/workout_control_size"
+            android:layout_height="@dimen/workout_control_size"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/overlay_chip"
+            android:contentDescription="@string/workout_sound"
+            android:src="@drawable/ic_volume_24"
+            app:layout_constraintBottom_toBottomOf="@id/btnPause"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnPause"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnPause"
+            android:layout_width="@dimen/workout_pause_size"
+            android:layout_height="@dimen/workout_pause_size"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/brand_primary"
+            android:contentDescription="@string/workout_pause"
+            android:src="@drawable/ic_pause_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/workout_finish"
+            android:textColor="@color/text_primary"
+            app:layout_constraintBottom_toBottomOf="@id/btnPause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnPause" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

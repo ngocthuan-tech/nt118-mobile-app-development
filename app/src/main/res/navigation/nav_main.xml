@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thành viên A: Trang chủ, Thư viện bài tập, Chi tiết bài tập, Kế hoạch, Hồ sơ, Cài đặt -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.aicoach.ui.home.HomeFragment"
+        android:label="@string/nav_home" />
+
+    <fragment
+        android:id="@+id/exerciseLibraryFragment"
+        android:name="com.aicoach.ui.exercise.ExerciseLibraryFragment"
+        android:label="@string/nav_exercises" />
+
+</navigation>
