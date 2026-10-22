@@ -45,6 +45,8 @@
     <color name="state_error_light">#FDECEC</color>
     <color name="gold_light">#FFE8B3</color>
     <color name="medal_orange">#F97316</color>
+    <color name="streak_orange_start">#FFB547</color>
+    <color name="day_done_bg">#1F3DD6F5</color>
 
     <!-- Lớp phủ -->
     <color name="overlay_chip">#80000000</color>

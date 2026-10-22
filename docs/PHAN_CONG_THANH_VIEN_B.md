@@ -36,6 +36,7 @@ date: "22/10/2026"
 | `BaseRepository.execute(call)` / `execute(call, onSuccess)` / `mock(data)` | `data/repository/` | Gọi API → `LiveData<Resource<T>>`, đã xử lý lỗi mạng và lỗi server |
 | `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
 | `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
+| `ExerciseImages.bind(imageView, idHoặcImageName)` | `common/` | Gắn ảnh người tập của 9 bài; chưa có ảnh thì hiện hình người mờ |
 | `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
 | `ProfileDtos.UpdateProfileRequest`, `AuthDtos.*` | `data/remote/dto/` | Body gửi lên server |
 

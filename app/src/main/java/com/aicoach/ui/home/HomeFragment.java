@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.aicoach.NavRootDirections;
 import com.aicoach.R;
 import com.aicoach.common.BaseFragment;
+import com.aicoach.common.ExerciseImages;
 import com.aicoach.databinding.FragmentHomeBinding;
 
 import java.util.Arrays;
@@ -69,6 +70,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding.tvPlanMeta.setText("Tuần 2 • Ngày 5/28 • 25 phút/buổi");
         binding.progressPlan.setProgress(18);
         binding.tvPlanPercent.setText("18%");
+        ExerciseImages.bind(binding.imgPlan, "jumping_jack");
 
         binding.tvTodaySummary.setText(getString(R.string.home_today_summary, 3, 18));
         exerciseAdapter.submitList(Arrays.asList(
@@ -77,15 +79,28 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
                 new ExerciseCardItem("plank", "Plank", "3 × 45 giây")));
     }
 
-    /** Tô cam các ngày đã tập trong tuần (T2 → CN). */
+    /** Chip ngày trong tuần (T2 → CN): đã tập = chữ cyan, hôm nay = viền cyan, chưa tới = mờ. */
     private void markDaysDone(int doneCount) {
         TextView[] days = {binding.dayMon, binding.dayTue, binding.dayWed, binding.dayThu,
                 binding.dayFri, binding.daySat, binding.daySun};
-        int doneBg = ContextCompat.getColor(requireContext(), R.color.brand_primary);
-        int doneText = ContextCompat.getColor(requireContext(), R.color.white);
-        for (int i = 0; i < days.length && i < doneCount; i++) {
-            days[i].setBackgroundTintList(ColorStateList.valueOf(doneBg));
-            days[i].setTextColor(doneText);
+        int cyan = ContextCompat.getColor(requireContext(), R.color.accent_cyan);
+        int doneBg = ContextCompat.getColor(requireContext(), R.color.day_done_bg);
+        int dimBg = ContextCompat.getColor(requireContext(), R.color.white_10);
+        int dimText = ContextCompat.getColor(requireContext(), R.color.text_on_dark_secondary);
+        for (int i = 0; i < days.length; i++) {
+            if (i < doneCount) {
+                days[i].setBackgroundResource(R.drawable.bg_circle);
+                days[i].setBackgroundTintList(ColorStateList.valueOf(doneBg));
+                days[i].setTextColor(cyan);
+            } else if (i == doneCount) {
+                days[i].setBackgroundResource(R.drawable.bg_day_today);
+                days[i].setBackgroundTintList(null);
+                days[i].setTextColor(cyan);
+            } else {
+                days[i].setBackgroundResource(R.drawable.bg_circle);
+                days[i].setBackgroundTintList(ColorStateList.valueOf(dimBg));
+                days[i].setTextColor(dimText);
+            }
         }
     }
 }

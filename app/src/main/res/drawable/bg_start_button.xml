@@ -10,19 +10,19 @@
         </shape>
     </item>
     <item
-        android:bottom="14dp"
-        android:left="14dp"
-        android:right="14dp"
-        android:top="14dp">
+        android:bottom="16dp"
+        android:left="16dp"
+        android:right="16dp"
+        android:top="16dp">
         <shape android:shape="oval">
             <solid android:color="@color/white_20" />
         </shape>
     </item>
     <item
-        android:bottom="26dp"
-        android:left="26dp"
-        android:right="26dp"
-        android:top="26dp">
+        android:bottom="28dp"
+        android:left="28dp"
+        android:right="28dp"
+        android:top="28dp">
         <shape android:shape="oval">
             <gradient
                 android:angle="315"

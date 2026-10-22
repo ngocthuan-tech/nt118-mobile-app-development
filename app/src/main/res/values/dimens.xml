@@ -29,10 +29,10 @@
 
     <!-- Trang chủ (Figma 08) -->
     <dimen name="home_header_height">330dp</dimen>
-    <dimen name="home_start_button_size">196dp</dimen>
-    <dimen name="home_plan_image_size">64dp</dimen>
+    <dimen name="home_start_button_size">176dp</dimen>
+    <dimen name="home_plan_image_size">72dp</dimen>
     <dimen name="exercise_card_width">150dp</dimen>
-    <dimen name="exercise_card_image_height">92dp</dimen>
+    <dimen name="exercise_card_image_height">104dp</dimen>
 
     <!-- Tập với AI Camera (Figma 12) -->
     <dimen name="workout_scrim_height">220dp</dimen>

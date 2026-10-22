@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aicoach.common.ExerciseImages;
 import com.aicoach.databinding.ItemExerciseCardBinding;
 
 /** Danh sách ngang các thẻ bài tập. Dùng chung cho Trang chủ và (về sau) Thư viện bài tập. */
@@ -37,6 +38,7 @@ public class ExerciseCardAdapter extends ListAdapter<ExerciseCardItem, ExerciseC
         ExerciseCardItem item = getItem(position);
         holder.binding.tvExerciseName.setText(item.name);
         holder.binding.tvExerciseVolume.setText(item.volume);
+        ExerciseImages.bind(holder.binding.imgExercise, item.exerciseId);
         holder.binding.getRoot().setOnClickListener(v -> listener.onClick(item));
     }
 

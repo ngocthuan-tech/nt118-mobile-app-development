@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nền xanh đậm sau ảnh người tập (Figma 21, 23, 25): ảnh người tách nền đặt lên trên -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:endColor="@color/navy_900"
+        android:startColor="@color/navy_700" />
+    <corners android:radius="@dimen/radius_button" />
+</shape>
