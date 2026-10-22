@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             boolean hideBottomNav = isInsideGraph(destination, R.id.nav_auth)
                     || isInsideGraph(destination, R.id.nav_workout)
-                    || isInsideGraph(destination, R.id.nav_profile);
+                    || isInsideGraph(destination, R.id.nav_profile)
+                    || isInsideGraph(destination, R.id.nav_notifications);
             binding.bottomBar.setVisibility(hideBottomNav ? View.GONE : View.VISIBLE);
         });
 

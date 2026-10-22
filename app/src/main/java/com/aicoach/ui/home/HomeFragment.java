@@ -42,6 +42,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding.btnStartWorkout.setOnClickListener(v -> openWorkout("squat"));
         binding.tvAvatar.setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_global_to_profile));
+        binding.btnNotifications.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_global_to_notifications));
 
         bindDemoData();
     }
