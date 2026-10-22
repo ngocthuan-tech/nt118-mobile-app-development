@@ -1,210 +1,157 @@
 ---
-title: "AI Coach — Phân công Thành viên A (Tài khoản & Nội dung)"
-date: "15/10/2026"
+title: "AI Coach — Phân công Thành viên A (Tài khoản, Trang chủ, Bài tập, Giáo án) (bản giữa kỳ)"
+date: "22/10/2026"
 ---
 
-# 1. Vai trò và phạm vi
+**Phạm vi:** Đăng nhập/Đăng ký, khảo sát, Trang chủ, Thư viện + Chi tiết bài tập, Giáo án
+**Nhánh làm việc:** `feature/a-auth-content` → Pull Request vào `develop`
+**Thay thế** bản phân công ngày 15/10 (bản cũ dùng Firebase — thầy yêu cầu REST API nên đã bỏ).
 
-Thành viên A phụ trách module **Tài khoản & Nội dung**: toàn bộ luồng từ lúc mở app đến lúc người dùng chọn được bài tập, cộng phần hồ sơ và cài đặt. Phần camera AI (đếm rep, sửa tư thế) do Trưởng nhóm làm; phần lịch sử, thống kê, bạn bè, thử thách do Thành viên B làm.
+> File gồm 2 phần. **PHẦN CHUNG** giống hệt 100% trong file của Thành viên A và B — là luật của cả nhóm. **PHẦN RIÊNG** là việc của bạn. Dùng AI hỗ trợ code thì đưa nguyên file này làm ngữ cảnh.
 
-| Mã | Màn hình | Độ khó | Package |
+---
+
+# PHẦN CHUNG — giống hệt trong file của A và B (muốn sửa phải báo Trưởng nhóm)
+
+## 0. Thầy chấm giữa kỳ (20% điểm môn) — Backend 4đ · Front-end 6đ
+
+| # | Yêu cầu của thầy | Ai lo | Bằng chứng khi demo |
 |---|---|---|---|
-| S01 | Splash (đã có sẵn, chỉ thêm logic kiểm tra đăng nhập) | Dễ | MainActivity |
-| S02 | Onboarding (2–3 slide giới thiệu) | Dễ | ui.auth |
-| S03 | Đăng nhập (email + Google) | Trung bình | ui.auth |
-| S04 | Đăng ký | Trung bình | ui.auth |
-| S05 | Quên mật khẩu | Dễ | ui.auth |
-| S06 | Thiết lập hồ sơ lần đầu (chiều cao, cân nặng, mục tiêu, trình độ) | Trung bình | ui.auth |
-| S07 | Trang chủ (streak, kế hoạch hôm nay, nút Bắt đầu nhanh) | Khó | ui.home |
-| S08 | Thư viện bài tập (9 bài, lọc theo nhóm cơ) | Trung bình | ui.exercise |
-| S09 | Chi tiết bài tập (1 layout dùng chung cho cả 9 bài) | Trung bình | ui.exercise |
-| S10 | Danh sách kế hoạch tập | Trung bình | ui.plan |
-| S11 | Chi tiết kế hoạch (các ngày, các bài trong ngày) | Trung bình | ui.plan |
-| S12 | Hồ sơ cá nhân | Dễ | ui.profile |
-| S13 | Sửa hồ sơ + đổi ảnh đại diện | Trung bình | ui.profile |
-| S14 | Cài đặt (giọng nói bật/tắt, nhắc tập, đơn vị, đăng xuất) | Dễ | ui.profile |
+| 1 | Back-end deploy lên **VPS Azure**, không localhost, không Vercel (chấm đầu tiên) | Trưởng nhóm — **đã xong** | Swagger chạy trên `aicoach-r15.koreacentral.cloudapp.azure.com`, điện thoại dùng 4G vẫn gọi được |
+| 2 | REST API phần di động: **Authentication / User Profile / Trang Home** | A: Authentication + Home · B: User Profile | Đăng ký → đăng nhập → Home có số liệu thật → Hồ sơ → sửa hồ sơ → lưu thành công |
+| 3 | Retrofit tạo thành **các abstract service (interface) chứa API**, không gọi API thủ công trong Activity | Trưởng nhóm dựng lõi — **đã xong**; A, B dùng đúng khuôn | Mở code: Fragment → ViewModel → Repository → `XxxApi` (interface) |
+| 4 | **Đủ tất cả màn hình**; chưa có chức năng cũng được nhưng **bấm vào phải chuyển màn**, có khung sườn + dữ liệu mẫu. **Thiếu → trừ 3 điểm** | Cả 3 người | Bấm qua toàn bộ app, không nút nào "chết" |
 
-**Điểm giao với người khác** (bắt buộc giữ đúng):
+## 1. Hệ thống đã có sẵn (Trưởng nhóm dựng — chỉ dùng, không sửa)
 
-- Nút "Bắt đầu tập" ở S07, S09, S11 chỉ gọi action `action_global_to_readiness` và truyền `exerciseId` (String). Không tự mở camera.
-- S07 hiển thị streak và số buổi tuần này bằng cách đọc field `streak`, `weeklyXp` trong `users/{uid}`. Thành viên B là người ghi các field này; A chỉ đọc.
-- Cài đặt "Giọng nói" ở S14 lưu vào `SettingsPrefs` (SharedPreferences dùng chung) để module AI đọc.
+- **Backend:** `https://aicoach-r15.koreacentral.cloudapp.azure.com/api/v1/` — xem và gọi thử mọi API tại **[Swagger](https://aicoach-r15.koreacentral.cloudapp.azure.com/swagger-ui.html)** (bấm *Authorize*, dán `accessToken`).
+- **Tài khoản demo:** `demo@aicoach.vn` / `Demo1234` — có sẵn giáo án và 8 buổi tập, dùng để test màn có số liệu.
+- **Bỏ Firebase.** App giờ chỉ nói chuyện với backend qua Retrofit. Không ai thêm lại thư viện Firebase.
 
-Nếu tên frame trong Figma khác bảng trên, đổi tên frame Figma theo mã S01–S14 để cả nhóm nói cùng một ngôn ngữ.
-
-# 2. Chuẩn chung toàn nhóm (cả 3 người làm giống hệt nhau)
-
-Cả nhóm code **Java + XML View**, kiến trúc **MVVM**, một Activity duy nhất (`MainActivity`) chứa các Fragment điều hướng bằng **Navigation Component**. Trưởng nhóm dựng sẵn khung project ở Tuần 1; không ai tự tạo Activity mới hay thêm thư viện khi chưa báo nhóm.
-
-**Thư viện thống nhất** (Trưởng nhóm khai báo trong `build.gradle`, đừng tự đổi phiên bản):
-
-- Material Components, ConstraintLayout, Navigation, ViewModel + LiveData, ViewBinding
-- Firebase: Auth, Firestore, Storage (BoM)
-- Glide (tải ảnh), MPAndroidChart (biểu đồ – Thành viên B dùng)
-- CameraX + ML Kit Pose Detection (module AI – Trưởng nhóm dùng)
-
-**Cấu trúc package** (`com.aicoach`):
-
-```
-com.aicoach
-├── data
-│   ├── model        // User, Exercise, Plan, WorkoutSession, Challenge, Badge
-│   ├── repository   // UserRepository, ExerciseRepository, ... (1 class / collection)
-│   └── local        // SettingsPrefs (SharedPreferences)
-├── domain           // ProgressService, BadgeRules  (Thành viên B)
-├── ui
-│   ├── auth  home  exercise  plan  profile      // Thành viên A
-│   ├── workout                                 // Trưởng nhóm
-│   └── history  stats  social  challenge       // Thành viên B
-├── pose             // Trưởng nhóm: analyzer, rep counter, rules
-├── common           // Resource<T>, BaseFragment, Constants, FirestorePaths
-└── util             // DateUtils, ValidationUtils, ...
-```
-
-**Luồng dữ liệu bắt buộc**: Fragment → ViewModel → Repository → Firebase. Fragment không bao giờ gọi `FirebaseFirestore.getInstance()` trực tiếp. Mọi kết quả trả về bọc trong `Resource<T>` (LOADING / SUCCESS / ERROR).
-
-**Quy tắc đặt tên**
-
-| Loại | Mẫu | Ví dụ |
+| Lớp có sẵn | Nằm ở | Dùng để |
 |---|---|---|
-| Fragment | `<Tên>Fragment` | `LoginFragment`, `ExerciseDetailFragment` |
-| ViewModel | `<Tên>ViewModel` | `LoginViewModel` |
-| Layout màn hình | `fragment_<tên>.xml` | `fragment_exercise_detail.xml` |
-| Layout 1 dòng list | `item_<tên>.xml` | `item_exercise.xml` |
-| Icon | `ic_<tên>_24.xml` | `ic_fire_24.xml` |
-| Nền/shape | `bg_<tên>.xml` | `bg_card_rounded.xml` |
-| String | `<module>_<tên>` | `auth_login_title`, `exercise_start_button` |
-| View id | `camelCase` theo vai trò | `btnLogin`, `tvExerciseName`, `rvExercises` |
+| `ApiClient.create(ctx, XxxApi.class)` | `data/remote/` | Lấy service Retrofit (chỉ gọi trong Repository) |
+| `AuthApi`, `UserApi`, `HomeApi`, `ExerciseApi`, `PlanApi`, `SessionApi` | `data/remote/api/` | **Các interface chứa API** — đúng yêu cầu số 3 của thầy |
+| `AuthInterceptor` | `data/remote/` | Tự gắn token vào mọi request; gặp 401 tự đưa về màn Đăng nhập |
+| `BaseRepository.execute(call)` / `execute(call, onSuccess)` / `mock(data)` | `data/repository/` | Gọi API → `LiveData<Resource<T>>`, đã xử lý lỗi mạng và lỗi server |
+| `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
+| `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
+| `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
+| `ProfileDtos.UpdateProfileRequest`, `AuthDtos.*` | `data/remote/dto/` | Body gửi lên server |
 
-Không hardcode chữ, màu, kích thước trong XML: chữ vào `strings.xml`, màu vào `colors.xml`, khoảng cách vào `dimens.xml`. Mỗi người chỉ thêm string/màu có tiền tố module của mình để tránh xung đột.
+## 2. Danh sách API
 
-**Điều hướng không đụng nhau**: mỗi module có file graph riêng (`nav_auth.xml`, `nav_main.xml` cho A; `nav_workout.xml` cho Trưởng nhóm; `nav_social.xml` cho B), được `include` vào `nav_root.xml` do Trưởng nhóm giữ.
+Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "data": ... }`. Lỗi đã có `message` tiếng Việt từ server — cứ hiện `res.message`.
 
-**Git (GitHub)**
+| Method | Path | Interface | Ai dùng |
+|---|---|---|---|
+| POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
+| POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
+| GET | `home` | `HomeApi.getHome` | A — Trang chủ (21) |
+| GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
+| GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
+| GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |
+| PUT | `users/me` (chỉ gửi field cần đổi) | `UserApi.updateMe` | B — Sửa hồ sơ (44) · A — Khảo sát (13–15), chọn giáo án (17, 26) |
+| PUT | `users/me/password` | `UserApi.changePassword` | B — Đổi mật khẩu (trong 43) |
+| GET | `sessions?limit=` · `sessions/{id}` | `SessionApi` | B — Lịch sử (37, 38), Chi tiết buổi tập (39) |
+| POST | `sessions` | `SessionApi.createSession` | Trưởng nhóm — Kết quả buổi tập (35) |
 
-- Nhánh: `main` (bản nộp) ← `develop` ← `feature/<tên-bạn>-<mã-màn>` (vd. `feature/a-s03-login`).
-- Không push thẳng vào `main`/`develop`. Mở Pull Request, Trưởng nhóm review rồi merge.
-- Commit nhỏ, mô tả rõ: `feat(auth): validate email on login`, `fix(home): streak not refreshing`.
-- Pull `develop` mỗi sáng trước khi code. Hội đồng có thể mở lịch sử commit để xem ai làm gì — commit đều đặn là bằng chứng đóng góp.
+Quy tắc dữ liệu (app kiểm tra trước, server kiểm tra lại): mật khẩu **8–64 ký tự, có chữ và số** · `goal`: `lose_weight | build_muscle | stay_fit` · `level`: `beginner | intermediate | advanced` · chiều cao 100–250 cm · cân nặng 30–250 kg · số buổi/tuần 1–7.
 
-# 3. Chuyển Figma sang XML trong Android Studio
+Mã lỗi: `400` dữ liệu sai · `401` sai mật khẩu hoặc hết phiên · `404` không tìm thấy · `409` email đã đăng ký · mất mạng → "Không có kết nối mạng".
 
-Figma chỉ là bản vẽ: mình tự dựng lại bằng XML theo số đo trong Figma, không dùng plugin tự sinh code (code sinh ra dùng tọa độ tuyệt đối, vỡ layout trên máy khác và bị hội đồng đánh giá thấp).
-
-1. **Mở Figma ở chế độ Dev Mode / Inspect.** Bấm vào từng phần tử để đọc kích thước, padding, bo góc, màu, font. Frame Figma rộng 360 thì 1 px = 1 dp; nếu frame rộng 390/393 (khung iPhone), vẫn đọc số như dp và kiểm tra lại trên máy thật.
-2. **Không tự thêm màu/font.** Trưởng nhóm đã đưa toàn bộ bảng màu vào `colors.xml`, kiểu chữ vào `themes.xml` (`TextAppearance.AICoach.Title`, `.Body`, `.Caption`), khoảng cách vào `dimens.xml` (`space_8`, `space_16`, `radius_card`...). Thiếu thì báo Trưởng nhóm thêm.
-3. **Xuất icon dạng SVG** → Android Studio: `File > New > Vector Asset > Local file` → đặt tên `ic_<tên>_24`.
-4. **Xuất ảnh (người tập, minh họa) dạng WebP**, khoảng 1080 px chiều dài nhất, đặt trong `res/drawable-nodpi/` với tên `img_<tên>.webp`. Ảnh 9 bài tập do Thành viên A quản lý.
-5. **Dựng layout bằng `ConstraintLayout`** cho màn phức tạp, `LinearLayout` cho khối đơn giản. Dùng sẵn component Material (`MaterialButton`, `TextInputLayout`, `MaterialCardView`, `Chip`) để giống Figma mà ít code.
-6. **Component lặp lại trong Figma = 1 file XML dùng chung**: thẻ bài tập → `item_exercise.xml`; ô thống kê nhỏ → `view_stat_box.xml` dùng bằng `<include>`.
-7. **Danh sách luôn dùng `RecyclerView` + `ListAdapter` + `DiffUtil`**, không dùng `ListView`, không thêm view bằng vòng lặp.
-8. **Kiểm tra**: chạy trên 1 máy màn nhỏ (5 inch) và 1 máy lớn, bật Dark mode thử, xoay ngang thử. Chụp màn hình đặt cạnh Figma rồi gửi vào nhóm khi mở Pull Request.
-
-Quy trình mỗi màn: **Tuần dựng UI** chỉ làm XML + dữ liệu giả để giống Figma; **tuần sau** mới nối ViewModel + Firebase. Tách như vậy để không bị kẹt khi Firebase chưa sẵn sàng.
-
-# 4. Chi tiết từng màn hình
-
-**Dữ liệu Firestore A làm việc cùng** (khuôn do Trưởng nhóm chốt, không tự thêm field):
+## 3. Khuôn code bắt buộc (4 lớp)
 
 ```
-users/{uid}
-  displayName, email, avatarUrl, heightCm, weightKg,
-  goal ("lose_weight" | "build_muscle" | "stay_fit"),
-  level ("beginner" | "intermediate" | "advanced"),
-  profileCompleted (bool), createdAt, activePlanId, planStartDate
-  streak, weeklyXp, totalXp, lastWorkoutDate   // B ghi, A chỉ đọc
-
-exercises/{exerciseId}        // 9 bài, Trưởng nhóm nạp sẵn
-  name, muscleGroup, difficulty, imageName, description,
-  steps[], tips[], commonMistakes[], defaultReps, caloriesPerRep
-
-plans/{planId}
-  title, level, durationDays, coverImageName,
-  days[] { dayIndex, items[] { exerciseId, sets, reps } }
+Fragment (chỉ vẽ + nhận thao tác)
+   │ observe LiveData<Resource<T>>
+ViewModel (giữ trạng thái, kiểm tra dữ liệu nhập)
+   │
+Repository extends BaseRepository  ← nơi DUY NHẤT gọi API hoặc trả dữ liệu mẫu
+   │
+XxxApi (interface Retrofit, có sẵn)
 ```
 
-**S01 Splash**: đã làm sẵn bằng SplashScreen API chuẩn Android 12+ (theme `Theme.AICoach.Starting`), không cần Fragment riêng. Việc của A: trong `MainActivity`, sau khi có `google-services.json`, kiểm tra đăng nhập — chưa đăng nhập thì `navigate(R.id.action_global_to_auth)`; lần đầu mở app thì vào S02 Onboarding; đã đăng nhập nhưng `profileCompleted = false` thì vào S06. Lưu cờ "đã xem onboarding" trong `SettingsPrefs`.
+**Luật cứng — vi phạm thì Pull Request bị trả lại:**
 
-**S02 Onboarding**: `ViewPager2` + chấm chỉ trang, nút Bỏ qua và Tiếp tục.
+1. Fragment/ViewModel **không** `import retrofit2`, không gọi `ApiClient`, không `enqueue()`. Kiểm tra: `Ctrl + Shift + F` tìm `retrofit2` → chỉ được nằm trong `data/`.
+2. Không gõ URL, không tự thêm header `Authorization`.
+3. Không hardcode chữ / màu / kích thước trong XML: chữ vào `strings_<module>.xml` của mình, màu dùng `@color/...` có sẵn, khoảng cách `@dimen/space_...`. Chữ mẫu để xem trước dùng `tools:text`.
+4. Dùng ViewBinding qua `BaseFragment`, không `findViewById`.
+5. Mỗi màn đủ trạng thái **đang tải / có dữ liệu / lỗi** (và **rỗng** nếu là danh sách). Nút gửi bị khoá khi đang tải.
+6. Màn chưa có API: Repository trả `mock(MockXxxData....)` — **cùng kiểu dữ liệu** với API thật, để sau này chỉ đổi 1 dòng.
+7. Danh sách dùng `RecyclerView` + `ListAdapter` + `DiffUtil`.
 
-**S03 Đăng nhập / S04 Đăng ký / S05 Quên mật khẩu**
-
-- Firebase Auth email/mật khẩu; thêm "Đăng nhập bằng Google" nếu kịp (điểm cộng).
-- Kiểm tra dữ liệu trước khi gọi Firebase: email đúng định dạng, mật khẩu tối thiểu 6 ký tự, xác nhận mật khẩu khớp. Lỗi hiện ngay dưới ô nhập (`TextInputLayout.setError`).
-- Đổi lỗi Firebase sang tiếng Việt dễ hiểu (sai mật khẩu, email đã tồn tại, không có mạng). Không hiện nguyên văn exception.
-- Khóa nút + hiện vòng xoay khi đang gửi để tránh bấm hai lần.
-- Đăng ký thành công → tạo document `users/{uid}` với `profileCompleted = false` → sang S06.
-
-**S06 Thiết lập hồ sơ**: nhập chiều cao (100–250 cm), cân nặng (25–250 kg), chọn mục tiêu và trình độ bằng `Chip`. Lưu xong đặt `profileCompleted = true` → S07. Trình độ dùng để gợi ý kế hoạch ở S10.
-
-**S07 Trang chủ**: lời chào + tên, ô streak, số XP tuần, thẻ "Kế hoạch hôm nay" (lấy từ plan đang theo), dải bài tập gợi ý ngang, nút Bắt đầu nhanh. Dùng listener realtime cho `users/{uid}` để streak cập nhật ngay sau khi tập xong. Có trạng thái rỗng khi chưa theo kế hoạch nào.
-
-**S08 Thư viện bài tập**: `RecyclerView` dạng lưới 2 cột, `ChipGroup` lọc theo nhóm cơ, ô tìm theo tên. Lọc ngay trong ViewModel (chỉ 9 bài, không cần query lại Firestore).
-
-**S09 Chi tiết bài tập**: một layout dùng chung, nhận `exerciseId` qua Safe Args. Ảnh người thật, mô tả, các bước, mẹo, lỗi hay gặp, số rep mặc định, nút "Bắt đầu tập" → `action_global_to_readiness`.
-
-**S10–S11 Kế hoạch tập**: danh sách plan lọc theo `level` của người dùng; chi tiết hiện từng ngày và bài trong ngày; nút "Theo kế hoạch này" lưu `activePlanId` và `planStartDate` vào `users/{uid}` (hai field này A sở hữu).
-
-**S12–S13 Hồ sơ**: hiện thông tin và chỉ số BMI tính từ chiều cao/cân nặng. Đổi ảnh đại diện: chọn ảnh bằng Photo Picker, nén còn khoảng 512 px, tải lên `Storage: avatars/{uid}.jpg`, lưu URL vào `avatarUrl`.
-
-**S14 Cài đặt**: công tắc giọng nói, công tắc nhắc tập + giờ nhắc (WorkManager, thông báo hằng ngày), đơn vị kg/lb, đăng xuất (xóa back stack, về S03), xóa tài khoản (hỏi xác nhận).
-
-# 5. Code mẫu bắt buộc theo khuôn
-
-Mọi màn hình viết đúng 4 lớp dưới đây. Trưởng nhóm đã tạo sẵn `Resource`, `BaseFragment`, `FirestorePaths`; A chỉ việc dùng.
-
-**Resource\<T\>** (có sẵn trong `common`):
+**Mẫu Repository gọi API thật:**
 
 ```java
-public class Resource<T> {
-    public enum Status { LOADING, SUCCESS, ERROR }
-    public final Status status; public final T data; public final String message;
-    private Resource(Status s, T d, String m) { status = s; data = d; message = m; }
-    public static <T> Resource<T> loading()          { return new Resource<>(Status.LOADING, null, null); }
-    public static <T> Resource<T> success(T data)    { return new Resource<>(Status.SUCCESS, data, null); }
-    public static <T> Resource<T> error(String msg)  { return new Resource<>(Status.ERROR, null, msg); }
-}
-```
+public class ExerciseRepository extends BaseRepository {
+    private final ExerciseApi api;
 
-**Repository** — chỉ nơi này được chạm Firebase:
+    public ExerciseRepository(Context context) {
+        api = ApiClient.create(context, ExerciseApi.class);
+    }
 
-```java
-public class ExerciseRepository {
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    public LiveData<Resource<List<Exercise>>> getAll() {
-        MutableLiveData<Resource<List<Exercise>>> result = new MutableLiveData<>(Resource.loading());
-        db.collection(FirestorePaths.EXERCISES).get()
-          .addOnSuccessListener(snap -> result.setValue(Resource.success(snap.toObjects(Exercise.class))))
-          .addOnFailureListener(e -> result.setValue(Resource.error(ErrorMapper.toVietnamese(e))));
-        return result;
+    public LiveData<Resource<List<Exercise>>> getExercises(String muscleGroup, String query) {
+        return execute(api.getExercises(muscleGroup, null, query));
     }
 }
 ```
 
-**ViewModel** — giữ trạng thái, không giữ `Context` hay `View`:
+**Mẫu Repository dùng dữ liệu mẫu:**
 
 ```java
-public class ExerciseLibraryViewModel extends ViewModel {
-    private final ExerciseRepository repo = new ExerciseRepository();
-    private final LiveData<Resource<List<Exercise>>> exercises = repo.getAll();
-    public LiveData<Resource<List<Exercise>>> getExercises() { return exercises; }
+public LiveData<Resource<List<Challenge>>> getChallenges() {
+    // TODO(giai-doan-2): return execute(api.getChallenges());
+    return mock(MockSocialData.challenges());
 }
 ```
 
-**Fragment** — chỉ vẽ và nhận thao tác:
+**Mẫu ViewModel** (dùng `AndroidViewModel` vì Repository cần Context):
+
+```java
+public class ExerciseLibraryViewModel extends AndroidViewModel {
+    private final ExerciseRepository repo;
+    private final MediatorLiveData<Resource<List<Exercise>>> exercises = new MediatorLiveData<>();
+
+    public ExerciseLibraryViewModel(@NonNull Application app) {
+        super(app);
+        repo = new ExerciseRepository(app);
+        load(null, null);
+    }
+
+    public LiveData<Resource<List<Exercise>>> getExercises() { return exercises; }
+
+    public void load(String muscleGroup, String query) {
+        LiveData<Resource<List<Exercise>>> src = repo.getExercises(muscleGroup, query);
+        exercises.addSource(src, r -> {
+            exercises.setValue(r);
+            if (r.status != Resource.Status.LOADING) exercises.removeSource(src);
+        });
+    }
+}
+```
+
+Gọi `load()` trong constructor → xoay màn hình **không** gọi lại API.
+
+**Mẫu Fragment:**
 
 ```java
 public class ExerciseLibraryFragment extends BaseFragment<FragmentExerciseLibraryBinding> {
-    @Override protected FragmentExerciseLibraryBinding inflate(LayoutInflater i, ViewGroup c) {
+    @Override
+    protected FragmentExerciseLibraryBinding inflate(@NonNull LayoutInflater i, @Nullable ViewGroup c) {
         return FragmentExerciseLibraryBinding.inflate(i, c, false);
     }
-    @Override public void onViewCreated(@NonNull View v, Bundle s) {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle state) {
+        super.onViewCreated(view, state);
         ExerciseLibraryViewModel vm = new ViewModelProvider(this).get(ExerciseLibraryViewModel.class);
-        ExerciseAdapter adapter = new ExerciseAdapter(ex -> navigateToDetail(ex.getId()));
+        ExerciseAdapter adapter = new ExerciseAdapter(ex -> openDetail(ex.getId()));
         binding.rvExercises.setAdapter(adapter);
+
         vm.getExercises().observe(getViewLifecycleOwner(), res -> {
-            showLoading(res.status == Resource.Status.LOADING);
+            binding.progress.setVisibility(res.status == Resource.Status.LOADING ? View.VISIBLE : View.GONE);
             if (res.status == Resource.Status.SUCCESS) adapter.submitList(res.data);
             if (res.status == Resource.Status.ERROR) showError(res.message);
         });
@@ -212,68 +159,266 @@ public class ExerciseLibraryFragment extends BaseFragment<FragmentExerciseLibrar
 }
 ```
 
-**Model** — class Java thường, có constructor rỗng và getter (Firestore cần để `toObjects`). Field id lấy bằng `@DocumentId private String id;`.
+## 4. Điều hướng — mỗi người một file graph, không đụng nhau
 
-**Mọi màn có danh sách phải có đủ 3 trạng thái**: đang tải (shimmer hoặc vòng xoay), rỗng (hình + câu hướng dẫn), lỗi (thông báo + nút Thử lại).
+| File | Chủ | Ghi chú |
+|---|---|---|
+| `nav_root.xml` | Trưởng nhóm | Gộp các graph + global action dùng chung |
+| `nav_auth.xml`, `nav_main.xml` | A | Đăng nhập, khảo sát · Trang chủ, bài tập, giáo án |
+| `nav_social.xml`, `nav_profile.xml`, `nav_notifications.xml` | B | Tiến độ, thử thách · Hồ sơ, cài đặt, huy hiệu · Thông báo |
+| `nav_workout.xml` | Trưởng nhóm | Luồng tập AI |
 
-# 6. Lịch 12 tuần và tiêu chí hoàn thành
+- Hai tab giữ nguyên id: `homeFragment`, `exerciseLibraryFragment` (A) và `historyFragment`, `challengeListFragment` (B) — đổi id là thanh tab hỏng.
+- Trong graph của mình: tự thêm `<fragment>` và `<action>`.
+- Sang graph của người khác: **chỉ** dùng global action có sẵn trong `nav_root.xml`:
 
-Lịch tính từ thứ Hai 19/10/2026. Mỗi tối Chủ nhật, cập nhật tiến độ vào nhóm chat (đã xong gì, kẹt gì).
+| Global action | Đi tới | Tham số |
+|---|---|---|
+| `action_global_to_main` | Trang chủ (xoá luồng đăng nhập khỏi back stack) | — |
+| `action_global_to_auth` | Luồng đăng nhập (đăng xuất) | — |
+| `action_global_to_readiness` | Luồng tập AI | `exerciseId` (String) |
+| `action_global_to_profile` | Hồ sơ (B) | — |
+| `action_global_to_notifications` | Thông báo (B) | — |
 
-**Tuần 1 (19–25/10) — Chuẩn bị**
+Cần thêm global action mới → nhắn Trưởng nhóm, không tự sửa `nav_root.xml`.
 
-- ☐ Cài Android Studio bản mới nhất, clone repo, chạy được app khung của Trưởng nhóm trên máy thật hoặc máy ảo
-- ☐ Đổi tên frame Figma theo mã S01–S14, xuất icon SVG và 9 ảnh bài tập WebP
-- ☐ Đọc lại mục 2 và mục 5, hỏi ngay nếu chỗ nào chưa rõ
+## 5. File của ai người nấy sửa
 
-**Tuần 2–3 (26/10–8/11) — Dựng giao diện (dữ liệu giả)**
-
-- ☐ XML cho S01–S14 khớp Figma, chạy được điều hướng giữa các màn
-- ☐ `item_exercise.xml`, `item_plan.xml`, `view_stat_box.xml`
-
-**Tuần 4–6 (9/11–29/11) — Nối logic + Firebase**
-
-- ☐ Đăng ký, đăng nhập, quên mật khẩu, thiết lập hồ sơ chạy thật
-- ☐ Thư viện + chi tiết bài tập đọc từ Firestore, lọc và tìm kiếm
-- ☐ Kế hoạch tập, hồ sơ, đổi avatar, cài đặt, nhắc tập
-
-**Tuần 7–8 (30/11–13/12) — Ghép với nhóm**
-
-- ☐ Nút "Bắt đầu tập" mở đúng màn của Trưởng nhóm với `exerciseId`
-- ☐ Trang chủ hiện streak/XP do Thành viên B ghi, cập nhật ngay sau khi tập
-
-**Tuần 9–10 (14/12–27/12) — Kiểm thử và hoàn thiện**
-
-- ☐ Thử mất mạng, nhập sai, bấm liên tục, xoay màn, quay lại giữa chừng
-- ☐ Viết unit test cho `ValidationUtils` (email, mật khẩu, chiều cao, cân nặng)
-
-**Tuần 11–12 (28/12/2026–10/1/2027) — Báo cáo**
-
-- ☐ Viết chương "Thiết kế và cài đặt module Tài khoản & Nội dung" (use case, sơ đồ tuần tự đăng nhập, ảnh màn hình)
-- ☐ Tập trả lời câu hỏi ở mục 7
-
-**Một màn hình chỉ tính là XONG khi**: giống Figma trên 2 cỡ màn; không còn chữ/màu hardcode; có đủ 3 trạng thái tải–rỗng–lỗi; đã qua Pull Request được Trưởng nhóm duyệt; không crash khi xoay màn hoặc mất mạng.
-
-# 7. Lưu ý tránh mất điểm và câu hỏi hội đồng có thể hỏi
-
-**Lỗi hay bị trừ điểm ở phần của A**
-
-- Gọi Firebase thẳng trong Fragment, hoặc dồn hết code vào một Activity khổng lồ.
-- Không kiểm tra dữ liệu nhập, hiện nguyên văn lỗi tiếng Anh của Firebase.
-- Màn hình trắng trơn khi đang tải hoặc khi không có dữ liệu.
-- Ấn Back ở Trang chủ quay về màn Đăng nhập (phải xóa back stack sau khi đăng nhập).
-- Ảnh quá nặng làm app giật, APK phình to.
-- Toàn bộ commit đứng tên một người — hội đồng sẽ hỏi "vậy bạn làm phần nào?".
-
-**Câu hỏi hội đồng có thể đặt cho A và hướng trả lời**
-
-| Câu hỏi | Ý chính khi trả lời |
+| Loại | Quy tắc |
 |---|---|
-| Mật khẩu người dùng lưu ở đâu, có an toàn không? | Không lưu ở app hay Firestore. Firebase Auth giữ và băm mật khẩu phía server; app chỉ giữ phiên đăng nhập. |
-| Người khác có đọc được hồ sơ của tôi không? | Firestore Security Rules chỉ cho `request.auth.uid == uid` sửa document của chính mình. |
-| Tại sao dùng MVVM? | Tách giao diện khỏi dữ liệu, ViewModel sống qua xoay màn nên không mất dữ liệu đang nhập, dễ test. |
-| Tại sao 9 bài tập lại để trên Firestore? | Cập nhật nội dung không cần phát hành bản mới; Firestore có cache offline nên vẫn xem được khi mất mạng. |
-| Mất mạng giữa lúc đăng ký thì sao? | Bắt lỗi, báo người dùng bằng tiếng Việt, giữ nguyên dữ liệu đã nhập, cho thử lại. |
-| Làm sao chắc màn hình đúng thiết kế? | Đặt ảnh chụp app cạnh frame Figma, dùng chung bảng màu, kiểu chữ, khoảng cách trong `res/values`. |
+| `build.gradle.kts`, `libs.versions.toml`, `AndroidManifest.xml`, `MainActivity`, `nav_root.xml` | Chỉ Trưởng nhóm |
+| `common/`, `data/remote/`, `data/model/`, `data/local/TokenManager` | Chỉ Trưởng nhóm — cần field mới thì nhắn |
+| `colors.xml`, `themes.xml`, `styles.xml`, `dimens.xml`, `strings.xml`, `strings_common.xml` | Chỉ Trưởng nhóm |
+| `strings_<module>.xml` | Mỗi người file riêng: A `strings_auth/home/exercise/plan.xml` · B `strings_profile/progress/social.xml` |
+| Layout, drawable | Tên có tiền tố theo module: `fragment_login.xml`, `item_history_session.xml`, `ic_badge_fire_24.xml` |
 
-**Điểm cộng nếu còn thời gian**: đăng nhập Google, chế độ tối (Dark mode) hoàn chỉnh, hỗ trợ TalkBack (đặt `contentDescription` cho ảnh và nút).
+## 6. Từ Figma sang XML
+
+- Ảnh từng màn ở `docs/figma/` (360 × 800 → 1 px = 1 dp). Mở cạnh Android Studio để dựng XML, đo bằng Figma Dev Mode.
+- Màu, kiểu chữ, nút đã có sẵn khớp Figma — xem bảng trong [`docs/MAN_HINH.md`](MAN_HINH.md). Không tự thêm màu mới.
+- Dựng bằng `ConstraintLayout` + component Material (`MaterialButton`, `TextInputLayout`, `MaterialCardView`, `Chip`). Không dùng plugin tự sinh code toạ độ tuyệt đối.
+- Khối lặp lại = 1 file XML dùng chung (`item_...`, `view_...` + `<include>`).
+- Icon: Figma xuất SVG → `File > New > Vector Asset` → `ic_<tên>_24`.
+
+## 7. Git — nhánh và thứ tự đưa vào `main`
+
+```
+main      ← bản nộp/demo. Trưởng nhóm merge develop → main trước buổi báo cáo
+develop   ← bản tích hợp, luôn build được. Nhận code qua Pull Request
+feature/lead-backend        ← Trưởng nhóm (backend + lớp Retrofit) — vào develop đầu tiên
+feature/lead-ai-workout     ← Trưởng nhóm (module AI)
+feature/a-auth-content      ← Thành viên A
+feature/b-progress-social   ← Thành viên B
+```
+
+**Bắt đầu (làm 1 lần, sau khi Trưởng nhóm báo `feature/lead-backend` đã vào `develop`):** Android Studio → chuyển sang nhánh của mình → **Git → Pull** → chọn `origin/develop` → Sync Gradle → Run, đăng nhập thử bằng tài khoản demo.
+
+**Mỗi ngày:** Pull `origin/develop` vào nhánh mình → code → Commit (`Ctrl + K`) → Push (`Ctrl + Shift + K`).
+Mẫu commit: `feat(auth): gọi API đăng nhập` · `ui(home): dựng thẻ giáo án theo Figma 21` · `fix(profile): lỗi khi chiều cao trống`.
+
+**Pull Request:** GitHub → *New pull request* → base `develop` ← nhánh mình → kèm ảnh chụp màn hình cạnh Figma → chờ **Android CI** xanh → Trưởng nhóm review và merge. Mỗi PR nên gọn (1 nhóm màn), đừng dồn cả tuần vào một PR.
+
+**Conflict** trong file của mình → tự sửa. Trong file của người khác hoặc file chung → không tự sửa, gọi Trưởng nhóm.
+
+**Thứ tự merge cho buổi giữa kỳ:** ① `lead-backend` → ② A: Đăng nhập/Đăng ký → ③ A: Trang chủ → ④ B: Hồ sơ/Sửa hồ sơ → ⑤ các màn khung còn lại của A, B → ⑥ `lead-ai-workout` → **đóng băng code** → Trưởng nhóm merge `develop → main`, gắn tag `v0.5-midterm`.
+
+## 8. Checklist trước khi mở Pull Request
+
+- [ ] `Build > Make Project` không lỗi, chạy được trên máy thật hoặc máy ảo
+- [ ] Layout XML thật bám Figma (không dán ảnh chụp Figma làm màn hình)
+- [ ] Mọi nút **chuyển được màn** — không dùng Toast "đang phát triển" thay cho điều hướng
+- [ ] Dữ liệu đi qua Repository (API thật hoặc `mock(...)`), không gõ cứng dữ liệu trong XML
+- [ ] Có đang tải / lỗi / rỗng; tắt mạng không crash; xoay màn hình không mất dữ liệu; bấm Back liên tục không crash
+- [ ] Không có `retrofit2` trong `ui/`
+- [ ] Chỉ sửa file thuộc quyền mình (mục 5)
+
+---
+
+# PHẦN RIÊNG — THÀNH VIÊN A
+
+## A.1 Bạn giữ điểm gì
+
+- **Yêu cầu 2:** hai trong ba API thầy kiểm tra trực tiếp là của bạn — **Authentication** (Đăng nhập, Đăng ký) và **Trang Home**.
+- **Yêu cầu 4:** bạn có nhiều màn nhất (khoảng 20 layout). Thiếu một màn là cả nhóm mất 3 điểm.
+
+## A.2 Màn hình của bạn
+
+Thứ tự ưu tiên: ★ làm thật + API trước buổi giữa kỳ · ○ khung sườn + dữ liệu mẫu, bấm chuyển màn được.
+
+| Figma | Màn | Dữ liệu | Bấm vào đâu đi đâu | Ưu tiên |
+|---|---|---|---|---|
+| 01 | Splash | Có sẵn (SplashScreen API) | `MainActivity` tự kiểm tra token | — |
+| 02–04 | Onboarding 1–3 | Tĩnh, `ViewPager2` | Bỏ qua / Tiếp → 05; lưu `SettingsPrefs.setOnboardingDone(true)` | ○ |
+| 05 | Chào mừng | Tĩnh | "Đăng nhập" → 06 · "Tạo tài khoản" → 12 | ○ |
+| 06 + 07 | Đăng nhập + trạng thái báo lỗi | **POST `auth/login`** | Thành công: `profileCompleted` = true → `action_global_to_main`, = false → 13 · "Quên mật khẩu" → 08 · "Đăng ký" → 12 | ★ |
+| 08–11 | Quên mật khẩu → Nhập mã → Mật khẩu mới → Thành công | Dữ liệu mẫu (mã đúng: `123456`) | 08 → 09 → 10 → 11 → về 06 | ○ |
+| 12 | Đăng ký | **POST `auth/register`** | Thành công → 13 | ★ |
+| 13–15 | Khảo sát 1/3, 2/3, 3/3 | **PUT `users/me`** (chiều cao, cân nặng, mục tiêu, trình độ, số buổi/tuần) | 13 → 14 → 15 → 16 | ★ |
+| 16 | AI đang tạo giáo án | **GET `plans`**, chọn giáo án khớp `level` | Hiệu ứng ~2 giây → 17 | ○ |
+| 17 | Giáo án đã sẵn sàng | Giáo án vừa chọn | "Bắt đầu" → **PUT `users/me`** `{activePlanId, profileCompleted: true}` → 20 | ★ |
+| 20 | Bật thông báo nhắc tập | `SettingsPrefs` | "Bật" / "Để sau" → `action_global_to_main` | ○ |
+| 21 | **Trang chủ** (tab) | **GET `home`** | Xem bảng A.4 | ★ |
+| 23 | Thư viện bài tập (tab) | **GET `exercises`** + Chip lọc nhóm cơ | Thẻ bài → 25 · nút lọc → 24 | ★ |
+| 24 | Tìm kiếm & bộ lọc | **GET `exercises?q=&muscleGroup=&difficulty=`** (tìm không dấu: "hit dat" ra "Hít đất") | Kết quả → 25 | ○ |
+| 25.1–25.9 | Chi tiết bài tập (**1 layout dùng chung cho 9 bài**) | **GET `exercises/{id}`** | "Bắt đầu tập" → `action_global_to_readiness(exerciseId)` | ★ |
+| 26 | Chi tiết giáo án | **GET `plans/{id}`** | Bài trong buổi → 25 · "Theo giáo án này" → PUT `activePlanId` · "Tập buổi này" → readiness | ○ |
+
+Màn 22 (Thông báo) và 43–47 (Hồ sơ, Cài đặt, Đăng xuất) đã chuyển sang Thành viên B để chia đều. Chuông và avatar ở Trang chủ đi tới đó bằng `action_global_to_notifications`, `action_global_to_profile` (đã nối sẵn).
+
+## A.3 File của bạn
+
+```
+ui/auth/      OnboardingFragment, WelcomeFragment, LoginFragment (đang là màn tạm), RegisterFragment,
+              ForgotPassword…Fragment (08–11), Survey…Fragment (13–15), PlanGeneratingFragment (16),
+              PlanReadyFragment (17), NotificationPermissionFragment (20) + ViewModel tương ứng
+ui/home/      HomeFragment (đã dựng giao diện theo Figma 21 — nối API), HomeViewModel, adapter
+ui/exercise/  ExerciseLibraryFragment, ExerciseSearchFragment, ExerciseDetailFragment, adapter, ViewModel
+ui/plan/      PlanDetailFragment, ViewModel
+data/repository/  AuthRepository, HomeRepository, ExerciseRepository, PlanRepository, OnboardingRepository
+data/mock/    MockAuthData (mã xác thực mẫu, nội dung onboarding)
+util/         ExerciseImages (imageName → R.drawable.img_xxx; B và Trưởng nhóm dùng lại)
+res/navigation/  nav_auth.xml, nav_main.xml
+res/values/   strings_auth.xml, strings_home.xml (đã có), strings_exercise.xml, strings_plan.xml
+res/drawable-nodpi/  9 ảnh bài tập: img_squat, img_pushup, img_plank, img_lunge, img_glute_bridge,
+                     img_dips, img_jumping_jack, img_high_knee, img_toe_touch (WebP, mỗi ảnh < 200 KB)
+```
+
+`OnboardingRepository` là của bạn: dùng `UserApi.updateMe` cho khảo sát và chọn giáo án. **Không sửa** `UserRepository` (của B) — hai Repository gọi chung một interface là bình thường.
+
+## A.4 Trang chủ (Figma 21) — field nào lấy ở đâu
+
+Gọi **một** API `GET home` → `HomeData`. Giao diện đã dựng sẵn trong `HomeFragment` + `fragment_home.xml`, bạn chỉ thay `bindDemoData()` bằng dữ liệu thật.
+
+| Trên màn | Lấy từ `HomeData` |
+|---|---|
+| "Xin chào, Minh" · chữ "M" trong avatar | `getDisplayName()` · chữ cái đầu của tên cuối |
+| "Chuỗi 7 ngày" | `getStreak()` |
+| "Còn 1 buổi để đạt mục tiêu tuần" | `getWeek().getRemainingSessions()` (= 0 → "Đã đạt mục tiêu tuần 🎉") |
+| 7 chấm T2 → CN | `getWeek().getDays()`: `isActive()` tô màu, `isToday()` viền |
+| "18 phút hôm nay" · "320 kcal" | `getToday().getMinutes()` · `getToday().getCalories()` |
+| Thẻ giáo án: tên, "Tuần 2 • Buổi 5/12 • 25 phút/buổi", thanh % | `getActivePlan()`: `getTitle()`, `getCurrentWeek()`, `getSessionsDone() + 1`, `getTotalSessions()`, `getMinutesPerSession()`, `getProgressPercent()` |
+| Chưa có giáo án | `getActivePlan() == null` → thẻ "Chọn giáo án" → mở 26 |
+| "Bài tập hôm nay — 3 bài • ~18 phút" + dải thẻ | `getTodayWorkout().getExercises()` (`Plan.PlanItem`), `getEstimatedMinutes()`; plank: `isTimeBased()` → "3 × 45 giây" |
+| Nút tròn "BẮT ĐẦU TẬP" | `action_global_to_readiness` với `exerciseId` của bài đầu tiên |
+
+Thêm `SwipeRefreshLayout` để kéo làm mới. Đăng nhập `demo@aicoach.vn` để thấy đủ số liệu; tài khoản mới đăng ký sẽ ra trạng thái rỗng (streak 0, chưa có giáo án) — **cả hai trạng thái đều phải đẹp**.
+
+## A.5 Code mẫu phần Đăng nhập
+
+**AuthRepository** — lưu token ngay khi thành công:
+
+```java
+public class AuthRepository extends BaseRepository {
+    private final AuthApi api;
+    private final TokenManager tokenManager;
+
+    public AuthRepository(Context context) {
+        api = ApiClient.create(context, AuthApi.class);
+        tokenManager = TokenManager.getInstance(context);
+    }
+
+    public LiveData<Resource<AuthDtos.AuthResponse>> login(String email, String password) {
+        return execute(api.login(new AuthDtos.LoginRequest(email, password)),
+                res -> tokenManager.saveToken(res.getAccessToken()));
+    }
+
+    public LiveData<Resource<AuthDtos.AuthResponse>> register(String name, String email, String password) {
+        return execute(api.register(new AuthDtos.RegisterRequest(name, email, password)),
+                res -> tokenManager.saveToken(res.getAccessToken()));
+    }
+}
+```
+
+**LoginViewModel** — kiểm tra dữ liệu nhập trước khi gọi mạng:
+
+```java
+public void login(String rawEmail, String password) {
+    String email = rawEmail == null ? "" : rawEmail.trim().toLowerCase();
+    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        state.setValue(Resource.error(getApplication().getString(R.string.auth_error_email)));
+        return;
+    }
+    if (password == null || password.isEmpty()) {
+        state.setValue(Resource.error(getApplication().getString(R.string.auth_error_password_empty)));
+        return;
+    }
+    LiveData<Resource<AuthDtos.AuthResponse>> src = repo.login(email, password);
+    state.addSource(src, r -> {
+        state.setValue(r);
+        if (r.status != Resource.Status.LOADING) state.removeSource(src);
+    });
+}
+```
+
+**LoginFragment** — hiện trạng thái và điều hướng:
+
+```java
+vm.getState().observe(getViewLifecycleOwner(), r -> {
+    boolean loading = r.status == Resource.Status.LOADING;
+    binding.progress.setVisibility(loading ? View.VISIBLE : View.GONE);
+    binding.btnLogin.setEnabled(!loading);                 // chống bấm 2 lần
+    if (r.status == Resource.Status.ERROR) {
+        binding.tilPassword.setError(r.message);           // Figma 07: lỗi đỏ dưới ô nhập
+    } else if (r.status == Resource.Status.SUCCESS) {
+        NavController nav = NavHostFragment.findNavController(this);
+        if (r.data.getUser().isProfileCompleted()) nav.navigate(R.id.action_global_to_main);
+        else nav.navigate(R.id.action_login_to_survey1);
+    }
+});
+```
+
+**Khảo sát / chọn giáo án** (`OnboardingRepository`):
+
+```java
+public LiveData<Resource<User>> saveBody(double heightCm, double weightKg) {
+    return execute(userApi.updateMe(new ProfileDtos.UpdateProfileRequest()
+            .heightCm(heightCm).weightKg(weightKg)));
+}
+
+public LiveData<Resource<User>> choosePlan(String planId) {
+    return execute(userApi.updateMe(new ProfileDtos.UpdateProfileRequest()
+            .activePlanId(planId).profileCompleted(true)));
+}
+```
+
+## A.6 Những lỗi thầy hay bấm thử
+
+- Email có khoảng trắng hoặc chữ hoa → vẫn đăng nhập được (đã `trim().toLowerCase()`).
+- Bấm "Đăng nhập" liên tục → nút khoá khi đang gửi.
+- Sai mật khẩu → hiện câu lỗi của server dưới ô mật khẩu (Figma 07), không crash.
+- Đăng ký email đã có → lỗi 409 hiện ở ô email.
+- Mật khẩu "12345678" (không có chữ) → báo ngay trên app, không cần gửi lên server.
+- Tắt mạng → "Không có kết nối mạng" + cho thử lại.
+- Đã đăng nhập, tắt app mở lại → vào thẳng Trang chủ. Đăng nhập xong bấm Back → **không** quay lại màn Đăng nhập.
+- Xoay màn hình khi đang nhập → không mất chữ đã nhập.
+- Ô mật khẩu có nút ẩn/hiện (`app:endIconMode="password_toggle"`), bàn phím bấm "Xong" là gửi luôn.
+
+## A.7 Lịch làm việc
+
+Ngày 1 = ngày Trưởng nhóm báo `feature/lead-backend` đã vào `develop`.
+
+| Ngày | Việc | PR |
+|---|---|---|
+| 1 | Pull `develop`. Tạo **đủ** fragment + layout khung + `<action>` cho mọi màn ở bảng A.2 trong `nav_auth.xml`, `nav_main.xml`; mọi nút đều chuyển màn. Xuất 9 ảnh bài tập. | PR "khung màn A" |
+| 2–3 | 06/07 Đăng nhập, 12 Đăng ký: giao diện theo Figma + API thật | PR Auth |
+| 4–5 | 21 Trang chủ nối `GET home` (cả trạng thái có dữ liệu và rỗng) | PR Home |
+| 6–7 | 13–17 Khảo sát + chọn giáo án; 23, 25 Thư viện + Chi tiết bài tập | PR |
+| 8–9 | Hoàn thiện 02–05, 08–11, 20, 24, 26 theo Figma | PR |
+| 10 | Sửa lỗi theo review, bấm thử toàn bộ trên máy thật. Đóng băng code | — |
+
+## A.8 Phần bạn trình bày khi demo (~2 phút, điện thoại dùng 4G)
+
+1. Đăng ký tài khoản mới ngay trước mặt thầy → làm khảo sát → chọn giáo án → vào Trang chủ (trạng thái người mới).
+2. Đăng xuất (ở Hồ sơ của B) → đăng nhập lại bằng `demo@aicoach.vn` → Trang chủ đầy đủ streak, giáo án, bài hôm nay **lấy từ server**.
+3. Thử nhập sai mật khẩu → báo lỗi đúng Figma 07.
+4. Mở code: `LoginFragment` → `LoginViewModel` → `AuthRepository` → `AuthApi` (interface) — Fragment không hề có Retrofit.
+
+## A.9 Câu hỏi phản biện có thể gặp
+
+| Thầy hỏi | Ý trả lời |
+|---|---|
+| Token lưu ở đâu, có an toàn không? | SharedPreferences chế độ PRIVATE qua `TokenManager`, chỉ app đọc được; chỉ gửi qua HTTPS; hết hạn sau 7 ngày, server trả 401 thì app tự xoá token và về màn Đăng nhập |
+| Mật khẩu có bị lộ không? | Đi qua HTTPS; server băm BCrypt, không lưu mật khẩu gốc; log mạng tắt ở bản release và luôn che header Authorization |
+| Sao kiểm tra dữ liệu cả ở app lẫn server? | App kiểm tra để phản hồi ngay, đỡ tốn request; server kiểm tra lại vì không bao giờ tin dữ liệu từ client |
+| Sao Trang chủ chỉ gọi một API? | `GET home` gộp mọi số liệu (mô hình Backend-for-Frontend): một lần gọi trên 4G thay vì 4–5 lần, server tính sẵn streak và tiến độ |
+| Sao không gọi API thẳng trong Fragment? | Tách tầng MVVM: Fragment chỉ hiển thị, Repository lo dữ liệu → đổi dữ liệu mẫu sang API không phải sửa giao diện, ViewModel giữ dữ liệu khi xoay màn |

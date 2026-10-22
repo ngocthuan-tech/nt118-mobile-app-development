@@ -27,7 +27,7 @@
 | 19 | Hộp thoại quyền Android | Trưởng nhóm | Hộp thoại hệ thống, gọi từ màn 18 — đã có | [xem](figma/19_hop_thoai_quyen_android.webp) |
 | 20 | Bật thông báo nhắc tập | Thành viên A | chưa làm | [xem](figma/20_bat_thong_bao_nhac_tap.webp) |
 | 21 | Trang chủ | Thành viên A | `HomeFragment` — có bản nháp, A chỉnh lại theo ảnh | [xem](figma/21_trang_chu.webp) |
-| 22 | Thông báo | Thành viên A | chưa làm | [xem](figma/22_thong_bao.webp) |
+| 22 | Thông báo | Thành viên B | chưa làm | [xem](figma/22_thong_bao.webp) |
 | 23 | Thư viện bài tập | Thành viên A | `ExerciseLibraryFragment` — màn tạm | [xem](figma/23_thu_vien_bai_tap.webp) |
 | 24 | Tìm kiếm & bộ lọc | Thành viên A | chưa làm | [xem](figma/24_tim_kiem_bo_loc.webp) |
 | 25.1 | Chi tiết – Squat | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.1_chi_tiet_squat.webp) |
@@ -56,13 +56,15 @@
 | 40 | Thử thách & Bảng xếp hạng | Thành viên B | `ChallengeListFragment` — màn tạm | [xem](figma/40_thu_thach_bang_xep_hang.webp) |
 | 41 | Tạo thử thách | Thành viên B | chưa làm | [xem](figma/41_tao_thu_thach.webp) |
 | 42 | Mời bạn bè | Thành viên B | chưa làm | [xem](figma/42_moi_ban_be.webp) |
-| 43 | Hồ sơ & Cài đặt | Thành viên A | chưa làm | [xem](figma/43_ho_so_cai_dat.webp) |
-| 44 | Chỉnh sửa hồ sơ | Thành viên A | chưa làm | [xem](figma/44_chinh_sua_ho_so.webp) |
-| 45 | Cài đặt giọng nói | Thành viên A | chưa làm | [xem](figma/45_cai_dat_giong_noi.webp) |
+| 43 | Hồ sơ & Cài đặt | Thành viên B | chưa làm | [xem](figma/43_ho_so_cai_dat.webp) |
+| 44 | Chỉnh sửa hồ sơ | Thành viên B | chưa làm | [xem](figma/44_chinh_sua_ho_so.webp) |
+| 45 | Cài đặt giọng nói | Thành viên B | chưa làm | [xem](figma/45_cai_dat_giong_noi.webp) |
 | 46 | Bộ sưu tập huy hiệu | Thành viên B | chưa làm | [xem](figma/46_bo_suu_tap_huy_hieu.webp) |
-| 47 | Xác nhận đăng xuất | Thành viên A | chưa làm | [xem](figma/47_xac_nhan_dang_xuat.webp) |
+| 47 | Xác nhận đăng xuất | Thành viên B | chưa làm | [xem](figma/47_xac_nhan_dang_xuat.webp) |
 
-Tổng: Trưởng nhóm 12 màn • Thành viên A 36 màn • Thành viên B 7 màn.
+Tổng: Trưởng nhóm 12 màn + backend • Thành viên A 31 màn (khoảng 20 layout, 25.1–25.9 dùng chung 1 layout) • Thành viên B 12 màn.
+
+Cập nhật 22/10: màn 22, 43, 44, 45, 47 chuyển từ A sang B để chia đều việc giữa kỳ.
 
 ## Hệ màu (đã có trong `res/values/colors.xml`)
 

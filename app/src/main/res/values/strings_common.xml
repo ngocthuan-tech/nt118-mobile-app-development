@@ -19,6 +19,7 @@
     <string name="placeholder_exercise_library">Thư viện bài tập</string>
     <string name="placeholder_progress">Tiến độ</string>
     <string name="placeholder_challenges">Thử thách</string>
+    <string name="placeholder_notifications">Thông báo</string>
     <string name="placeholder_profile">Hồ sơ &amp; Cài đặt</string>
     <string name="placeholder_readiness">Kiểm tra khung hình\nBài tập: %1$s</string>
     <string name="placeholder_start_workout">Bắt đầu tập (tạm)</string>
