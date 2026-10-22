@@ -10,7 +10,8 @@ App dùng camera điện thoại + ML Kit Pose Detection để **tự đếm s�
 |---|---|
 | Ngôn ngữ / giao diện | Java 11, XML View, Material 3 |
 | Kiến trúc | MVVM (Fragment → ViewModel → Repository), Single Activity + Navigation Component, ViewBinding |
-| Backend | Firebase Auth, Cloud Firestore, Firebase Storage |
+| Backend | REST API Spring Boot 3 + PostgreSQL + JWT, chạy Docker trên Azure VM (thư mục [`backend/`](backend/README.md)) |
+| Gọi API | Retrofit + OkHttp, mỗi nhóm API một interface trong `data/remote/api/` |
 | AI | CameraX + ML Kit Pose Detection (chạy trên máy, không gửi hình lên mạng) |
 | Khác | Glide, MPAndroidChart, GitHub Actions (tự build APK) |
 
@@ -18,24 +19,25 @@ App dùng camera điện thoại + ML Kit Pose Detection để **tự đếm s�
 
 1. Android Studio → **File → New → Project from Version Control** → dán link repo này.
 2. Chuyển sang nhánh `develop` (góc trên bên trái, chỗ tên nhánh).
-3. Chép file `google-services.json` (Trưởng nhóm gửi riêng, không có trên GitHub) vào thư mục `app/`.
-4. Bấm **Sync Now** rồi **Run**.
-
-Chưa có `google-services.json` thì app vẫn chạy được giao diện, chỉ chưa kết nối Firebase.
+3. Bấm **Sync Now** rồi **Run**. App gọi thẳng backend trên Azure, không cần file cấu hình riêng.
+4. Đăng nhập thử bằng tài khoản demo `demo@aicoach.vn` / `Demo1234`. Xem toàn bộ API: [Swagger](https://aicoach-r15.koreacentral.cloudapp.azure.com/swagger-ui.html).
 
 ## Cấu trúc thư mục
 
 ```
 app/src/main/java/com/aicoach
-├── common/          Resource<T>, BaseFragment, ErrorMapper, FirestorePaths   (Trưởng nhóm)
-├── data/model/      User, Exercise, Plan, WorkoutSession, Challenge            (Trưởng nhóm)
-├── data/repository/ Mỗi collection một Repository                             (A, B)
-├── data/local/      SettingsPrefs                                              (A)
-├── domain/          ProgressService, BadgeRules — luật streak/XP/huy hiệu       (B)
-├── pose/            PoseOverlayView, bộ phân tích tư thế 9 bài                  (Trưởng nhóm)
-├── ui/auth, home, exercise, plan, profile                                     (A)
-├── ui/workout                                                                 (Trưởng nhóm)
-└── ui/history, stats, social, challenge                                       (B)
+├── common/           Resource<T>, BaseFragment, ErrorMapper                    (Trưởng nhóm)
+├── data/model/       User, Exercise, Plan, WorkoutSession, HomeData, Challenge (Trưởng nhóm)
+├── data/remote/      ApiClient, AuthInterceptor, ApiResponse, api/*Api, dto/   (Trưởng nhóm)
+├── data/local/       TokenManager, SessionEvents, SettingsPrefs                (Trưởng nhóm)
+├── data/repository/  BaseRepository (Trưởng nhóm) · mỗi người Repository riêng   (A, B)
+├── data/mock/        Dữ liệu mẫu cho màn chưa có API (A, B)
+├── domain/           BadgeRules — luật huy hiệu                                (B)
+├── pose/             PoseOverlayView, bộ phân tích tư thế 9 bài                (Trưởng nhóm)
+├── ui/auth, home, exercise, plan                                               (A)
+├── ui/workout                                                                  (Trưởng nhóm)
+└── ui/profile, history, stats, social, challenge                               (B)
+backend/              REST API Spring Boot                                      (Trưởng nhóm)
 ```
 
 Tài liệu phân công chi tiết: [`docs/PHAN_CONG_THANH_VIEN_A.md`](docs/PHAN_CONG_THANH_VIEN_A.md), [`docs/PHAN_CONG_THANH_VIEN_B.md`](docs/PHAN_CONG_THANH_VIEN_B.md).
@@ -56,9 +58,10 @@ Xem [`docs/QUY_TRINH_GIT.md`](docs/QUY_TRINH_GIT.md). Tóm tắt:
 ```
 main      ← bản ổn định để nộp/demo (chỉ merge từ develop)
 develop   ← bản tích hợp của cả nhóm (merge qua Pull Request)
-feature/lead-ai-workout     ← Trưởng nhóm
+feature/lead-ai-workout     ← Trưởng nhóm (module AI)
+feature/lead-backend        ← Trưởng nhóm (backend + lớp Retrofit)
 feature/a-auth-content      ← Thành viên A
 feature/b-progress-social   ← Thành viên B
 ```
 
-Mỗi Pull Request được GitHub Actions tự build APK; build đỏ thì chưa được merge.
+Mỗi Pull Request được GitHub Actions tự build APK (và test backend nếu sửa `backend/`); build đỏ thì chưa được merge.

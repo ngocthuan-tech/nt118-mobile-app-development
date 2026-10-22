@@ -16,6 +16,8 @@ import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.aicoach.data.local.SessionEvents;
+import com.aicoach.data.local.TokenManager;
 import com.aicoach.databinding.ActivityMainBinding;
 
 /**
@@ -36,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         applySystemBarInsets();
-        setupNavigation();
+        setupNavigation(savedInstanceState == null);
     }
 
-    private void setupNavigation() {
+    private void setupNavigation(boolean firstLaunch) {
         NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.navHostFragment);
         if (navHost == null) return;
@@ -52,12 +54,24 @@ public class MainActivity extends AppCompatActivity {
         // Ẩn thanh tab ở luồng đăng nhập và khi đang tập với camera
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             boolean hideBottomNav = isInsideGraph(destination, R.id.nav_auth)
-                    || isInsideGraph(destination, R.id.nav_workout);
+                    || isInsideGraph(destination, R.id.nav_workout)
+                    || isInsideGraph(destination, R.id.nav_profile)
+                    || isInsideGraph(destination, R.id.nav_notifications);
             binding.bottomBar.setVisibility(hideBottomNav ? View.GONE : View.VISIBLE);
         });
 
-        // TODO (Thành viên A): khi đã có google-services.json, nếu chưa đăng nhập thì
-        //  navController.navigate(R.id.action_global_to_auth);
+        // Chưa có token (chưa đăng nhập) → vào luồng đăng nhập.
+        if (firstLaunch && !TokenManager.getInstance(this).isLoggedIn()) {
+            navController.navigate(R.id.action_global_to_auth);
+        }
+
+        // Server trả 401 (token hết hạn / bị xoá) → AuthInterceptor báo về đây → quay lại đăng nhập.
+        SessionEvents.expired().observe(this, expired -> {
+            if (Boolean.TRUE.equals(expired)) {
+                SessionEvents.consume();
+                navController.navigate(R.id.action_global_to_auth);
+            }
+        });
     }
 
     private static boolean isInsideGraph(@NonNull NavDestination destination, int graphId) {

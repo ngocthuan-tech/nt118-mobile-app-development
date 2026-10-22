@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thành viên B: 43 Hồ sơ & Cài đặt, 44 Chỉnh sửa hồ sơ, 45 Cài đặt giọng nói, 47 Xác nhận đăng xuất, 46 Huy hiệu -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_profile"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.aicoach.ui.profile.ProfileFragment"
+        android:label="@string/placeholder_profile" />
+
+</navigation>

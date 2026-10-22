@@ -7,8 +7,9 @@
 | `main` | Bản ổn định để nộp và demo | Chỉ merge từ `develop` qua Pull Request |
 | `develop` | Bản tích hợp, luôn build được | Merge từ nhánh feature qua Pull Request |
 | `feature/lead-ai-workout` | Module tập AI (camera, đếm rep, kết quả) | Trưởng nhóm |
-| `feature/a-auth-content` | Đăng nhập, Trang chủ, Bài tập, Giáo án, Hồ sơ | Thành viên A |
-| `feature/b-progress-social` | Tiến độ, Thống kê, Huy hiệu, Bạn bè, Thử thách | Thành viên B |
+| `feature/lead-backend` | Backend Spring Boot + lớp Retrofit dùng chung | Trưởng nhóm |
+| `feature/a-auth-content` | Đăng nhập, Khảo sát, Trang chủ, Bài tập, Giáo án | Thành viên A |
+| `feature/b-progress-social` | Hồ sơ & Cài đặt, Tiến độ, Huy hiệu, Bạn bè, Thử thách, Thông báo | Thành viên B |
 
 Làm xong một phần lớn (ví dụ xong màn Đăng nhập) có thể tách nhánh nhỏ hơn từ nhánh của mình, ví dụ `feature/a-s03-login`, rồi mở Pull Request như bình thường.
 
@@ -35,9 +36,9 @@ Cuối mỗi tuần (hoặc trước buổi báo cáo), Trưởng nhóm mở Pul
 ## Quy tắc tránh xung đột
 
 - Chỉ sửa file thuộc phần của mình (xem bảng trong `README.md`).
-- Cần sửa file chung (`colors.xml`, `themes.xml`, `nav_root.xml`, `common/`, `data/model/`) thì nhắn Trưởng nhóm trước.
+- Cần sửa file chung (`colors.xml`, `themes.xml`, `nav_root.xml`, `common/`, `data/model/`, `data/remote/`) thì nhắn Trưởng nhóm trước.
 - Chuỗi chữ đặt trong file `strings_<module>.xml` riêng của mình: `strings_home.xml`, `strings_workout.xml`… để không đụng nhau.
-- Không commit: `local.properties`, thư mục `build/`, `.idea/`, `google-services.json`.
+- Không commit: `local.properties`, thư mục `build/`, `.idea/`, file `.env` của backend.
 
 ## Lấy APK để cài thử
 

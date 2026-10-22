@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thành viên B: 22 Thông báo (mở từ chuông ở Trang chủ) -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_notifications"
+    app:startDestination="@id/notificationsFragment">
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.aicoach.ui.profile.NotificationsFragment"
+        android:label="@string/placeholder_notifications" />
+
+</navigation>

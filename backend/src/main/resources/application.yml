@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  # Chạy sau Caddy (HTTPS) — đọc X-Forwarded-* để Swagger sinh đúng link https
+  forward-headers-strategy: framework
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  error:
+    include-message: never
+    include-stacktrace: never
+
+spring:
+  application:
+    name: aicoach-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/aicoach}
+    username: ${DB_USER:aicoach}
+    password: ${DB_PASSWORD:aicoach}
+    hikari:
+      maximum-pool-size: 5
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        default_batch_fetch_size: 50
+  jackson:
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: false
+
+app:
+  jwt:
+    # Bắt buộc ≥ 32 ký tự, đặt qua biến môi trường JWT_SECRET (không ghi vào code)
+    secret: ${JWT_SECRET:}
+    expiration-days: 7
+  seed:
+    demo: ${SEED_DEMO:true}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    org.hibernate.SQL: warn

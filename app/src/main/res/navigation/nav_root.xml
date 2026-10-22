@@ -5,6 +5,9 @@
       nav_auth, nav_main  -> Thành viên A
       nav_workout         -> Trưởng nhóm
       nav_social          -> Thành viên B
+      nav_profile         -> Thành viên B (hồ sơ, cài đặt, huy hiệu)
+      nav_notifications   -> Thành viên B (thông báo)
+    Điều hướng sang module người khác: chỉ dùng global action ở cuối file (trỏ tới id của graph).
     Màn bắt đầu là Trang chủ (nav_main) để thanh 5 tab hoạt động đúng.
 -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,6 +19,8 @@
     <include app:graph="@navigation/nav_auth" />
     <include app:graph="@navigation/nav_workout" />
     <include app:graph="@navigation/nav_social" />
+    <include app:graph="@navigation/nav_profile" />
+    <include app:graph="@navigation/nav_notifications" />
 
     <!-- Chưa đăng nhập: sang luồng đăng nhập, bỏ Trang chủ khỏi back stack -->
     <action
@@ -30,6 +35,16 @@
         app:destination="@id/nav_main"
         app:popUpTo="@id/nav_auth"
         app:popUpToInclusive="true" />
+
+    <!-- Avatar ở Trang chủ (A) mở Hồ sơ (B) -->
+    <action
+        android:id="@+id/action_global_to_profile"
+        app:destination="@id/nav_profile" />
+
+    <!-- Chuông ở Trang chủ (A) mở Thông báo (B) -->
+    <action
+        android:id="@+id/action_global_to_notifications"
+        app:destination="@id/nav_notifications" />
 
     <!-- HỢP ĐỒNG: mọi nút "Bắt đầu tập" (Trang chủ, Chi tiết bài tập, Kế hoạch, Lịch sử) gọi action này kèm exerciseId -->
     <action
