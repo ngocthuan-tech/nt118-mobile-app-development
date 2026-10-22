@@ -1,48 +1,44 @@
 package com.aicoach.data.model;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentId;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/** Document challenges/{id}. Điểm từng người nằm ở challenges/{id}/scores/{uid}. */
+/**
+ * Thử thách giữa bạn bè (Figma 40–42). Giữa kỳ dùng dữ liệu mẫu (MockSocialData); giai đoạn 2 mới có API.
+ * Thành viên B có thể thêm field khi dựng màn, nhớ báo nhóm.
+ */
 public class Challenge {
 
-    @DocumentId
     private String id;
     private String title;
-    private String creatorUid;
+    private String creatorName;
     private String exerciseId;
     private int targetReps;
-    private Timestamp startAt;
-    private Timestamp endAt;
-    private List<String> participantUids = new ArrayList<>();
+    private String startAt;         // "2026-10-20"
+    private String endAt;
+    private List<String> participantNames = new ArrayList<>();
 
     public Challenge() {
     }
 
+    public Challenge(String id, String title, String creatorName, String exerciseId, int targetReps,
+                     String startAt, String endAt, List<String> participantNames) {
+        this.id = id;
+        this.title = title;
+        this.creatorName = creatorName;
+        this.exerciseId = exerciseId;
+        this.targetReps = targetReps;
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.participantNames = participantNames;
+    }
+
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
     public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public String getCreatorUid() { return creatorUid; }
-    public void setCreatorUid(String creatorUid) { this.creatorUid = creatorUid; }
-
+    public String getCreatorName() { return creatorName; }
     public String getExerciseId() { return exerciseId; }
-    public void setExerciseId(String exerciseId) { this.exerciseId = exerciseId; }
-
     public int getTargetReps() { return targetReps; }
-    public void setTargetReps(int targetReps) { this.targetReps = targetReps; }
-
-    public Timestamp getStartAt() { return startAt; }
-    public void setStartAt(Timestamp startAt) { this.startAt = startAt; }
-
-    public Timestamp getEndAt() { return endAt; }
-    public void setEndAt(Timestamp endAt) { this.endAt = endAt; }
-
-    public List<String> getParticipantUids() { return participantUids; }
-    public void setParticipantUids(List<String> participantUids) { this.participantUids = participantUids; }
+    public String getStartAt() { return startAt; }
+    public String getEndAt() { return endAt; }
+    public List<String> getParticipantNames() { return participantNames; }
 }

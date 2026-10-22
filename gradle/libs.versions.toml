@@ -1,6 +1,5 @@
 [versions]
 agp = "8.9.1"
-googleServices = "4.4.2"
 navigation = "2.9.0"
 lifecycle = "2.9.1"
 appcompat = "1.7.1"
@@ -10,7 +9,8 @@ splashscreen = "1.0.1"
 material = "1.12.0"
 constraintlayout = "2.2.1"
 recyclerview = "1.4.0"
-firebaseBom = "34.0.0"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
 glide = "4.16.0"
 mpandroidchart = "v3.1.0"
 camerax = "1.4.2"
@@ -34,10 +34,9 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
-firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
@@ -55,5 +54,4 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }

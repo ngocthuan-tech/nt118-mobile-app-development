@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Nạp dữ liệu nền khi database còn trống: 9 bài tập, 3 giáo án.
+ * Nạp dữ liệu nền: 9 bài tập, 3 giáo án (ghi đè mỗi lần khởi động).
  * Bật app.seed.demo thì tạo thêm tài khoản demo@aicoach.vn / Demo1234 có sẵn lịch sử tập để demo Trang chủ.
  */
 @Component
@@ -35,6 +35,11 @@ public class DataSeeder implements ApplicationRunner {
     public static final String DEMO_PASSWORD = "Demo1234";
 
     private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
+
+    /** Tên ảnh trong app (res/drawable-nodpi) — khớp docs/MAN_HINH.md. */
+    private static final Map<String, String> IMAGE_NAMES = Map.of(
+            "chair_dip", "img_dips",
+            "high_knees", "img_high_knee");
 
     private final ExerciseRepository exercises;
     private final PlanRepository plans;
@@ -58,14 +63,11 @@ public class DataSeeder implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        if (exercises.count() == 0) {
-            seedExercises();
-            log.info("Đã nạp 9 bài tập");
-        }
-        if (plans.count() == 0) {
-            seedPlans();
-            log.info("Đã nạp 3 giáo án");
-        }
+        // Dữ liệu tham chiếu (bài tập, giáo án) luôn được ghi đè theo code mỗi lần khởi động,
+        // nhờ vậy sửa nội dung chỉ cần deploy lại, không phải xoá database.
+        seedExercises();
+        seedPlans();
+        log.info("Đã đồng bộ 9 bài tập và 3 giáo án");
         if (seedDemo && !users.existsByEmail(DEMO_EMAIL)) {
             seedDemoUser();
             log.info("Đã tạo tài khoản demo {}", DEMO_EMAIL);
@@ -150,7 +152,7 @@ public class DataSeeder implements ApplicationRunner {
         e.setName(name);
         e.setMuscleGroup(muscle);
         e.setDifficulty(difficulty);
-        e.setImageName("img_" + id);
+        e.setImageName(IMAGE_NAMES.getOrDefault(id, "img_" + id));
         e.setMeasureType(measure);
         e.setDefaultSets(sets);
         e.setDefaultReps(reps);

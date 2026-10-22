@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 /**
  * Trang chủ — giao diện dựng theo Figma 08.
- * TODO (Thành viên A): thay bindDemoData() bằng HomeViewModel đọc users/{uid} + giáo án đang theo.
+ * TODO (Thành viên A): thay bindDemoData() bằng HomeViewModel → HomeRepository → HomeApi (GET /home).
  */
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
@@ -40,6 +40,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding.rvTodayExercises.setAdapter(exerciseAdapter);
 
         binding.btnStartWorkout.setOnClickListener(v -> openWorkout("squat"));
+        binding.tvAvatar.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_global_to_profile));
 
         bindDemoData();
     }
@@ -50,7 +52,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
                 .navigate(NavRootDirections.actionGlobalToReadiness(exerciseId));
     }
 
-    /** Dữ liệu mẫu giống Figma để xem giao diện. Xoá khi đã nối Firestore. */
+    /** Dữ liệu mẫu giống Figma để xem giao diện. Xoá khi đã nối API. */
     private void bindDemoData() {
         binding.tvGreeting.setText(getString(R.string.home_greeting, "Minh"));
         binding.tvAvatar.setText("M");

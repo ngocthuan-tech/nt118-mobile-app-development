@@ -3,12 +3,6 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
 }
 
-// Firebase chỉ được bật khi đã có app/google-services.json (Trưởng nhóm tải từ Firebase Console).
-// Nhờ vậy project vẫn build được trên máy chưa có file này và trên GitHub Actions.
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-}
-
 android {
     namespace = "com.aicoach"
     compileSdk = 35
@@ -21,6 +15,10 @@ android {
         versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Địa chỉ backend — mọi API đi qua đây, KHÔNG ai gõ URL ở chỗ khác
+        buildConfigField("String", "BASE_URL",
+            "\"https://aicoach-r15.koreacentral.cloudapp.azure.com/api/v1/\"")
     }
 
     buildTypes {
@@ -41,6 +39,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -61,11 +60,10 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
 
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.storage)
+    // REST API (backend Spring Boot trên Azure)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
 
     // Ảnh + biểu đồ
     implementation(libs.glide)
