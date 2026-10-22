@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_login_title">Đăng nhập</string>
+    <string name="auth_email_hint">Email</string>
+    <string name="auth_password_hint">Mật khẩu</string>
+    <string name="auth_login_button">Đăng nhập</string>
+    <string name="auth_forgot_password">Quên mật khẩu?</string>
+    <string name="auth_register_button">Tạo tài khoản</string>
+</resources>
