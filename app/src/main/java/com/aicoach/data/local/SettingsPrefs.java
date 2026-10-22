@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Cài đặt lưu trên máy (không lên Firestore).
+ * Cài đặt lưu trên máy (không gửi lên server).
  * Thành viên A ghi (màn Cài đặt S14, Splash S01); module AI của Trưởng nhóm đọc isVoiceEnabled().
  */
 public class SettingsPrefs {

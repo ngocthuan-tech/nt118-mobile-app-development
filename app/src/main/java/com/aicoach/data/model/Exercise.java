@@ -1,59 +1,42 @@
 package com.aicoach.data.model;
 
-import com.google.firebase.firestore.DocumentId;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/** Document exercises/{exerciseId} — 9 bài, Trưởng nhóm nạp sẵn. id ví dụ: "squat", "pushup". */
+/**
+ * Một trong 9 bài tập, khớp JSON của GET /api/v1/exercises.
+ * id: squat | pushup | plank | lunge | glute_bridge | chair_dip | jumping_jack | high_knees | toe_touch.
+ * imageName là tên ảnh trong res/drawable-nodpi (vd. "img_squat").
+ */
 public class Exercise {
 
-    @DocumentId
     private String id;
     private String name;
-    private String muscleGroup;     // legs | chest | core | ...
+    private String muscleGroup;     // legs | chest_arms | core | cardio
     private String difficulty;      // easy | medium | hard
-    private String imageName;       // tên ảnh trong res/drawable-nodpi, ví dụ "img_squat"
+    private String imageName;
     private String description;
+    private String measureType;     // reps | seconds (plank tính bằng giây)
+    private int defaultSets;
+    private int defaultReps;
+    private double caloriesPerRep;
     private List<String> steps = new ArrayList<>();
     private List<String> tips = new ArrayList<>();
     private List<String> commonMistakes = new ArrayList<>();
-    private int defaultReps;
-    private double caloriesPerRep;
-
-    public Exercise() {
-    }
 
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
     public String getMuscleGroup() { return muscleGroup; }
-    public void setMuscleGroup(String muscleGroup) { this.muscleGroup = muscleGroup; }
-
     public String getDifficulty() { return difficulty; }
-    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
-
     public String getImageName() { return imageName; }
-    public void setImageName(String imageName) { this.imageName = imageName; }
-
     public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public List<String> getSteps() { return steps; }
-    public void setSteps(List<String> steps) { this.steps = steps; }
-
-    public List<String> getTips() { return tips; }
-    public void setTips(List<String> tips) { this.tips = tips; }
-
-    public List<String> getCommonMistakes() { return commonMistakes; }
-    public void setCommonMistakes(List<String> commonMistakes) { this.commonMistakes = commonMistakes; }
-
+    public String getMeasureType() { return measureType; }
+    public int getDefaultSets() { return defaultSets; }
     public int getDefaultReps() { return defaultReps; }
-    public void setDefaultReps(int defaultReps) { this.defaultReps = defaultReps; }
-
     public double getCaloriesPerRep() { return caloriesPerRep; }
-    public void setCaloriesPerRep(double caloriesPerRep) { this.caloriesPerRep = caloriesPerRep; }
+    public List<String> getSteps() { return steps; }
+    public List<String> getTips() { return tips; }
+    public List<String> getCommonMistakes() { return commonMistakes; }
+
+    public boolean isTimeBased() { return "seconds".equals(measureType); }
 }

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
-/** Dữ liệu hiển thị cho 1 thẻ bài tập (UI model, không phải model Firestore). */
+/** Dữ liệu hiển thị cho 1 thẻ bài tập (UI model, không phải model API). */
 public final class ExerciseCardItem {
 
     public final String exerciseId;

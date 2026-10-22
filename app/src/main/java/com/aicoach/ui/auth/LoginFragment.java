@@ -13,7 +13,7 @@ import com.aicoach.R;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentPlaceholderBinding;
 
-/** Đăng nhập — MÀN TẠM. Thành viên A thay bằng giao diện + Firebase Auth thật. */
+/** Đăng nhập — MÀN TẠM. Thành viên A thay bằng giao diện + API đăng nhập thật. */
 public class LoginFragment extends BaseFragment<FragmentPlaceholderBinding> {
 
     @Override
