@@ -61,7 +61,7 @@ develop   ← bản tích hợp của cả nhóm (merge qua Pull Request)
 feature/lead-ai-workout     ← Trưởng nhóm (module AI)
 feature/lead-backend        ← Trưởng nhóm (backend + lớp Retrofit)
 feature/a-auth-content      ← Thành viên A
-feature/b-progress-social   ← Thành viên B
+feature/b-progress-social   ← Thành viên Trương Đức Thịnh
 ```
 
 Mỗi Pull Request được GitHub Actions tự build APK (và test backend nếu sửa `backend/`); build đỏ thì chưa được merge.
