@@ -38,7 +38,7 @@ date: "22/10/2026"
 | `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
 | `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
 | `ExerciseImages.bind(imageView, idHoặcImageName)` | `common/` | Gắn ảnh người tập của 9 bài; chưa có ảnh thì hiện hình người mờ |
-| `User`, `HomeStreak`, `TodayWorkout`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
+| `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
 | `ProfileDtos.UpdateProfileRequest`, `AuthDtos.*` | `data/remote/dto/` | Body gửi lên server |
 
 ## 2. Danh sách API
@@ -49,8 +49,7 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
-| GET | `home/streak` → `HomeStreak` | `HomeApi.getStreak` | A — Trang chủ (21): thẻ **Chuỗi 7 ngày** |
-| GET | `home/today-workout` → `TodayWorkout` | `HomeApi.getTodayWorkout` | A — Trang chủ (21): dải **Bài tập hôm nay** |
+| GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
 | GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |

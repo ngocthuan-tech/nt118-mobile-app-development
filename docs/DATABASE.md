@@ -103,12 +103,14 @@ erDiagram
     }
 ```
 
-## 2 API Trang chủ đọc từ đâu
+## API Trang chủ đọc từ đâu
 
-| API | Đọc bảng | Cách tính |
+`GET /api/v1/home` trả cả 2 khối thầy chấm trong một lần gọi:
+
+| Khối trong JSON | Đọc bảng | Cách tính |
 |---|---|---|
-| `GET /api/v1/home/streak` — **Chuỗi 7 ngày** | `users` (streak, last_workout_date, weekly_goal_sessions) + `workout_sessions` của tuần này | 1 truy vấn theo index `(user_id, started_at)` từ thứ Hai đến Chủ nhật, giờ Việt Nam → ngày nào có tập. Streak = số ngày tập liên tiếp, được cập nhật mỗi lần lưu buổi tập; lần tập cuối trước hôm qua thì hiển thị 0 |
-| `GET /api/v1/home/today-workout` — **Bài tập hôm nay** | `users.active_plan_id` → `plans` + `plan_items` + `exercises`, đếm số ngày đã tập theo giáo án trong `workout_sessions` | Buổi tiếp theo = buổi thứ (số ngày đã tập + 1) của giáo án. Chưa chọn giáo án → 3 bài gợi ý Squat, Hít đất, Plank lấy từ `exercises` |
+| **Chuỗi 7 ngày** — `streak`, `week` | `users` (streak, last_workout_date, weekly_goal_sessions) + `workout_sessions` của tuần này | 1 truy vấn theo index `(user_id, started_at)` từ thứ Hai đến Chủ nhật, giờ Việt Nam → ngày nào có tập. Streak = số ngày tập liên tiếp, cập nhật mỗi lần lưu buổi tập; lần tập cuối trước hôm qua thì hiển thị 0 |
+| **Bài tập hôm nay** — `todayWorkout` | `users.active_plan_id` → `plans` + `plan_items` + `exercises`, đếm số ngày đã tập theo giáo án trong `workout_sessions` | Buổi tiếp theo = buổi thứ (số ngày đã tập + 1) của giáo án. Chưa chọn giáo án → 3 bài gợi ý Squat, Hít đất, Plank lấy từ `exercises` |
 
 ## Dữ liệu nền
 

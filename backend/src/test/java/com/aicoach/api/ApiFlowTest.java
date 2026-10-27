@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/** Kiểm thử toàn luồng mà thầy chấm trên PostgreSQL thật: Authentication → User Profile → Home (Chuỗi 7 ngày, Bài tập hôm nay). */
+/** Kiểm thử toàn luồng mà thầy chấm trên PostgreSQL thật: Authentication → User Profile → Home (Chuỗi 7 ngày + Bài tập hôm nay trong GET /home). */
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -170,21 +170,6 @@ class ApiFlowTest {
                 .andExpect(jsonPath("$.data.activePlan.sessionsDone").value(1))
                 .andExpect(jsonPath("$.data.todayWorkout.exercises", hasSize(3)));
 
-        // Hai API Trang chủ thầy yêu cầu, mỗi API trả một đối tượng riêng
-        mvc.perform(get("/api/v1/home/streak").header("Authorization", auth))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.streakDays").value(1))
-                .andExpect(jsonPath("$.data.days", hasSize(7)))
-                .andExpect(jsonPath("$.data.days[0].label").value("T2"))
-                .andExpect(jsonPath("$.data.doneSessions").value(1))
-                .andExpect(jsonPath("$.data.goalSessions").value(4))
-                .andExpect(jsonPath("$.data.remainingSessions").value(3));
-        mvc.perform(get("/api/v1/home/today-workout").header("Authorization", auth))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.planId").value("core-2w"))
-                .andExpect(jsonPath("$.data.planDayIndex").value(2))
-                .andExpect(jsonPath("$.data.exercises", hasSize(3)));
-
         mvc.perform(get("/api/v1/sessions").header("Authorization", auth))
                 .andExpect(jsonPath("$.data", hasSize(1)));
 
@@ -199,19 +184,17 @@ class ApiFlowTest {
 
     @Test
     void newUserHomeIsEmptyButValid() throws Exception {
-        String email = randomEmail();
-        String auth = register(email, "abc12345");
-        mvc.perform(get("/api/v1/home/streak").header("Authorization", auth))
+        String auth = register(randomEmail(), "abc12345");
+        mvc.perform(get("/api/v1/home").header("Authorization", auth))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.streakDays").value(0))
-                .andExpect(jsonPath("$.data.doneSessions").value(0))
-                .andExpect(jsonPath("$.data.days", hasSize(7)));
-        mvc.perform(get("/api/v1/home/today-workout").header("Authorization", auth))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.planId").doesNotExist())
-                .andExpect(jsonPath("$.data.exercises[0].exerciseId").value("squat"))
-                .andExpect(jsonPath("$.data.exercises", hasSize(3)));
-        mvc.perform(get("/api/v1/home/streak"))
+                .andExpect(jsonPath("$.data.streak").value(0))
+                .andExpect(jsonPath("$.data.week.doneSessions").value(0))
+                .andExpect(jsonPath("$.data.week.days", hasSize(7)))
+                .andExpect(jsonPath("$.data.week.days[0].label").value("T2"))
+                .andExpect(jsonPath("$.data.activePlan").doesNotExist())
+                .andExpect(jsonPath("$.data.todayWorkout.exercises[0].exerciseId").value("squat"))
+                .andExpect(jsonPath("$.data.todayWorkout.exercises", hasSize(3)));
+        mvc.perform(get("/api/v1/home"))
                 .andExpect(status().isUnauthorized());
     }
 

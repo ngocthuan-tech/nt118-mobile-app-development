@@ -38,7 +38,7 @@ date: "22/10/2026"
 | `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
 | `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
 | `ExerciseImages.bind(imageView, idHoặcImageName)` | `common/` | Gắn ảnh người tập của 9 bài; chưa có ảnh thì hiện hình người mờ |
-| `User`, `HomeStreak`, `TodayWorkout`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
+| `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
 | `ProfileDtos.UpdateProfileRequest`, `AuthDtos.*` | `data/remote/dto/` | Body gửi lên server |
 
 ## 2. Danh sách API
@@ -49,8 +49,7 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
-| GET | `home/streak` → `HomeStreak` | `HomeApi.getStreak` | A — Trang chủ (21): thẻ **Chuỗi 7 ngày** |
-| GET | `home/today-workout` → `TodayWorkout` | `HomeApi.getTodayWorkout` | A — Trang chủ (21): dải **Bài tập hôm nay** |
+| GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
 | GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |
@@ -260,7 +259,7 @@ Thứ tự ưu tiên: ★ làm thật + API trước buổi giữa kỳ · ○ k
 | 16 | AI đang tạo giáo án | **GET `plans`**, chọn giáo án khớp `level` | Hiệu ứng ~2 giây → 17 | ○ |
 | 17 | Giáo án đã sẵn sàng | Giáo án vừa chọn | "Bắt đầu" → **PUT `users/me`** `{activePlanId, profileCompleted: true}` → 20 | ★ |
 | 20 | Bật thông báo nhắc tập | `SettingsPrefs` | "Bật" / "Để sau" → `action_global_to_main` | ○ |
-| 21 | **Trang chủ** (tab) | **GET `home/streak`** + **GET `home/today-workout`** | Xem bảng A.4 | ★ |
+| 21 | **Trang chủ** (tab) | **GET `home`** | Xem bảng A.4 | ★ |
 | 23 | Thư viện bài tập (tab) | **GET `exercises`** + Chip lọc nhóm cơ | Thẻ bài → 25 · nút lọc → 24 | ★ |
 | 24 | Tìm kiếm & bộ lọc | **GET `exercises?q=&muscleGroup=&difficulty=`** (tìm không dấu: "hit dat" ra "Hít đất") | Kết quả → 25 | ○ |
 | 25.1–25.9 | Chi tiết bài tập (**1 layout dùng chung cho 9 bài**) | **GET `exercises/{id}`** | "Bắt đầu tập" → `action_global_to_readiness(exerciseId)` | ★ |
@@ -287,32 +286,32 @@ res/drawable-nodpi/  9 ảnh bài tập: img_squat, img_pushup, img_plank, img_l
 
 `OnboardingRepository` là của bạn: dùng `UserApi.updateMe` cho khảo sát và chọn giáo án. **Không sửa** `UserRepository` (của B) — hai Repository gọi chung một interface là bình thường.
 
-## A.4 Trang chủ (Figma 21) — 2 API thầy chấm
+## A.4 Trang chủ (Figma 21) — Chuỗi 7 ngày + Bài tập hôm nay
 
-Thầy chốt Trang chủ giữa kỳ cần **2 API riêng, mỗi API trả một đối tượng**: **Chuỗi 7 ngày** và **Bài tập hôm nay**. Giao diện đã dựng sẵn trong `HomeFragment` + `fragment_home.xml`; bạn thay `bindDemoData()` bằng dữ liệu thật từ 2 API. Phần còn lại của màn (lời chào, phút/kcal, thẻ giáo án) giữa kỳ để dữ liệu mẫu.
+Thầy chấm Trang chủ giữa kỳ ở 2 khối: **Chuỗi 7 ngày** và **Bài tập hôm nay**, dữ liệu thật từ database. Cả hai nằm trong **một** API `GET home` → `HomeData`. Giao diện đã dựng sẵn trong `HomeFragment` + `fragment_home.xml`; bạn thay `bindDemoData()` bằng dữ liệu thật. Các khối khác (phút/kcal, thẻ giáo án) có sẵn trong cùng API, làm thêm nếu kịp.
 
-| Trên màn | API | Lấy từ |
-|---|---|---|
-| "Chuỗi 7 ngày" | `HomeApi.getStreak()` → `HomeStreak` | `getStreakDays()` |
-| "Còn 1 buổi để đạt mục tiêu tuần" | ″ | `getRemainingSessions()` (= 0 → "Đã đạt mục tiêu tuần") |
-| 7 chấm T2 → CN | ″ | `getDays()`: `getLabel()`, `isActive()` tô màu, `isToday()` viền |
-| "Bài tập hôm nay — 3 bài • ~18 phút" | `HomeApi.getTodayWorkout()` → `TodayWorkout` | `getExercises().size()`, `getEstimatedMinutes()` |
-| Dải thẻ bài tập | ″ | `getExercises()` (`Plan.PlanItem`): `getExerciseName()`, `getSets()` × `getReps()`; plank `isTimeBased()` → "3 × 45 giây"; ảnh `ExerciseImages.bind(img, item.getImageName())` |
-| Nút tròn "BẮT ĐẦU TẬP" | ″ | `action_global_to_readiness` với `exerciseId` của bài đầu tiên |
-
-**HomeRepository + HomeViewModel** — 2 LiveData riêng, 2 phần màn tải độc lập (một API lỗi, phần kia vẫn hiện):
+| Trên màn | Lấy từ `HomeData` |
+|---|---|
+| "Xin chào, Minh" · chữ "M" trong avatar | `getDisplayName()` · chữ cái đầu của tên cuối |
+| **"Chuỗi 7 ngày"** | `getStreak()` |
+| "Còn 1 buổi để đạt mục tiêu tuần" | `getWeek().getRemainingSessions()` (= 0 → "Đã đạt mục tiêu tuần") |
+| **7 chấm T2 → CN** | `getWeek().getDays()`: `getLabel()`, `isActive()` tô màu, `isToday()` viền |
+| **"Bài tập hôm nay — 3 bài • ~18 phút"** | `getTodayWorkout().getExercises().size()`, `getTodayWorkout().getEstimatedMinutes()` |
+| **Dải thẻ bài tập** | `getTodayWorkout().getExercises()` (`Plan.PlanItem`): `getExerciseName()`, `getSets()` × `getReps()`; plank `isTimeBased()` → "3 × 45 giây"; ảnh `ExerciseImages.bind(img, item.getImageName())` |
+| Nút tròn "BẮT ĐẦU TẬP" | `action_global_to_readiness` với `exerciseId` của bài đầu tiên |
+| "18 phút hôm nay" · "320 kcal" | `getToday().getMinutes()` · `getToday().getCalories()` |
+| Thẻ giáo án | `getActivePlan()` (null = chưa chọn → thẻ "Chọn giáo án" → mở 26) |
 
 ```java
 public class HomeRepository extends BaseRepository {
     private final HomeApi api;
     public HomeRepository(Context context) { api = ApiClient.create(context, HomeApi.class); }
 
-    public LiveData<Resource<HomeStreak>> getStreak() { return execute(api.getStreak()); }
-    public LiveData<Resource<TodayWorkout>> getTodayWorkout() { return execute(api.getTodayWorkout()); }
+    public LiveData<Resource<HomeData>> getHome() { return execute(api.getHome()); }
 }
 ```
 
-ViewModel giữ `MediatorLiveData<Resource<HomeStreak>> streak` và `MediatorLiveData<Resource<TodayWorkout>> todayWorkout`, hàm `load()` gọi cả hai (đúng khuôn ở mục 3). Fragment quan sát từng cái, mỗi phần có trạng thái đang tải / lỗi riêng. Thêm `SwipeRefreshLayout` để kéo làm mới (gọi lại `load()`).
+ViewModel đúng khuôn ở mục 3 (gọi `load()` trong constructor). Thêm `SwipeRefreshLayout` để kéo làm mới.
 
 Đăng nhập `demo@aicoach.vn` để thấy đủ số liệu (streak 5, đang theo giáo án). Tài khoản mới đăng ký: streak 0, 7 chấm trống, 3 bài gợi ý Squat · Hít đất · Plank — **cả hai trạng thái đều phải đẹp**.
 
@@ -414,7 +413,7 @@ Ngày 1 = ngày Trưởng nhóm báo `feature/lead-backend` đã vào `develop`.
 |---|---|---|
 | 1 | Pull `develop`. Tạo **đủ** fragment + layout khung + `<action>` cho mọi màn ở bảng A.2 trong `nav_auth.xml`, `nav_main.xml`; mọi nút đều chuyển màn. Xuất 9 ảnh bài tập. | PR "khung màn A" |
 | 2–3 | 06/07 Đăng nhập, 12 Đăng ký: giao diện theo Figma + API thật | PR Auth |
-| 4–5 | 21 Trang chủ nối `GET home/streak` + `GET home/today-workout` (cả trạng thái có dữ liệu và rỗng) | PR Home |
+| 4–5 | 21 Trang chủ nối `GET home` (cả trạng thái có dữ liệu và rỗng) | PR Home |
 | 6–7 | 13–17 Khảo sát + chọn giáo án; 23, 25 Thư viện + Chi tiết bài tập | PR |
 | 8–9 | Hoàn thiện 02–05, 08–11, 20, 24, 26 theo Figma | PR |
 | 10 | Sửa lỗi theo review, bấm thử toàn bộ trên máy thật. Đóng băng code | — |
@@ -433,5 +432,5 @@ Ngày 1 = ngày Trưởng nhóm báo `feature/lead-backend` đã vào `develop`.
 | Token lưu ở đâu, có an toàn không? | SharedPreferences chế độ PRIVATE qua `TokenManager`, chỉ app đọc được; chỉ gửi qua HTTPS; hết hạn sau 7 ngày, server trả 401 thì app tự xoá token và về màn Đăng nhập |
 | Mật khẩu có bị lộ không? | Đi qua HTTPS; server băm BCrypt, không lưu mật khẩu gốc; log mạng tắt ở bản release và luôn che header Authorization |
 | Sao kiểm tra dữ liệu cả ở app lẫn server? | App kiểm tra để phản hồi ngay, đỡ tốn request; server kiểm tra lại vì không bao giờ tin dữ liệu từ client |
-| Sao Trang chủ tách 2 API? | Mỗi API trả đúng một đối tượng của một khối trên màn → dễ kiểm thử, một khối lỗi không kéo sập khối kia; streak và bài hôm nay đều do server tính từ database, app chỉ hiển thị |
+| Sao Trang chủ chỉ gọi một API? | `GET home` gộp Chuỗi 7 ngày và Bài tập hôm nay (mô hình Backend-for-Frontend): một lần gọi trên 4G thay vì nhiều lần; server tính sẵn từ database, app chỉ hiển thị |
 | Sao không gọi API thẳng trong Fragment? | Tách tầng MVVM: Fragment chỉ hiển thị, Repository lo dữ liệu → đổi dữ liệu mẫu sang API không phải sửa giao diện, ViewModel giữ dữ liệu khi xoay màn |
