@@ -157,7 +157,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/space_8"
-                    android:layout_marginStart="@dimen/space_8"
                     android:text="@string/social_message"
                     app:icon="@drawable/ic_send_24" />
 
@@ -166,7 +165,6 @@
                     style="@style/Widget.AICoach.B.SmallOutline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_8"
                     android:text="@string/social_qr"
                     app:icon="@drawable/ic_qr_code_24" />
             </LinearLayout>
