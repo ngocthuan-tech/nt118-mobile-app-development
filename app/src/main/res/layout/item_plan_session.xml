@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1 buổi trong giáo án (Figma 17, 26): ô ngày (T2 / Buổi 1) + tên các bài + trạng thái.
+    Buổi hôm nay (26) mở rộng: danh sách bài + nút "Bắt đầu".
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_12"
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardCornerRadius="@dimen/radius_card"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/brand_primary"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/dayBox"
+                android:layout_width="@dimen/plan_day_box_size"
+                android:layout_height="@dimen/plan_day_box_size"
+                android:background="@drawable/bg_icon_box"
+                android:backgroundTint="@color/brand_primary_light"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/brand_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="T2" />
+
+                <TextView
+                    android:id="@+id/tvSessionNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp"
+                    tools:text="Buổi 1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Squat • Hít đất • Plank" />
+
+                <TextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                    tools:text="22 phút" />
+            </LinearLayout>
+
+            <!-- 17: 3 ảnh nhỏ các bài -->
+            <LinearLayout
+                android:id="@+id/rowThumbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:orientation="horizontal">
+
+                <ImageView android:id="@+id/thumb1" style="@style/Widget.AICoach.Plan.Thumb" />
+                <ImageView android:id="@+id/thumb2" style="@style/Widget.AICoach.Plan.Thumb" />
+                <ImageView android:id="@+id/thumb3" style="@style/Widget.AICoach.Plan.Thumb" />
+            </LinearLayout>
+
+            <!-- 26: tích xanh (đã tập) / ổ khoá (chưa mở) -->
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginStart="@dimen/space_8"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                tools:src="@drawable/ic_check_circle_24"
+                tools:tint="@color/state_success"
+                tools:visibility="visible" />
+
+            <!-- 26: buổi hôm nay -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStart"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/space_8"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="40dp"
+                android:paddingStart="@dimen/space_16"
+                android:paddingEnd="@dimen/space_16"
+                android:text="@string/plan_start_session"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:icon="@drawable/ic_play_24"
+                app:iconSize="@dimen/icon_size_small"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <!-- 26: danh sách bài của buổi hôm nay -->
+        <LinearLayout
+            android:id="@+id/exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

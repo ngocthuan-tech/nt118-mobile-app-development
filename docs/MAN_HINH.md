@@ -7,39 +7,39 @@
 | Số | Màn | Phụ trách | Code | Ảnh |
 |---|---|---|---|---|
 | 01 | Splash | Thành viên A | Theme `Theme.AICoach.Starting` — đã có (SplashScreen API) | [xem](figma/01_splash.webp) |
-| 02 | Onboarding 1 | Thành viên A | chưa làm | [xem](figma/02_onboarding_1.webp) |
-| 03 | Onboarding 2 | Thành viên A | chưa làm | [xem](figma/03_onboarding_2.webp) |
-| 04 | Onboarding 3 | Thành viên A | chưa làm | [xem](figma/04_onboarding_3.webp) |
-| 05 | Chào mừng | Thành viên A | chưa làm | [xem](figma/05_chao_mung.webp) |
-| 06 | Đăng nhập | Thành viên A | `LoginFragment` — màn tạm | [xem](figma/06_dang_nhap.webp) |
-| 07 | Đăng nhập – báo lỗi | Thành viên A | chưa làm | [xem](figma/07_dang_nhap_bao_loi.webp) |
-| 08 | Quên mật khẩu | Thành viên A | chưa làm | [xem](figma/08_quen_mat_khau.webp) |
-| 09 | Nhập mã xác thực | Thành viên A | chưa làm | [xem](figma/09_nhap_ma_xac_thuc.webp) |
-| 10 | Mật khẩu mới | Thành viên A | chưa làm | [xem](figma/10_mat_khau_moi.webp) |
-| 11 | Đổi mật khẩu thành công | Thành viên A | chưa làm | [xem](figma/11_doi_mat_khau_thanh_cong.webp) |
-| 12 | Đăng ký | Thành viên A | chưa làm | [xem](figma/12_dang_ky.webp) |
-| 13 | Khảo sát 1/3 – Thông tin cơ thể | Thành viên A | chưa làm | [xem](figma/13_khao_sat_1_3_thong_tin_co_the.webp) |
-| 14 | Khảo sát 2/3 – Mục tiêu | Thành viên A | chưa làm | [xem](figma/14_khao_sat_2_3_muc_tieu.webp) |
-| 15 | Khảo sát 3/3 – Trình độ & lịch tập | Thành viên A | chưa làm | [xem](figma/15_khao_sat_3_3_trinh_do_lich_tap.webp) |
-| 16 | AI đang tạo giáo án | Thành viên A | chưa làm | [xem](figma/16_ai_dang_tao_giao_an.webp) |
-| 17 | Giáo án đã sẵn sàng | Thành viên A | chưa làm | [xem](figma/17_giao_an_da_san_sang.webp) |
+| 02 | Onboarding 1 | Thành viên A | `OnboardingFragment` (ViewPager2, trang 1) — đã dựng | [xem](figma/02_onboarding_1.webp) |
+| 03 | Onboarding 2 | Thành viên A | `OnboardingFragment` (trang 2) — đã dựng | [xem](figma/03_onboarding_2.webp) |
+| 04 | Onboarding 3 | Thành viên A | `OnboardingFragment` (trang 3) — đã dựng | [xem](figma/04_onboarding_3.webp) |
+| 05 | Chào mừng | Thành viên A | `WelcomeFragment` — đã dựng | [xem](figma/05_chao_mung.webp) |
+| 06 | Đăng nhập | Thành viên A | `LoginFragment` — đã dựng, nối POST auth/login | [xem](figma/06_dang_nhap.webp) |
+| 07 | Đăng nhập – báo lỗi | Thành viên A | `LoginFragment` (khung `errorBanner`) — đã dựng | [xem](figma/07_dang_nhap_bao_loi.webp) |
+| 08 | Quên mật khẩu | Thành viên A | `ForgotPasswordFragment` — đã dựng (dữ liệu mẫu) | [xem](figma/08_quen_mat_khau.webp) |
+| 09 | Nhập mã xác thực | Thành viên A | `VerifyCodeFragment` — đã dựng (mã demo 123456) | [xem](figma/09_nhap_ma_xac_thuc.webp) |
+| 10 | Mật khẩu mới | Thành viên A | `NewPasswordFragment` — đã dựng | [xem](figma/10_mat_khau_moi.webp) |
+| 11 | Đổi mật khẩu thành công | Thành viên A | `ResetSuccessFragment` — đã dựng | [xem](figma/11_doi_mat_khau_thanh_cong.webp) |
+| 12 | Đăng ký | Thành viên A | `RegisterFragment` — đã dựng, nối POST auth/register | [xem](figma/12_dang_ky.webp) |
+| 13 | Khảo sát 1/3 – Thông tin cơ thể | Thành viên A | `SurveyBodyFragment` — đã dựng, PUT users/me | [xem](figma/13_khao_sat_1_3_thong_tin_co_the.webp) |
+| 14 | Khảo sát 2/3 – Mục tiêu | Thành viên A | `SurveyGoalFragment` — đã dựng, PUT users/me | [xem](figma/14_khao_sat_2_3_muc_tieu.webp) |
+| 15 | Khảo sát 3/3 – Trình độ & lịch tập | Thành viên A | `SurveyScheduleFragment` — đã dựng, PUT users/me | [xem](figma/15_khao_sat_3_3_trinh_do_lich_tap.webp) |
+| 16 | AI đang tạo giáo án | Thành viên A | `PlanGeneratingFragment` — đã dựng, GET plans | [xem](figma/16_ai_dang_tao_giao_an.webp) |
+| 17 | Giáo án đã sẵn sàng | Thành viên A | `PlanReadyFragment` — đã dựng, PUT users/me {activePlanId} | [xem](figma/17_giao_an_da_san_sang.webp) |
 | 18 | Xin quyền camera | Trưởng nhóm | `CameraPermissionFragment` — đã dựng | [xem](figma/18_xin_quyen_camera.webp) |
 | 19 | Hộp thoại quyền Android | Trưởng nhóm | Hộp thoại hệ thống, gọi từ màn 18 — đã có | [xem](figma/19_hop_thoai_quyen_android.webp) |
-| 20 | Bật thông báo nhắc tập | Thành viên A | chưa làm | [xem](figma/20_bat_thong_bao_nhac_tap.webp) |
-| 21 | Trang chủ | Thành viên A | `HomeFragment` — có bản nháp, A chỉnh lại theo ảnh | [xem](figma/21_trang_chu.webp) |
+| 20 | Bật thông báo nhắc tập | Thành viên A | `NotificationPermissionFragment` — đã dựng | [xem](figma/20_bat_thong_bao_nhac_tap.webp) |
+| 21 | Trang chủ | Thành viên A | `HomeFragment` — đã nối GET home | [xem](figma/21_trang_chu.webp) |
 | 22 | Thông báo | Thành viên B | chưa làm | [xem](figma/22_thong_bao.webp) |
-| 23 | Thư viện bài tập | Thành viên A | `ExerciseLibraryFragment` — màn tạm | [xem](figma/23_thu_vien_bai_tap.webp) |
-| 24 | Tìm kiếm & bộ lọc | Thành viên A | chưa làm | [xem](figma/24_tim_kiem_bo_loc.webp) |
-| 25.1 | Chi tiết – Squat | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.1_chi_tiet_squat.webp) |
-| 25.2 | Chi tiết – Hít đất | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.2_chi_tiet_hit_dat.webp) |
-| 25.3 | Chi tiết – Plank | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.3_chi_tiet_plank.webp) |
-| 25.4 | Chi tiết – Lunge | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.4_chi_tiet_lunge.webp) |
-| 25.5 | Chi tiết – Cầu mông | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.5_chi_tiet_cau_mong.webp) |
-| 25.6 | Chi tiết – Chống ghế | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.6_chi_tiet_chong_ghe.webp) |
-| 25.7 | Chi tiết – Bật nhảy | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.7_chi_tiet_bat_nhay.webp) |
-| 25.8 | Chi tiết – Nâng gối | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.8_chi_tiet_nang_goi.webp) |
-| 25.9 | Chi tiết – Chạm chân | Thành viên A | chưa làm (1 layout dùng chung cho 9 bài) | [xem](figma/25.9_chi_tiet_cham_chan.webp) |
-| 26 | Chi tiết giáo án | Thành viên A | chưa làm | [xem](figma/26_chi_tiet_giao_an.webp) |
+| 23 | Thư viện bài tập | Thành viên A | `ExerciseLibraryFragment` — đã dựng, GET exercises | [xem](figma/23_thu_vien_bai_tap.webp) |
+| 24 | Tìm kiếm & bộ lọc | Thành viên A | `ExerciseFilterSheet` (bottom sheet) — đã dựng | [xem](figma/24_tim_kiem_bo_loc.webp) |
+| 25.1 | Chi tiết – Squat | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.1_chi_tiet_squat.webp) |
+| 25.2 | Chi tiết – Hít đất | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.2_chi_tiet_hit_dat.webp) |
+| 25.3 | Chi tiết – Plank | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.3_chi_tiet_plank.webp) |
+| 25.4 | Chi tiết – Lunge | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.4_chi_tiet_lunge.webp) |
+| 25.5 | Chi tiết – Cầu mông | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.5_chi_tiet_cau_mong.webp) |
+| 25.6 | Chi tiết – Chống ghế | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.6_chi_tiet_chong_ghe.webp) |
+| 25.7 | Chi tiết – Bật nhảy | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.7_chi_tiet_bat_nhay.webp) |
+| 25.8 | Chi tiết – Nâng gối | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.8_chi_tiet_nang_goi.webp) |
+| 25.9 | Chi tiết – Chạm chân | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.9_chi_tiet_cham_chan.webp) |
+| 26 | Chi tiết giáo án | Thành viên A | `PlanDetailFragment` — đã dựng, GET plans/{id} | [xem](figma/26_chi_tiet_giao_an.webp) |
 | 27 | Kiểm tra sẵn sàng – chưa thấy người | Trưởng nhóm | `ReadinessFragment` (trạng thái chưa thấy người) — đã dựng | [xem](figma/27_kiem_tra_san_sang_chua_thay_nguoi.webp) |
 | 28 | Kiểm tra sẵn sàng | Trưởng nhóm | `ReadinessFragment` — đã dựng | [xem](figma/28_kiem_tra_san_sang.webp) |
 | 29 | Đếm ngược bắt đầu | Trưởng nhóm | `CountdownFragment` — đã dựng | [xem](figma/29_dem_nguoc_bat_dau.webp) |
@@ -65,6 +65,8 @@
 Tổng: Trưởng nhóm 12 màn + backend • Thành viên A 31 màn (khoảng 20 layout, 25.1–25.9 dùng chung 1 layout) • Thành viên B 12 màn.
 
 Cập nhật 22/10: màn 22, 43, 44, 45, 47 chuyển từ A sang B để chia đều việc giữa kỳ.
+
+Cập nhật 27/10: **toàn bộ 31 màn của Thành viên A đã dựng xong** trên nhánh `feature/a-auth-content` (giao diện theo Figma + điều hướng + dữ liệu qua Repository). Luồng: `nav_auth.xml` (02–17, 20) và `nav_main.xml` (21, 23–26). Màn chi tiết ẩn thanh tab bằng tham số `hideBottomNav = true` trong file navigation của mình (MainActivity đọc tham số này) — Thành viên B dùng được cho màn 38, 39, 41, 42.
 
 ## Hệ màu (đã có trong `res/values/colors.xml`)
 

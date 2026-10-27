@@ -1,18 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Thành viên A: Trang chủ, Thư viện bài tập, Chi tiết bài tập, Kế hoạch, Hồ sơ, Cài đặt -->
+<!--
+    Thành viên A — trong app (có thanh tab):
+    21 Trang chủ (tab) → 25 Chi tiết bài tập · 26 Chi tiết giáo án
+    23 Thư viện bài tập (tab) → 24 Bộ lọc (bottom sheet) · 25 Chi tiết bài tập
+    26 Chi tiết giáo án → 25 Chi tiết bài tập
+    Màn chi tiết ẩn thanh tab bằng tham số hideBottomNav (MainActivity đọc tham số này).
+    "Bắt đầu tập" ở mọi màn: action_global_to_readiness (nav_root.xml).
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
     app:startDestination="@id/homeFragment">
 
+    <!-- 21 Trang chủ — id giữ nguyên (trùng menu thanh tab) -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.aicoach.ui.home.HomeFragment"
-        android:label="@string/nav_home" />
+        android:label="@string/nav_home">
+        <action
+            android:id="@+id/action_home_to_exercise_detail"
+            app:destination="@id/exerciseDetailFragment" />
+        <action
+            android:id="@+id/action_home_to_plan_detail"
+            app:destination="@id/planDetailFragment" />
+    </fragment>
 
+    <!-- 23 Thư viện bài tập — id giữ nguyên (trùng menu thanh tab) -->
     <fragment
         android:id="@+id/exerciseLibraryFragment"
         android:name="com.aicoach.ui.exercise.ExerciseLibraryFragment"
-        android:label="@string/nav_exercises" />
+        android:label="@string/nav_exercises">
+        <action
+            android:id="@+id/action_library_to_filter"
+            app:destination="@id/exerciseFilterSheet" />
+        <action
+            android:id="@+id/action_library_to_exercise_detail"
+            app:destination="@id/exerciseDetailFragment" />
+    </fragment>
+
+    <!-- 24 Bộ lọc (bottom sheet trên Thư viện) -->
+    <dialog
+        android:id="@+id/exerciseFilterSheet"
+        android:name="com.aicoach.ui.exercise.ExerciseFilterSheet"
+        android:label="ExerciseFilter" />
+
+    <!-- 25.1–25.9 Chi tiết bài tập (1 màn cho 9 bài) -->
+    <fragment
+        android:id="@+id/exerciseDetailFragment"
+        android:name="com.aicoach.ui.exercise.ExerciseDetailFragment"
+        android:label="ExerciseDetail">
+        <argument
+            android:name="exerciseId"
+            app:argType="string" />
+        <!-- Vị trí trong thư viện cho chip "Bài 3/9"; 0 = không hiện -->
+        <argument
+            android:name="position"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <!-- 26 Chi tiết giáo án -->
+    <fragment
+        android:id="@+id/planDetailFragment"
+        android:name="com.aicoach.ui.plan.PlanDetailFragment"
+        android:label="PlanDetail">
+        <argument
+            android:name="planId"
+            app:argType="string" />
+        <!-- Số buổi đã tập; -1 = chưa theo giáo án này -->
+        <argument
+            android:name="sessionsDone"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="preview"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_plan_detail_to_exercise_detail"
+            app:destination="@id/exerciseDetailFragment" />
+    </fragment>
 
 </navigation>

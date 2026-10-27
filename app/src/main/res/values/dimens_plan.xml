@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên A — Giáo án (Figma 17, 26) -->
+    <dimen name="plan_day_box_size">56dp</dimen>
+    <dimen name="plan_thumb_size">28dp</dimen>
+    <dimen name="plan_exercise_thumb">40dp</dimen>
+    <dimen name="plan_stat_value_size">26sp</dimen>
+</resources>

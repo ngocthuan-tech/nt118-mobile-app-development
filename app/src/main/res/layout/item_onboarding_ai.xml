@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 02: khung camera kính mờ + khung xương AI + huy hiệu "12 lần" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="@dimen/onboarding_frame_height">
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="@dimen/onboarding_frame_width"
+            android:layout_height="@dimen/onboarding_frame_height"
+            android:background="@drawable/bg_glass_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.55">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_16"
+                android:background="@drawable/bg_camera_frame_cyan" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/brand_sky" />
+
+            <ImageView
+                android:layout_width="@dimen/onboarding_body_size"
+                android:layout_height="@dimen/onboarding_body_size"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/accent_cyan" />
+        </FrameLayout>
+
+        <!-- Chip "33 điểm khớp" chồng lên góc trên trái khung -->
+        <TextView
+            style="@style/Widget.AICoach.ChipDark"
+            android:background="@drawable/bg_glass_card"
+            android:drawableStart="@drawable/ic_target_24"
+            android:drawableTint="@color/accent_cyan"
+            android:text="@string/onboarding_1_joints"
+            android:translationX="-24dp"
+            android:translationY="@dimen/space_32"
+            app:layout_constraintStart_toStartOf="@id/frame"
+            app:layout_constraintTop_toTopOf="@id/frame" />
+
+        <!-- Huy hiệu "12 lần" chồng lên góc dưới phải khung -->
+        <LinearLayout
+            android:layout_width="@dimen/onboarding_rep_badge_size"
+            android:layout_height="@dimen/onboarding_rep_badge_size"
+            android:background="@drawable/bg_auth_gradient_circle"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:translationX="@dimen/space_24"
+            android:translationY="-28dp"
+            app:layout_constraintBottom_toBottomOf="@id/frame"
+            app:layout_constraintEnd_toEndOf="@id/frame">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/onboarding_1_reps"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_1_reps_unit"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/text"
+        layout="@layout/item_onboarding_text" />
+</LinearLayout>

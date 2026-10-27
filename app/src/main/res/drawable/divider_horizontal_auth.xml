@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vạch ngăn 1dp giữa các dòng trong thẻ (Figma 20) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/divider" />
+    <size android:height="1dp" />
+</shape>

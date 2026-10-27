@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vòng sáng 2 lớp quanh icon lớn (Figma 08, 09, 10, 20) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/brand_primary_light" />
+        </shape>
+    </item>
+    <item
+        android:bottom="16dp"
+        android:left="16dp"
+        android:right="16dp"
+        android:top="16dp">
+        <shape android:shape="oval">
+            <gradient
+                android:angle="315"
+                android:endColor="@color/brand_gradient_end"
+                android:startColor="@color/brand_gradient_start" />
+        </shape>
+    </item>
+</layer-list>

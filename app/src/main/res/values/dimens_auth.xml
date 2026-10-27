@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên A — luồng tài khoản, onboarding, khảo sát -->
+    <dimen name="auth_logo_size">56dp</dimen>
+    <dimen name="auth_horizontal_padding">28dp</dimen>
+    <dimen name="auth_title_size">26sp</dimen>
+
+    <dimen name="auth_icon_halo_size">96dp</dimen>
+    <dimen name="auth_icon_inner_size">32dp</dimen>
+    <dimen name="auth_otp_box_width">46dp</dimen>
+    <dimen name="auth_otp_box_height">56dp</dimen>
+    <dimen name="auth_otp_text_size">24sp</dimen>
+    <dimen name="auth_bar_height">4dp</dimen>
+    <dimen name="auth_success_size">220dp</dimen>
+    <dimen name="auth_success_icon_size">56dp</dimen>
+    <dimen name="auth_banner_icon_size">22dp</dimen>
+
+    <!-- 02–05 Onboarding, Chào mừng -->
+    <dimen name="onboarding_illustration_height">380dp</dimen>
+    <dimen name="onboarding_frame_width">240dp</dimen>
+    <dimen name="onboarding_frame_height">300dp</dimen>
+    <dimen name="onboarding_body_size">170dp</dimen>
+    <dimen name="onboarding_rep_badge_size">84dp</dimen>
+    <dimen name="onboarding_fire_size">140dp</dimen>
+    <dimen name="onboarding_fire_icon_size">64dp</dimen>
+    <dimen name="onboarding_badge_size">52dp</dimen>
+    <dimen name="onboarding_next_size">56dp</dimen>
+    <dimen name="onboarding_dot_size">6dp</dimen>
+    <dimen name="onboarding_dot_active_width">24dp</dimen>
+    <dimen name="onboarding_title_size">26sp</dimen>
+    <dimen name="welcome_logo_size">120dp</dimen>
+    <dimen name="welcome_title_size">34sp</dimen>
+    <dimen name="welcome_feature_icon_box">32dp</dimen>
+
+    <!-- 13–15 Khảo sát -->
+    <dimen name="survey_bar_height">4dp</dimen>
+    <dimen name="survey_option_icon_box">40dp</dimen>
+    <dimen name="survey_gender_avatar">40dp</dimen>
+    <dimen name="survey_day_size">40dp</dimen>
+    <dimen name="survey_big_value_size">22sp</dimen>
+    <dimen name="survey_estimate_value_size">26sp</dimen>
+    <dimen name="survey_level_bar_width">5dp</dimen>
+
+    <!-- 16 AI đang tạo giáo án -->
+    <dimen name="plan_generating_ring_size">200dp</dimen>
+    <dimen name="plan_generating_ring_thickness">10dp</dimen>
+    <dimen name="plan_generating_logo_size">56dp</dimen>
+    <dimen name="plan_generating_step_icon">22dp</dimen>
+
+    <!-- 20 Bật thông báo -->
+    <dimen name="notify_bell_halo">132dp</dimen>
+    <dimen name="notify_bell_icon">44dp</dimen>
+</resources>

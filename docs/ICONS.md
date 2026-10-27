@@ -87,4 +87,6 @@ Icon riêng của luồng tập AI (Trưởng nhóm): `ic_body_24`, `ic_standing
 
 ## Ảnh bài tập
 
-Ảnh người tập của 9 bài **không phải icon**. Thành viên A xuất từ Figma, đặt ở `res/drawable-nodpi/` (`img_squat`, `img_pushup`…), gắn bằng `ExerciseImages.bind(imageView, imageName)`. Chưa có ảnh thì app tự hiện hình người mờ.
+Ảnh người tập của 9 bài **không phải icon**. Đã có trong `res/drawable-nodpi/` (`img_squat`, `img_pushup`, `img_plank`, `img_lunge`, `img_glute_bridge`, `img_dips`, `img_jumping_jack`, `img_high_knee`, `img_toe_touch` — WebP nền trong suốt, mỗi ảnh < 35 KB), gắn bằng `ExerciseImages.bind(imageView, imageName)`. Chưa có ảnh thì app tự hiện hình người mờ.
+
+Nguồn ảnh: [Free Exercise DB](https://github.com/yuhonas/free-exercise-db) (giấy phép Unlicense — dùng tự do), tách nền bằng MediaPipe Pose (segmentation) — cùng công nghệ nhận diện tư thế của app. Ghi nguồn này trong báo cáo phần "Tài nguyên sử dụng".

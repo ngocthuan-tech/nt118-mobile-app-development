@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Giáo án (Figma 16, 17, 26) — Thành viên A, tiền tố plan_ -->
+
+    <string name="plan_level_beginner">Người mới</string>
+    <string name="plan_level_intermediate">Trung bình</string>
+    <string name="plan_level_advanced">Nâng cao</string>
+
+    <!-- 16 AI đang tạo giáo án -->
+    <string name="plan_generating_title">AI đang tạo giáo án\ncho riêng bạn…</string>
+    <string name="plan_generating_percent">%1$d%%</string>
+    <string name="plan_generating_step_body">Phân tích chỉ số cơ thể</string>
+    <string name="plan_generating_step_body_desc">%1$d cm • %2$d kg • BMI %3$s</string>
+    <string name="plan_generating_step_goal">Xác định mục tiêu</string>
+    <string name="plan_generating_step_exercises">Chọn bài tập theo trình độ</string>
+    <string name="plan_generating_step_exercises_desc">Đang chọn bài phù hợp với trình độ %1$s…</string>
+    <string name="plan_generating_step_schedule">Sắp xếp lịch tập</string>
+    <string name="plan_generating_step_schedule_desc">%1$d buổi/tuần • %2$d phút/buổi</string>
+    <string name="plan_generating_footer">Chỉ mất vài giây • Dữ liệu được xử lý an toàn</string>
+
+    <!-- 17 Giáo án đã sẵn sàng -->
+    <string name="plan_ready_badge">Do AI đề xuất cho bạn</string>
+    <string name="plan_ready_title">Giáo án của bạn đã sẵn sàng!</string>
+    <string name="plan_stat_weeks">tuần</string>
+    <string name="plan_stat_sessions">buổi tập</string>
+    <string name="plan_stat_minutes">mỗi buổi</string>
+    <string name="plan_stat_minutes_value">%1$d′</string>
+    <string name="plan_week_intro">Tuần 1 – Làm quen</string>
+    <string name="plan_see_all_weeks">Xem đủ %1$d tuần</string>
+    <string name="plan_session_number">Buổi %1$d</string>
+    <string name="plan_minutes">%1$d phút</string>
+    <string name="plan_ready_ai_note">Độ khó tự tăng khi điểm tư thế của bạn đạt ≥ 85 trong 3 buổi liên tiếp</string>
+    <string name="plan_ready_start">Bắt đầu hành trình</string>
+    <string name="plan_ready_adjust">Điều chỉnh giáo án</string>
+
+    <!-- 26 Chi tiết giáo án -->
+    <string name="plan_detail_header">Giáo án</string>
+    <string name="plan_detail_meta">%1$d tuần • %2$d buổi • Trình độ: %3$s</string>
+    <string name="plan_detail_progress">Buổi %1$d/%2$d</string>
+    <string name="plan_detail_percent">%1$d%%</string>
+    <string name="plan_week_tab">Tuần %1$d</string>
+    <string name="plan_session_today">Buổi %1$d • Hôm nay</string>
+    <string name="plan_session_summary">%1$d bài • ~%2$d phút</string>
+    <string name="plan_session_line">%1$s • %2$d phút</string>
+    <string name="plan_start_session">Bắt đầu</string>
+    <string name="plan_follow">Theo giáo án này</string>
+    <string name="plan_following">Bạn đang theo giáo án này</string>
+    <string name="plan_follow_done">Đã chọn giáo án. Trang chủ sẽ cập nhật bài tập hôm nay.</string>
+    <string name="plan_detail_ai_note">AI tăng số lần khi 3 buổi gần nhất bạn đạt ≥ 85 điểm tư thế</string>
+    <string name="plan_session_done">Đã hoàn thành</string>
+    <string name="plan_session_locked">Chưa mở</string>
+
+    <string name="plan_percent_value">%1$d%%</string>
+</resources>

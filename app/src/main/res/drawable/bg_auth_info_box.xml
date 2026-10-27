@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hộp thông tin nền xanh nhạt (Figma 08 "Mã có hiệu lực…", 14, 15). Đổi màu bằng backgroundTint. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/white" />
+    <corners android:radius="@dimen/radius_button" />
+</shape>

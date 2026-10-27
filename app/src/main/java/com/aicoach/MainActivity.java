@@ -26,6 +26,9 @@ import com.aicoach.databinding.ActivityMainBinding;
  */
 public class MainActivity extends AppCompatActivity {
 
+    /** Tham số navigation: màn chi tiết đặt true để ẩn thanh 5 tab (Figma 25, 26 không có thanh tab). */
+    public static final String ARG_HIDE_BOTTOM_NAV = "hideBottomNav";
+
     private ActivityMainBinding binding;
 
     @Override
@@ -51,12 +54,14 @@ public class MainActivity extends AppCompatActivity {
         // Nút tròn "Tập AI" nổi giữa thanh tab = chọn tab giữa
         binding.fabTrain.setOnClickListener(v -> binding.bottomNav.setSelectedItemId(R.id.nav_workout));
 
-        // Ẩn thanh tab ở luồng đăng nhập và khi đang tập với camera
+        // Ẩn thanh tab ở luồng đăng nhập, khi đang tập với camera, và ở màn chi tiết
+        // (màn nào khai báo tham số hideBottomNav = true trong file navigation của mình).
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             boolean hideBottomNav = isInsideGraph(destination, R.id.nav_auth)
                     || isInsideGraph(destination, R.id.nav_workout)
                     || isInsideGraph(destination, R.id.nav_profile)
-                    || isInsideGraph(destination, R.id.nav_notifications);
+                    || isInsideGraph(destination, R.id.nav_notifications)
+                    || (arguments != null && arguments.getBoolean(ARG_HIDE_BOTTOM_NAV, false));
             binding.bottomBar.setVisibility(hideBottomNav ? View.GONE : View.VISIBLE);
         });
 

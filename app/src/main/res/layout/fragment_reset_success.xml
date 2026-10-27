@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 11 Đổi mật khẩu thành công (Thành viên A) -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/space_24"
+        android:paddingTop="@dimen/space_48"
+        android:paddingEnd="@dimen/space_24"
+        android:paddingBottom="@dimen/space_16">
+
+        <!-- Vòng tích xanh + vài mảnh giấy màu -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_success_size">
+
+            <FrameLayout
+                android:id="@+id/successRing"
+                android:layout_width="@dimen/auth_success_size"
+                android:layout_height="@dimen/auth_success_size"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_auth_success_rings">
+
+                <ImageView
+                    android:layout_width="@dimen/auth_success_icon_size"
+                    android:layout_height="@dimen/auth_success_icon_size"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_check_24"
+                    app:tint="@color/white" />
+            </FrameLayout>
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="top|start"
+                android:layout_marginStart="@dimen/space_24"
+                android:layout_marginTop="@dimen/space_16"
+                android:backgroundTint="@color/accent_cyan"
+                android:rotation="-20" />
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/space_4"
+                android:layout_marginEnd="@dimen/space_48"
+                android:backgroundTint="@color/state_warning"
+                android:rotation="30" />
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="@dimen/space_12"
+                android:backgroundTint="@color/gold_light"
+                android:rotation="15" />
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/space_16"
+                android:backgroundTint="@color/state_success"
+                android:rotation="-50" />
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="@dimen/space_32"
+                android:layout_marginBottom="@dimen/space_24"
+                android:backgroundTint="@color/brand_primary"
+                android:rotation="-40" />
+
+            <View
+                style="@style/Widget.AICoach.Auth.Confetti"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/space_32"
+                android:layout_marginBottom="@dimen/space_12"
+                android:backgroundTint="@color/streak_orange_start"
+                android:rotation="-10" />
+        </FrameLayout>
+
+        <TextView
+            style="@style/Widget.AICoach.Auth.Title"
+            android:layout_marginTop="@dimen/space_24"
+            android:gravity="center"
+            android:text="@string/auth_reset_success_title" />
+
+        <TextView
+            style="@style/Widget.AICoach.Auth.Subtitle"
+            android:gravity="center"
+            android:text="@string/auth_reset_success_desc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            android:background="@drawable/bg_card_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12">
+
+            <FrameLayout
+                android:layout_width="@dimen/icon_circle_size"
+                android:layout_height="@dimen/icon_circle_size"
+                android:background="@drawable/bg_icon_box"
+                android:backgroundTint="@color/brand_primary_light">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_shield_24"
+                    app:tint="@color/brand_primary" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:text="@string/auth_reset_success_note"
+                android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/space_32" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoginNow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/auth_login_now" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

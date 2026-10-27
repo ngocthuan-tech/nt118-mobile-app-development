@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên A — Thư viện, Bộ lọc, Chi tiết bài tập (Figma 23, 24, 25) -->
+    <dimen name="exercise_grid_image_height">96dp</dimen>
+    <dimen name="exercise_filter_button_size">52dp</dimen>
+    <dimen name="exercise_detail_header_height">300dp</dimen>
+    <dimen name="exercise_detail_image_height">230dp</dimen>
+    <dimen name="exercise_detail_sheet_overlap">28dp</dimen>
+    <dimen name="exercise_step_number_size">22dp</dimen>
+    <dimen name="exercise_sheet_handle_width">40dp</dimen>
+    <dimen name="exercise_bottom_bar_space">96dp</dimen>
+
+    <dimen name="exercise_detail_sheet_overlap_negative">-28dp</dimen>
+</resources>

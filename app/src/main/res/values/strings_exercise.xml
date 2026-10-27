@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thư viện, Bộ lọc, Chi tiết bài tập (Figma 23, 24, 25.1–25.9) — Thành viên A, tiền tố exercise_ -->
+
+    <string name="exercise_group_all">Tất cả</string>
+    <string name="exercise_group_all_count">Tất cả (%1$d)</string>
+    <string name="exercise_group_legs">Chân &amp; mông</string>
+    <string name="exercise_group_chest_arms">Ngực &amp; tay</string>
+    <string name="exercise_group_core">Bụng &amp; lưng</string>
+    <string name="exercise_group_cardio">Toàn thân</string>
+
+    <string name="exercise_difficulty_easy">Dễ</string>
+    <string name="exercise_difficulty_medium">Trung bình</string>
+    <string name="exercise_difficulty_hard">Khó</string>
+
+    <string name="exercise_ai_counter">AI đếm số lần</string>
+    <string name="exercise_ai_timer">AI tính giờ giữ</string>
+    <string name="exercise_volume_reps">%1$d × %2$d lần</string>
+    <string name="exercise_volume_seconds">%1$d × %2$d giây</string>
+
+    <!-- 23 Thư viện -->
+    <string name="exercise_library_title">Thư viện bài tập</string>
+    <string name="exercise_library_subtitle">%1$d bài tập • tất cả đều có AI theo dõi</string>
+    <string name="exercise_search_hint">Tìm bài tập, nhóm cơ…</string>
+    <string name="exercise_filter">Bộ lọc</string>
+    <string name="exercise_empty">Không tìm thấy bài tập phù hợp</string>
+    <string name="exercise_empty_hint">Thử bỏ bớt bộ lọc hoặc gõ từ khoá khác</string>
+    <string name="exercise_clear_filters">Xoá bộ lọc</string>
+    <string name="exercise_camera_badge">Có AI camera</string>
+
+    <!-- 24 Bộ lọc -->
+    <string name="exercise_filter_reset">Đặt lại</string>
+    <string name="exercise_filter_muscle">Nhóm cơ</string>
+    <string name="exercise_filter_difficulty">Mức độ</string>
+    <string name="exercise_filter_ai_mode">Kiểu AI theo dõi</string>
+    <string name="exercise_filter_mode_all">Tất cả</string>
+    <string name="exercise_filter_mode_reps">Đếm số lần</string>
+    <string name="exercise_filter_mode_seconds">Tính giờ</string>
+    <string name="exercise_filter_no_equipment">Không cần dụng cụ</string>
+    <string name="exercise_filter_no_equipment_desc">Chỉ hiện bài tập được bằng thân người</string>
+    <string name="exercise_filter_apply">Áp dụng • %1$d bài tập</string>
+
+    <!-- 25 Chi tiết -->
+    <string name="exercise_back">Quay lại</string>
+    <string name="exercise_share">Chia sẻ</string>
+    <string name="exercise_position">Bài %1$d/%2$d</string>
+    <string name="exercise_stat_time">Thời gian</string>
+    <string name="exercise_stat_time_value">%1$d phút</string>
+    <string name="exercise_stat_kcal">Tiêu hao</string>
+    <string name="exercise_stat_kcal_value">~%1$d kcal</string>
+    <string name="exercise_stat_volume_reps">Hiệp × lần</string>
+    <string name="exercise_stat_volume_seconds">Hiệp × giây</string>
+    <string name="exercise_stat_volume_value">%1$d × %2$d</string>
+    <string name="exercise_how_to">Cách thực hiện</string>
+    <string name="exercise_ai_tracks">AI sẽ theo dõi</string>
+    <string name="exercise_tips">Mẹo tập đúng</string>
+    <string name="exercise_mistakes">Lỗi thường gặp – AI sẽ nhắc bạn</string>
+    <string name="exercise_start">Bắt đầu tập</string>
+    <string name="exercise_share_text">Mình đang tập %1$s cùng AI Coach – AI đếm số lần và sửa tư thế ngay tại nhà!</string>
+
+    <string name="exercise_camera_angled">Camera: Nghiêng 45°, cách 2–3 m</string>
+    <string name="exercise_camera_side">Camera: Ngang người, cách 2 m</string>
+    <string name="exercise_camera_front">Camera: Chính diện, cách 2–3 m</string>
+
+    <string-array name="exercise_ai_checks_squat">
+        <item>Đếm 1 lần mỗi khi đứng lên từ đáy</item>
+        <item>Góc gối ≤ 90° – xuống đủ sâu</item>
+        <item>Thân trên không đổ về trước</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_pushup">
+        <item>Đếm 1 lần khi đẩy người lên hết tay</item>
+        <item>Góc khuỷu ≤ 90° ở điểm thấp nhất</item>
+        <item>Vai – hông – gót thành một đường thẳng</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_plank">
+        <item>Chỉ tính giờ khi giữ đúng tư thế</item>
+        <item>Vai – hông – gót thẳng (lệch ≤ 10%)</item>
+        <item>Tự dừng giờ khi võng hoặc nhô hông</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_lunge">
+        <item>Đếm 1 lần mỗi khi trở về tư thế đứng</item>
+        <item>Gối trước gập khoảng 90°</item>
+        <item>Thân trên giữ thẳng, không ngả trước</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_glute_bridge">
+        <item>Đếm 1 lần khi nâng hông lên cao nhất</item>
+        <item>Vai – hông – gối thẳng ở điểm cao</item>
+        <item>Nhắc khi hạ hông quá nhanh</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_chair_dip">
+        <item>Đếm 1 lần khi duỗi thẳng tay</item>
+        <item>Góc khuỷu ≤ 90° khi hạ người</item>
+        <item>Khuỷu tay hướng ra sau, không mở rộng</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_jumping_jack">
+        <item>Đếm 1 lần mỗi chu kỳ dang – khép</item>
+        <item>Hai tay đưa lên quá đầu</item>
+        <item>Chân dang rộng hơn vai</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_high_knees">
+        <item>Đếm mỗi lần một gối nâng lên</item>
+        <item>Gối nâng ngang hông</item>
+        <item>Thân trên giữ thẳng, không ngả sau</item>
+    </string-array>
+    <string-array name="exercise_ai_checks_toe_touch">
+        <item>Đếm 1 lần khi tay chạm gần mũi chân</item>
+        <item>Gập người từ hông, không giật</item>
+        <item>Nhắc khi khoá cứng đầu gối</item>
+    </string-array>
+</resources>

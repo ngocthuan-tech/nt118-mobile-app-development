@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hình tròn gradient xanh chứa icon (Figma 02 nút Tiếp, 08–10, 20) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:angle="315"
+        android:endColor="@color/brand_gradient_end"
+        android:startColor="@color/brand_gradient_start" />
+</shape>
