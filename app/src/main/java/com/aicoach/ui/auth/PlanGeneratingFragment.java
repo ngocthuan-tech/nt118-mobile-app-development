@@ -55,13 +55,13 @@ public class PlanGeneratingFragment extends BaseFragment<FragmentPlanGeneratingB
         super.onViewCreated(view, savedInstanceState);
         vm = SurveyUi.viewModel(this);
 
-        List<String> focus = new ArrayList<>();
-        focus.add(getString(goalLabel()));
+        String goal = getString(goalLabel());
+        List<String> focus = new ArrayList<>(vm.getFocusAreas());
         binding.stepBody.tvTitle.setText(R.string.plan_generating_step_body);
         binding.stepBody.tvDesc.setText(getString(R.string.plan_generating_step_body_desc,
                 vm.getHeightCm(), vm.getWeightKg(), vm.bmiText()));
         binding.stepGoal.tvTitle.setText(R.string.plan_generating_step_goal);
-        binding.stepGoal.tvDesc.setText(TextUtils.join(" – ", focus));
+        binding.stepGoal.tvDesc.setText(focus.isEmpty() ? goal : goal + " – " + TextUtils.join(", ", focus));
         binding.stepExercises.tvTitle.setText(R.string.plan_generating_step_exercises);
         binding.stepExercises.tvDesc.setText(getString(R.string.plan_generating_step_exercises_desc,
                 getString(PlanUi.levelLabel(vm.getLevel())).toLowerCase(java.util.Locale.ROOT)));

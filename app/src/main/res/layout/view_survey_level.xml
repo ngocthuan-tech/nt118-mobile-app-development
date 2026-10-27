@@ -35,7 +35,7 @@
         android:id="@+id/tvDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textAppearance="@style/TextAppearance.AICoach.Caption"
         tools:text="@string/survey_level_beginner_desc" />
 </LinearLayout>

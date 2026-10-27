@@ -49,7 +49,7 @@ public class SurveyGoalFragment extends BaseFragment<FragmentSurveyGoalBinding> 
         Chip[] chips = {binding.chipAbs, binding.chipLegs, binding.chipArms, binding.chipChest,
                 binding.chipBack, binding.chipFull};
         for (Chip chip : chips) {
-            String key = String.valueOf(chip.getId());
+            String key = chip.getText().toString();
             chip.setChecked(vm.getFocusAreas().contains(key));
             chip.setOnCheckedChangeListener((c, checked) -> {
                 if (checked) vm.getFocusAreas().add(key);

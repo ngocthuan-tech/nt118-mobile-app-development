@@ -33,8 +33,7 @@
                     android:layout_marginEnd="@dimen/space_24"
                     android:layout_marginBottom="@dimen/space_48"
                     android:alpha="0.7"
-                    android:background="@drawable/bg_body_frame"
-                    android:backgroundTint="@color/accent_cyan" />
+                    android:background="@drawable/bg_camera_frame_cyan" />
 
                 <ImageView
                     android:id="@+id/imgExercise"

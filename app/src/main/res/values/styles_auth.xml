@@ -9,7 +9,7 @@
         <item name="android:layout_marginTop">@dimen/space_4</item>
         <item name="hintEnabled">false</item>
         <item name="boxBackgroundColor">@color/bg_card</item>
-        <item name="boxStrokeColor">@color/brand_primary</item>
+        <item name="boxStrokeColor">@color/auth_input_stroke</item>
         <item name="boxCornerRadiusTopStart">@dimen/radius_card</item>
         <item name="boxCornerRadiusTopEnd">@dimen/radius_card</item>
         <item name="boxCornerRadiusBottomStart">@dimen/radius_card</item>

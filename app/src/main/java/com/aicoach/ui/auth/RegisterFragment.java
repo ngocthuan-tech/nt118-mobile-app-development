@@ -1,6 +1,11 @@
 package com.aicoach.ui.auth;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -56,6 +62,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding> {
         binding.etConfirm.addTextChangedListener(SimpleTextWatcher.after(vm::clearErrors));
         binding.cbTerms.setOnCheckedChangeListener((b, checked) -> vm.clearErrors());
         PasswordUi.bindStrength(binding.strength, LoginFragment.text(binding.etPassword.getText()), true);
+        binding.cbTerms.setText(termsText());
 
         vm.getErrors().observe(getViewLifecycleOwner(), fe -> {
             binding.tilName.setError(fe == null || fe.name == null ? null : getString(fe.name));
@@ -83,6 +90,19 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding> {
                 AuthNavigation.afterSignIn(nav, r.data.getUser() != null && r.data.getUser().isProfileCompleted());
             }
         });
+    }
+
+    /** "Tôi đồng ý với **Điều khoản sử dụng & Chính sách quyền riêng tư**" — phần sau "với" in đậm màu xanh. */
+    @NonNull
+    private CharSequence termsText() {
+        String full = getString(R.string.auth_terms_agree);
+        String lead = getString(R.string.auth_terms_agree_lead);
+        SpannableString span = new SpannableString(full);
+        int start = full.startsWith(lead) ? lead.length() : 0;
+        span.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.brand_primary)),
+                start, full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(new StyleSpan(Typeface.BOLD), start, full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return span;
     }
 
     private void submit() {
