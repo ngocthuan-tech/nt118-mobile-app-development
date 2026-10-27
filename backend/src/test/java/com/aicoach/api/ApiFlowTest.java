@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/** Kiểm thử toàn luồng mà thầy chấm: Authentication → User Profile → Home, cộng bài tập và lưu buổi tập. */
+/** Kiểm thử toàn luồng mà thầy chấm trên PostgreSQL thật: Authentication → User Profile → Home (Chuỗi 7 ngày + Bài tập hôm nay trong GET /home). */
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -180,6 +180,22 @@ class ApiFlowTest {
                                 {"currentPassword":"abc12345","newPassword":"xyz98765"}"""))
                 .andExpect(status().isOk());
         login(email, "xyz98765");
+    }
+
+    @Test
+    void newUserHomeIsEmptyButValid() throws Exception {
+        String auth = register(randomEmail(), "abc12345");
+        mvc.perform(get("/api/v1/home").header("Authorization", auth))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.streak").value(0))
+                .andExpect(jsonPath("$.data.week.doneSessions").value(0))
+                .andExpect(jsonPath("$.data.week.days", hasSize(7)))
+                .andExpect(jsonPath("$.data.week.days[0].label").value("T2"))
+                .andExpect(jsonPath("$.data.activePlan").doesNotExist())
+                .andExpect(jsonPath("$.data.todayWorkout.exercises[0].exerciseId").value("squat"))
+                .andExpect(jsonPath("$.data.todayWorkout.exercises", hasSize(3)));
+        mvc.perform(get("/api/v1/home"))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

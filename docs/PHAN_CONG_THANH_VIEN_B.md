@@ -27,6 +27,7 @@ date: "22/10/2026"
 - **Backend:** `https://aicoach-r15.koreacentral.cloudapp.azure.com/api/v1/` — xem và gọi thử mọi API tại **[Swagger](https://aicoach-r15.koreacentral.cloudapp.azure.com/swagger-ui.html)** (bấm *Authorize*, dán `accessToken`).
 - **Tài khoản demo:** `demo@aicoach.vn` / `Demo1234` — có sẵn giáo án và 8 buổi tập, dùng để test màn có số liệu.
 - **Bỏ Firebase.** App giờ chỉ nói chuyện với backend qua Retrofit. Không ai thêm lại thư viện Firebase.
+- **Database:** PostgreSQL trên server. Cấu trúc bảng nằm trong `backend/src/main/resources/db/migration/` (Flyway), sơ đồ quan hệ ở [`docs/DATABASE.md`](DATABASE.md).
 
 | Lớp có sẵn | Nằm ở | Dùng để |
 |---|---|---|
@@ -35,6 +36,7 @@ date: "22/10/2026"
 | `AuthInterceptor` | `data/remote/` | Tự gắn token vào mọi request; gặp 401 tự đưa về màn Đăng nhập |
 | `BaseRepository.execute(call)` / `execute(call, onSuccess)` / `mock(data)` | `data/repository/` | Gọi API → `LiveData<Resource<T>>`, đã xử lý lỗi mạng và lỗi server |
 | `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
+| 62 icon `ic_*_24`, logo `img_logo_tile` | `res/drawable/` | Bộ icon chung cho mọi màn — tra ở [`docs/ICONS.md`](ICONS.md) |
 | `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
 | `ExerciseImages.bind(imageView, idHoặcImageName)` | `common/` | Gắn ảnh người tập của 9 bài; chưa có ảnh thì hiện hình người mờ |
 | `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
@@ -48,7 +50,7 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
-| GET | `home` | `HomeApi.getHome` | A — Trang chủ (21) |
+| GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
 | GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |
@@ -199,7 +201,7 @@ Cần thêm global action mới → nhắn Trưởng nhóm, không tự sửa `n
 - Màu, kiểu chữ, nút đã có sẵn khớp Figma — xem bảng trong [`docs/MAN_HINH.md`](MAN_HINH.md). Không tự thêm màu mới.
 - Dựng bằng `ConstraintLayout` + component Material (`MaterialButton`, `TextInputLayout`, `MaterialCardView`, `Chip`). Không dùng plugin tự sinh code toạ độ tuyệt đối.
 - Khối lặp lại = 1 file XML dùng chung (`item_...`, `view_...` + `<include>`).
-- Icon: Figma xuất SVG → `File > New > Vector Asset` → `ic_<tên>_24`.
+- **Icon: dùng bộ 62 icon có sẵn** — tra tên theo số màn Figma trong [`docs/ICONS.md`](ICONS.md), tô màu bằng `app:tint`. Không tự import icon trùng chức năng; thiếu icon thì nhắn Trưởng nhóm thêm vào bộ chung.
 
 ## 7. Git — nhánh và thứ tự đưa vào `main`
 

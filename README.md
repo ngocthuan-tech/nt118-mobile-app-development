@@ -46,7 +46,7 @@ Tài liệu phân công chi tiết: [`docs/PHAN_CONG_THANH_VIEN_A.md`](docs/PHAN
 
 Toàn bộ 55 màn (ảnh + người phụ trách + trạng thái) nằm ở [`docs/MAN_HINH.md`](docs/MAN_HINH.md), ảnh gốc trong [`docs/figma/`](docs/figma/).
 
-- Hệ màu, kiểu chữ, style nút, icon dùng chung đã khớp Figma (`res/values/`, `res/drawable/`).
+- Hệ màu, kiểu chữ, style nút đã khớp Figma (`res/values/`); 62 icon dùng chung cho mọi màn giữa kỳ — tra tên ở [`docs/ICONS.md`](docs/ICONS.md).
 - Thanh 5 tab có nút tròn "Tập AI" nổi ở giữa đúng như Figma.
 - Luồng tập AI của Trưởng nhóm (Figma 18, 27–36) đã dựng đủ giao diện, chạy được bằng dữ liệu mẫu.
 - Các màn của Thành viên A và B: mỗi người tự dựng theo ảnh trong `docs/figma/`.
@@ -61,7 +61,7 @@ develop   ← bản tích hợp của cả nhóm (merge qua Pull Request)
 feature/lead-ai-workout     ← Trưởng nhóm (module AI)
 feature/lead-backend        ← Trưởng nhóm (backend + lớp Retrofit)
 feature/a-auth-content      ← Thành viên A
-feature/b-progress-social   ← Thành viên B
+feature/b-progress-social   ← Thành viên Trương Đức Thịnh
 ```
 
 Mỗi Pull Request được GitHub Actions tự build APK (và test backend nếu sửa `backend/`); build đỏ thì chưa được merge.
