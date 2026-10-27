@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1 ô ngày trên lịch tháng (Figma 38). Thành viên B đặt nền trong adapter:
+    đã tập = bg_progress_day_done (chữ trắng) · có lịch = bg_progress_day_planned (chữ xanh)
+    · hôm nay = bg_progress_day_today · ô trống đầu tháng = để trống chữ.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="@dimen/b_calendar_day"
+        android:layout_height="@dimen/b_calendar_day"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:background="@drawable/bg_progress_day_done"
+        tools:text="5"
+        tools:textColor="@color/white" />
+</FrameLayout>

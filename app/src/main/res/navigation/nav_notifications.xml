@@ -2,12 +2,22 @@
 <!-- Thành viên B: 22 Thông báo (mở từ chuông ở Trang chủ) -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_notifications"
     app:startDestination="@id/notificationsFragment">
 
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.aicoach.ui.profile.NotificationsFragment"
-        android:label="@string/placeholder_notifications" />
+        android:label="@string/placeholder_notifications"
+        tools:layout="@layout/fragment_notifications">
+        <!-- Nút "Tham gia" trên thông báo lời mời thử thách -> tab Thử thách (40, ở nav_social).
+             B gọi trong adapter: NotificationsFragmentDirections.actionNotificationsToChallenges() -->
+        <action
+            android:id="@+id/action_notifications_to_challenges"
+            app:destination="@id/challengeListFragment"
+            app:popUpTo="@id/notificationsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

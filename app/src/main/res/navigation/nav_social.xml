@@ -1,18 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Thành viên B: Tiến độ (lịch sử, thống kê, huy hiệu), Bạn bè, Thử thách, Xếp hạng -->
+<!--
+    Thành viên B: 37 Lịch sử, 38 Lịch tháng, 39 Chi tiết buổi tập, 40 Thử thách, 41 Tạo thử thách, 42 Mời bạn.
+    GIỮ NGUYÊN id historyFragment và challengeListFragment: đây là id của 2 tab ở thanh điều hướng dưới.
+    Màn con khai báo hideBottomNav = true để MainActivity ẩn thanh tab.
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_social"
     app:startDestination="@id/historyFragment">
 
+    <!-- 37 Lịch sử & Thống kê (tab "Tiến độ") -->
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.aicoach.ui.history.HistoryFragment"
-        android:label="@string/nav_progress" />
+        android:label="@string/nav_progress"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_to_calendar"
+            app:destination="@id/monthCalendarFragment" />
+        <!-- B dùng khi bấm 1 dòng trong danh sách buổi tập -->
+        <action
+            android:id="@+id/action_history_to_session_detail"
+            app:destination="@id/sessionDetailFragment" />
+    </fragment>
 
+    <!-- 38 Lịch tháng -->
+    <fragment
+        android:id="@+id/monthCalendarFragment"
+        android:name="com.aicoach.ui.history.MonthCalendarFragment"
+        android:label="@string/progress_calendar_title"
+        tools:layout="@layout/fragment_month_calendar">
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_calendar_to_session_detail"
+            app:destination="@id/sessionDetailFragment" />
+    </fragment>
+
+    <!-- 39 Chi tiết buổi tập -->
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.aicoach.ui.history.SessionDetailFragment"
+        android:label="@string/progress_detail_title"
+        tools:layout="@layout/fragment_session_detail">
+        <argument
+            android:name="sessionId"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="exerciseId"
+            android:defaultValue="squat"
+            app:argType="string" />
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <!-- 40 Thử thách & Xếp hạng (tab "Thử thách") -->
     <fragment
         android:id="@+id/challengeListFragment"
         android:name="com.aicoach.ui.challenge.ChallengeListFragment"
-        android:label="@string/nav_challenges" />
+        android:label="@string/nav_challenges"
+        tools:layout="@layout/fragment_challenge_list">
+        <action
+            android:id="@+id/action_challenges_to_create"
+            app:destination="@id/createChallengeFragment" />
+        <action
+            android:id="@+id/action_challenges_to_invite"
+            app:destination="@id/inviteFriendsFragment" />
+    </fragment>
+
+    <!-- 41 Tạo thử thách -->
+    <fragment
+        android:id="@+id/createChallengeFragment"
+        android:name="com.aicoach.ui.challenge.CreateChallengeFragment"
+        android:label="@string/social_create_title"
+        tools:layout="@layout/fragment_create_challenge">
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_create_to_invite"
+            app:destination="@id/inviteFriendsFragment" />
+    </fragment>
+
+    <!-- 42 Mời bạn bè. Gửi lời mời xong: popBackStack(challengeListFragment) — bỏ 41 khỏi back stack. -->
+    <fragment
+        android:id="@+id/inviteFriendsFragment"
+        android:name="com.aicoach.ui.challenge.InviteFriendsFragment"
+        android:label="@string/social_invite_title"
+        tools:layout="@layout/fragment_invite_friends">
+        <argument
+            android:name="challengeId"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
 
 </navigation>

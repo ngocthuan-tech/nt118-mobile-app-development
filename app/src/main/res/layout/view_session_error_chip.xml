@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 nhãn lỗi tư thế dưới biểu đồ (Figma 39: "Gối chụm × 4"). B inflate vào groupErrors cho từng formErrors. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_chip_light"
+    android:backgroundTint="@color/state_warning_light"
+    android:drawablePadding="@dimen/space_4"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/space_12"
+    android:paddingTop="6dp"
+    android:paddingEnd="@dimen/space_12"
+    android:paddingBottom="6dp"
+    android:textColor="@color/medal_orange"
+    android:textSize="13sp"
+    android:textStyle="bold"
+    app:drawableStartCompat="@drawable/ic_alert_24"
+    app:drawableTint="@color/medal_orange"
+    tools:text="Gối chụm × 4" />

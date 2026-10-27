@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Thành viên B: 43 Hồ sơ & Cài đặt, 44 Chỉnh sửa hồ sơ, 45 Cài đặt giọng nói, 47 Xác nhận đăng xuất, 46 Huy hiệu -->
+<!--
+    Thành viên B: 43 Hồ sơ & Cài đặt, 44 Chỉnh sửa hồ sơ, 45 Giọng nói, 46 Huy hiệu,
+    47 Xác nhận đăng xuất (bottom sheet), Đổi mật khẩu (bottom sheet).
+    Cả graph này đã ẩn thanh tab (MainActivity), không cần hideBottomNav.
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_profile"
     app:startDestination="@id/profileFragment">
 
+    <!-- 43 Hồ sơ & Cài đặt -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.aicoach.ui.profile.ProfileFragment"
-        android:label="@string/placeholder_profile" />
+        android:label="@string/placeholder_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_edit"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profile_to_voice"
+            app:destination="@id/voiceSettingsFragment" />
+        <action
+            android:id="@+id/action_profile_to_badges"
+            app:destination="@id/badgesFragment" />
+        <action
+            android:id="@+id/action_profile_to_change_password"
+            app:destination="@id/changePasswordDialog" />
+        <action
+            android:id="@+id/action_profile_to_logout"
+            app:destination="@id/logoutDialog" />
+    </fragment>
+
+    <!-- 44 Chỉnh sửa hồ sơ -->
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.aicoach.ui.profile.EditProfileFragment"
+        android:label="@string/profile_edit_title"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <!-- 45 Giọng nói & âm thanh -->
+    <fragment
+        android:id="@+id/voiceSettingsFragment"
+        android:name="com.aicoach.ui.profile.VoiceSettingsFragment"
+        android:label="@string/profile_voice_title"
+        tools:layout="@layout/fragment_voice_settings" />
+
+    <!-- 46 Bộ sưu tập huy hiệu -->
+    <fragment
+        android:id="@+id/badgesFragment"
+        android:name="com.aicoach.ui.profile.BadgesFragment"
+        android:label="@string/profile_badges_screen"
+        tools:layout="@layout/fragment_badges" />
+
+    <!-- Đổi mật khẩu -->
+    <dialog
+        android:id="@+id/changePasswordDialog"
+        android:name="com.aicoach.ui.profile.ChangePasswordDialogFragment"
+        android:label="@string/profile_password_title"
+        tools:layout="@layout/dialog_change_password" />
+
+    <!-- 47 Xác nhận đăng xuất -->
+    <dialog
+        android:id="@+id/logoutDialog"
+        android:name="com.aicoach.ui.profile.LogoutDialogFragment"
+        android:label="@string/profile_logout_title"
+        tools:layout="@layout/dialog_logout" />
 
 </navigation>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Figma 40 Thử thách & Bảng xếp hạng (tab "Thử thách") — Thành viên B.
+    B tự viết: SocialRepository.mock(MockSocialData…), đổ thẻ thử thách, 3 cột bục (tvFirst…, tvSecond…, tvThird…),
+    adapter cho rvLeaderboard (item_leaderboard_row). "+ Tạo" → 41, chạm thẻ thử thách → 42 Mời bạn đã nối sẵn.
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/space_20"
+        android:paddingTop="@dimen/space_20"
+        android:paddingEnd="@dimen/space_20"
+        android:paddingBottom="@dimen/space_24">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/social_challenges_title"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/b_title_size"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="40dp"
+                android:paddingStart="@dimen/space_16"
+                android:paddingEnd="@dimen/space_16"
+                android:text="@string/social_create"
+                app:icon="@drawable/ic_add_24"
+                app:iconSize="@dimen/icon_size_small" />
+        </LinearLayout>
+
+        <!-- Thử thách đang diễn ra → bấm để mời thêm bạn (42) -->
+        <FrameLayout
+            android:id="@+id/cardActive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:background="@drawable/bg_social_card_gradient"
+            android:clickable="true"
+            android:contentDescription="@string/social_invite_more"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="@dimen/space_16">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="top|end"
+                android:alpha="0.25"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_trophy_24"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:text="@string/social_active_label"
+                    android:textColor="@color/accent_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvChallengeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="100 Squat mỗi ngày" />
+
+                <TextView
+                    android:id="@+id/tvChallengeMeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+                    tools:text="7 ngày • 6 bạn tham gia • còn 3 ngày" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvTodayProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            tools:text="Hôm nay 72/100" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progressToday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8"
+                            android:layout_marginEnd="@dimen/space_16"
+                            app:indicatorColor="@color/accent_cyan"
+                            app:trackColor="@color/white_20"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="8dp"
+                            tools:progress="72" />
+                    </LinearLayout>
+
+                    <!-- Avatar người tham gia: B đặt chữ + màu, avatarMore = "+3" -->
+                    <LinearLayout
+                        android:id="@+id/rowParticipants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/avatar1"
+                            style="@style/Widget.AICoach.B.AvatarStack"
+                            android:backgroundTint="@color/medal_orange"
+                            tools:text="M" />
+
+                        <TextView
+                            android:id="@+id/avatar2"
+                            style="@style/Widget.AICoach.B.AvatarStack"
+                            android:backgroundTint="@color/state_success"
+                            tools:text="H" />
+
+                        <TextView
+                            android:id="@+id/avatar3"
+                            style="@style/Widget.AICoach.B.AvatarStack"
+                            android:backgroundTint="@color/brand_sky"
+                            tools:text="L" />
+
+                        <TextView
+                            android:id="@+id/avatarMore"
+                            style="@style/Widget.AICoach.B.AvatarStack"
+                            android:backgroundTint="@color/navy_950"
+                            tools:text="+3" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Bạn bè / Toàn quốc -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:background="@drawable/bg_survey_segment"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_4">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFriends"
+                style="@style/Widget.AICoach.Segment"
+                android:checked="true"
+                android:text="@string/social_tab_friends" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNational"
+                style="@style/Widget.AICoach.Segment"
+                android:text="@string/social_tab_national" />
+        </LinearLayout>
+
+        <!-- Bục top 3: hạng 2 · hạng 1 (cao nhất, có vương miện) · hạng 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <!-- Hạng 2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSecondAvatar"
+                    android:layout_width="@dimen/b_podium_avatar"
+                    android:layout_height="@dimen/b_podium_avatar"
+                    android:background="@drawable/bg_social_avatar_ring"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="A" />
+
+                <TextView
+                    android:id="@+id/tvSecondName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="Lan Anh" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/b_podium_second_height"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:background="@drawable/bg_social_podium"
+                    android:backgroundTint="@color/navy_700"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvSecondPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_cyan"
+                        android:textSize="12sp"
+                        tools:text="1.410" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/podiumFirst"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_crown_24"
+                    app:tint="@color/state_warning" />
+
+                <TextView
+                    android:id="@+id/tvFirstAvatar"
+                    android:layout_width="@dimen/b_podium_avatar_first"
+                    android:layout_height="@dimen/b_podium_avatar_first"
+                    android:background="@drawable/bg_social_avatar_ring"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="N" />
+
+                <TextView
+                    android:id="@+id/tvFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="Hoàng Nam" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/b_podium_first_height"
+                    android:layout_marginStart="@dimen/space_4"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginEnd="@dimen/space_4"
+                    android:background="@drawable/bg_social_podium_first"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvFirstPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_cyan"
+                        android:textSize="12sp"
+                        tools:text="1.520" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Hạng 3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvThirdAvatar"
+                    android:layout_width="@dimen/b_podium_avatar"
+                    android:layout_height="@dimen/b_podium_avatar"
+                    android:background="@drawable/bg_social_avatar_ring"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="H" />
+
+                <TextView
+                    android:id="@+id/tvThirdName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="Đức Huy" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/b_podium_third_height"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:background="@drawable/bg_social_podium"
+                    android:backgroundTint="@color/text_secondary"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvThirdPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent_cyan"
+                        android:textSize="12sp"
+                        tools:text="1.300" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLeaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_leaderboard_row" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

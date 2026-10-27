@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bục hạng 1 (Figma 40): gradient xanh đậm -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:endColor="@color/navy_900"
+        android:startColor="@color/brand_primary" />
+    <corners
+        android:topLeftRadius="@dimen/radius_button"
+        android:topRightRadius="@dimen/radius_button" />
+</shape>

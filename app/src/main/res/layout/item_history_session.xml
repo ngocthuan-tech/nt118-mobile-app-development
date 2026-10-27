@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1 buổi tập trong Lịch sử (Figma 37) và cuối Lịch tháng (38).
+    Thành viên B gắn dữ liệu trong adapter: ảnh = ExerciseImages.bind(imgExercise, exerciseId),
+    điểm = accuracy × 100 (≥ 85 nền xanh lá, 70–84 cam, < 70 đỏ). Bấm → action_history_to_session_detail.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_8"
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardCornerRadius="@dimen/radius_card"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_8">
+
+        <ImageView
+            android:id="@+id/imgExercise"
+            android:layout_width="@dimen/b_list_thumb"
+            android:layout_height="@dimen/b_list_thumb"
+            android:background="@drawable/bg_exercise_photo"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/img_squat" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Squat • 45 lần" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                tools:text="Hôm nay, 19:30 • 08:24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvScore"
+            android:layout_width="40dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="@dimen/space_4"
+            android:background="@drawable/bg_progress_badge"
+            android:backgroundTint="@color/state_success_light"
+            android:gravity="center"
+            android:textColor="@color/state_success"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="92" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
