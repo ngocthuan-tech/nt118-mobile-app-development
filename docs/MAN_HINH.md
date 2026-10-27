@@ -27,7 +27,7 @@
 | 19 | Hộp thoại quyền Android | Trưởng nhóm | Hộp thoại hệ thống, gọi từ màn 18 — đã có | [xem](figma/19_hop_thoai_quyen_android.webp) |
 | 20 | Bật thông báo nhắc tập | Thành viên A | `NotificationPermissionFragment` — đã dựng | [xem](figma/20_bat_thong_bao_nhac_tap.webp) |
 | 21 | Trang chủ | Thành viên A | `HomeFragment` — đã nối GET home | [xem](figma/21_trang_chu.webp) |
-| 22 | Thông báo | Thành viên B | chưa làm | [xem](figma/22_thong_bao.webp) |
+| 22 | Thông báo | Thành viên B | `NotificationsFragment` (`nav_notifications`) — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/22_thong_bao.webp) |
 | 23 | Thư viện bài tập | Thành viên A | `ExerciseLibraryFragment` — đã dựng, GET exercises | [xem](figma/23_thu_vien_bai_tap.webp) |
 | 24 | Tìm kiếm & bộ lọc | Thành viên A | `ExerciseFilterSheet` (bottom sheet) — đã dựng | [xem](figma/24_tim_kiem_bo_loc.webp) |
 | 25.1 | Chi tiết – Squat | Thành viên A | `ExerciseDetailFragment` — đã dựng (1 layout cho 9 bài), GET exercises/{id} | [xem](figma/25.1_chi_tiet_squat.webp) |
@@ -50,23 +50,25 @@
 | 34 | Xác nhận kết thúc | Trưởng nhóm | `view_finish_confirm` trong màn tập — đã dựng | [xem](figma/34_xac_nhan_ket_thuc.webp) |
 | 35 | Kết quả buổi tập | Trưởng nhóm | `WorkoutResultFragment` — đã dựng | [xem](figma/35_ket_qua_buoi_tap.webp) |
 | 36 | Chia sẻ thành tích | Trưởng nhóm | `ShareAchievementFragment` — đã dựng | [xem](figma/36_chia_se_thanh_tich.webp) |
-| 37 | Lịch sử & Biểu đồ | Thành viên B | `HistoryFragment` — màn tạm | [xem](figma/37_lich_su_bieu_do.webp) |
-| 38 | Lịch tập tháng | Thành viên B | chưa làm | [xem](figma/38_lich_tap_thang.webp) |
-| 39 | Chi tiết buổi tập | Thành viên B | chưa làm | [xem](figma/39_chi_tiet_buoi_tap.webp) |
-| 40 | Thử thách & Bảng xếp hạng | Thành viên B | `ChallengeListFragment` — màn tạm | [xem](figma/40_thu_thach_bang_xep_hang.webp) |
-| 41 | Tạo thử thách | Thành viên B | chưa làm | [xem](figma/41_tao_thu_thach.webp) |
-| 42 | Mời bạn bè | Thành viên B | chưa làm | [xem](figma/42_moi_ban_be.webp) |
-| 43 | Hồ sơ & Cài đặt | Thành viên B | chưa làm | [xem](figma/43_ho_so_cai_dat.webp) |
-| 44 | Chỉnh sửa hồ sơ | Thành viên B | chưa làm | [xem](figma/44_chinh_sua_ho_so.webp) |
-| 45 | Cài đặt giọng nói | Thành viên B | chưa làm | [xem](figma/45_cai_dat_giong_noi.webp) |
-| 46 | Bộ sưu tập huy hiệu | Thành viên B | chưa làm | [xem](figma/46_bo_suu_tap_huy_hieu.webp) |
-| 47 | Xác nhận đăng xuất | Thành viên B | chưa làm | [xem](figma/47_xac_nhan_dang_xuat.webp) |
+| 37 | Lịch sử & Biểu đồ | Thành viên B | `HistoryFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/37_lich_su_bieu_do.webp) |
+| 38 | Lịch tập tháng | Thành viên B | `MonthCalendarFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/38_lich_tap_thang.webp) |
+| 39 | Chi tiết buổi tập | Thành viên B | `SessionDetailFragment` (args `sessionId`, `exerciseId`) — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/39_chi_tiet_buoi_tap.webp) |
+| 40 | Thử thách & Bảng xếp hạng | Thành viên B | `ChallengeListFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/40_thu_thach_bang_xep_hang.webp) |
+| 41 | Tạo thử thách | Thành viên B | `CreateChallengeFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/41_tao_thu_thach.webp) |
+| 42 | Mời bạn bè | Thành viên B | `InviteFriendsFragment` (arg `challengeId`) — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/42_moi_ban_be.webp) |
+| 43 | Hồ sơ & Cài đặt | Thành viên B | `ProfileFragment` (`nav_profile`) + bottom sheet `ChangePasswordDialogFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/43_ho_so_cai_dat.webp) |
+| 44 | Chỉnh sửa hồ sơ | Thành viên B | `EditProfileFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/44_chinh_sua_ho_so.webp) |
+| 45 | Cài đặt giọng nói | Thành viên B | `VoiceSettingsFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/45_cai_dat_giong_noi.webp) |
+| 46 | Bộ sưu tập huy hiệu | Thành viên B | `BadgesFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/46_bo_suu_tap_huy_hieu.webp) |
+| 47 | Xác nhận đăng xuất | Thành viên B | `LogoutDialogFragment` (bottom sheet) — giao diện + điều hướng xong, B thêm xoá token | [xem](figma/47_xac_nhan_dang_xuat.webp) |
 
 Tổng: Trưởng nhóm 12 màn + backend • Thành viên A 31 màn (khoảng 20 layout, 25.1–25.9 dùng chung 1 layout) • Thành viên B 12 màn.
 
 Cập nhật 22/10: màn 22, 43, 44, 45, 47 chuyển từ A sang B để chia đều việc giữa kỳ.
 
 Cập nhật 27/10: **toàn bộ 31 màn của Thành viên A đã dựng xong** trên nhánh `feature/a-auth-content` (giao diện theo Figma + điều hướng + dữ liệu qua Repository). Luồng: `nav_auth.xml` (02–17, 20) và `nav_main.xml` (21, 23–26). Màn chi tiết ẩn thanh tab bằng tham số `hideBottomNav = true` trong file navigation của mình (MainActivity đọc tham số này) — Thành viên B dùng được cho màn 38, 39, 41, 42.
+
+Cập nhật 27/10 (2): **giao diện 12 màn của Thành viên B đã dựng xong** trên nhánh `feature/b-progress-social` và đã nối điều hướng: `nav_social.xml` (37–42), `nav_profile.xml` (43–47 + đổi mật khẩu), `nav_notifications.xml` (22 → 40). Phần B còn tự viết (đã ghi `TODO(B)` trong từng Fragment và chú thích đầu mỗi layout): ViewModel, Repository (User/History/Social), adapter cho các RecyclerView (dùng `item_*` có sẵn), `MockSocialData`, `BadgeRules` + unit test, `TokenManager.clear()` khi đăng xuất. Số liệu mẫu trong layout chỉ nằm ở `tools:text` nên chạy thật sẽ trống cho tới khi B đổ dữ liệu.
 
 ## Hệ màu (đã có trong `res/values/colors.xml`)
 

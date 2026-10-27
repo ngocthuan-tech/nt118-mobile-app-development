@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên B — Tiến độ, Thử thách, Hồ sơ (Figma 22, 37–47) -->
+    <dimen name="b_title_size">26sp</dimen>
+    <dimen name="b_toolbar_title_size">20sp</dimen>
+    <dimen name="b_list_thumb">48dp</dimen>
+    <dimen name="b_chart_height">180dp</dimen>
+    <dimen name="b_line_chart_height">150dp</dimen>
+    <dimen name="b_calendar_day">40dp</dimen>
+    <dimen name="b_score_ring">92dp</dimen>
+    <dimen name="b_podium_avatar">56dp</dimen>
+    <dimen name="b_podium_avatar_first">64dp</dimen>
+    <dimen name="b_podium_first_height">104dp</dimen>
+    <dimen name="b_podium_second_height">84dp</dimen>
+    <dimen name="b_podium_third_height">64dp</dimen>
+    <dimen name="b_avatar_small">36dp</dimen>
+    <dimen name="b_profile_avatar">96dp</dimen>
+    <dimen name="b_badge_small">56dp</dimen>
+    <dimen name="b_badge_large">72dp</dimen>
+    <dimen name="b_exercise_pick_width">100dp</dimen>
+    <dimen name="b_exercise_pick_image">64dp</dimen>
+    <dimen name="b_target_value_size">32sp</dimen>
+    <dimen name="b_code_size">28sp</dimen>
+    <dimen name="b_header_bottom_space">56dp</dimen>
+    <dimen name="b_stats_overlap">-44dp</dimen>
+</resources>

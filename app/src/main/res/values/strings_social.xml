@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên B — Thử thách, Bạn bè, Thông báo (Figma 22, 40, 41, 42), tiền tố social_ -->
+
+    <!-- 40 Thử thách & Bảng xếp hạng -->
+    <string name="social_challenges_title">Thử thách</string>
+    <string name="social_create">Tạo</string>
+    <string name="social_active_label">ĐANG DIỄN RA</string>
+    <string name="social_invite_more">Mời thêm bạn</string>
+    <string name="social_tab_friends">Bạn bè</string>
+    <string name="social_tab_national">Toàn quốc</string>
+
+    <!-- 41 Tạo thử thách -->
+    <string name="social_create_title">Tạo thử thách</string>
+    <string name="social_pick_exercise">Chọn bài tập</string>
+    <string name="social_daily_target">Mục tiêu mỗi ngày</string>
+    <string name="social_decrease">Giảm</string>
+    <string name="social_increase">Tăng</string>
+    <string name="social_duration">Thời gian thử thách</string>
+    <string name="social_duration_3">3 ngày</string>
+    <string name="social_duration_7">7 ngày</string>
+    <string name="social_duration_14">14 ngày</string>
+    <string name="social_duration_30">30 ngày</string>
+    <string name="social_challenge_name">Tên thử thách</string>
+    <string name="social_private">Chỉ người được mời</string>
+    <string name="social_private_desc">Bạn bè cần mã mời để tham gia</string>
+    <string name="social_continue_invite">Tiếp tục – Mời bạn bè</string>
+
+    <!-- 42 Mời bạn bè -->
+    <string name="social_invite_title">Mời bạn bè</string>
+    <string name="social_invite_code">Mã mời</string>
+    <string name="social_copy_code">Sao chép mã</string>
+    <string name="social_show_qr">Hiện mã QR</string>
+    <string name="social_copy_link">Sao chép link</string>
+    <string name="social_message">Tin nhắn</string>
+    <string name="social_qr">Mã QR</string>
+    <string name="social_search_friends">Tìm bạn bè theo tên hoặc email</string>
+    <string name="social_friends">Bạn bè</string>
+    <string name="social_send_invites">Gửi lời mời</string>
+
+    <!-- 22 Thông báo -->
+    <string name="social_notifications_title">Thông báo</string>
+    <string name="social_read_all">Đọc tất cả</string>
+    <string name="social_filter_all">Tất cả</string>
+    <string name="social_filter_challenges">Thử thách</string>
+    <string name="social_filter_system">Hệ thống</string>
+    <string name="social_join">Tham gia</string>
+    <string name="social_decline">Từ chối</string>
+    <string name="social_notifications_empty">Chưa có thông báo nào</string>
+</resources>

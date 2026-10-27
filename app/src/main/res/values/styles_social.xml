@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style riêng của Thành viên B. Dùng lại Widget.AICoach.Auth.* và Widget.AICoach.Segment của A cho đồng bộ. -->
+
+    <!-- Tiêu đề trên thanh có nút quay lại: "Thông báo", "Lịch tập" -->
+    <style name="Widget.AICoach.B.ToolbarTitle" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/space_12</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/b_toolbar_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Thẻ trắng bo góc -->
+    <style name="Widget.AICoach.B.Card" parent="">
+        <item name="android:background">@drawable/bg_card_white</item>
+        <item name="android:padding">@dimen/space_16</item>
+    </style>
+
+    <!-- Ô chỉ số trong hàng 3 ô (Figma 37, 38) -->
+    <style name="Widget.AICoach.B.StatBox" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_card_white</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/space_12</item>
+    </style>
+
+    <style name="Widget.AICoach.B.StatValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_4</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.AICoach.B.StatLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- 1 dòng trong thẻ Cài đặt (Figma 43): ô icon + chữ + giá trị/công tắc/mũi tên -->
+    <style name="Widget.AICoach.B.SettingRow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+    </style>
+
+    <style name="Widget.AICoach.B.SettingIcon" parent="">
+        <item name="android:layout_width">@dimen/b_avatar_small</item>
+        <item name="android:layout_height">@dimen/b_avatar_small</item>
+        <item name="android:background">@drawable/bg_icon_box</item>
+        <item name="android:backgroundTint">@color/brand_primary_light</item>
+        <item name="android:padding">9dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:importantForAccessibility">no</item>
+        <item name="tint">@color/brand_primary</item>
+    </style>
+
+    <style name="Widget.AICoach.B.SettingText" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/space_12</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Widget.AICoach.B.SettingValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Widget.AICoach.B.Chevron" parent="">
+        <item name="android:layout_width">@dimen/icon_size_small</item>
+        <item name="android:layout_height">@dimen/icon_size_small</item>
+        <item name="android:layout_marginStart">@dimen/space_4</item>
+        <item name="android:src">@drawable/ic_chevron_right_24</item>
+        <item name="android:importantForAccessibility">no</item>
+        <item name="tint">@color/text_secondary</item>
+    </style>
+
+    <style name="Widget.AICoach.B.Divider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginStart">60dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <!-- Avatar chữ cái tròn (bảng xếp hạng, bạn bè) -->
+    <style name="Widget.AICoach.B.Avatar" parent="">
+        <item name="android:layout_width">@dimen/b_avatar_small</item>
+        <item name="android:layout_height">@dimen/b_avatar_small</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:backgroundTint">@color/brand_primary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Nút tròn trắng chỉ có icon (Figma 37 lịch, 39 chia sẻ) -->
+    <style name="Widget.AICoach.B.RoundIconButton" parent="Widget.AICoach.CircleIconButton">
+        <item name="android:background">@drawable/bg_auth_back_button</item>
+        <item name="tint">@color/text_primary</item>
+    </style>
+
+    <!-- Nút nhỏ viền xám (Figma 42: Sao chép link · Tin nhắn · Mã QR) -->
+    <style name="Widget.AICoach.B.SmallOutline" parent="Widget.AICoach.Button.Secondary">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:textSize">13sp</item>
+        <item name="iconSize">@dimen/icon_size_small</item>
+        <item name="iconTint">@color/brand_primary</item>
+        <item name="iconPadding">@dimen/space_4</item>
+    </style>
+
+    <!-- Ô chọn dạng danh sách thả xuống (Figma 44: năm sinh, giới tính, mục tiêu) -->
+    <style name="Widget.AICoach.B.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_4</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxBackgroundColor">@color/bg_card</item>
+        <item name="boxStrokeColor">@color/auth_input_stroke</item>
+        <item name="boxCornerRadiusTopStart">@dimen/radius_card</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_card</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_card</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_card</item>
+        <item name="startIconTint">@color/text_secondary</item>
+        <item name="endIconTint">@color/text_secondary</item>
+    </style>
+
+    <!-- Nhãn thứ T2…CN trên lịch (Figma 38) -->
+    <style name="Widget.AICoach.B.WeekdayLabel" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Chú thích có chấm màu (Figma 38) -->
+    <style name="Widget.AICoach.B.Legend" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/space_8</item>
+        <item name="android:layout_marginEnd">@dimen/space_8</item>
+        <item name="android:drawablePadding">@dimen/space_4</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- 3 chỉ số nhỏ trong thẻ tóm tắt (Figma 39) -->
+    <style name="Widget.AICoach.B.MiniStat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.AICoach.B.MiniValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Tiêu đề cột bảng hiệp (Figma 39) -->
+    <style name="Widget.AICoach.B.TableHead" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Avatar nhỏ xếp chồng có viền (Figma 40: M H L +3) -->
+    <style name="Widget.AICoach.B.AvatarStack" parent="">
+        <item name="android:layout_width">@dimen/b_avatar_tiny</item>
+        <item name="android:layout_height">@dimen/b_avatar_tiny</item>
+        <item name="android:layout_marginStart">@dimen/space_2</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 1 ô trong thẻ 3 chỉ số của Hồ sơ (Figma 43) -->
+    <style name="Widget.AICoach.B.ProfileStat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="Widget.AICoach.B.ProfileStatIcon" parent="">
+        <item name="android:layout_width">@dimen/icon_size</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <!-- Ô chữ bên trong ô thả xuống (Figma 44) -->
+    <style name="Widget.AICoach.B.DropdownText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">none</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

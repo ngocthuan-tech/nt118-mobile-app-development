@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Khung mã mời nét đứt (Figma 42) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/brand_primary_light" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/brand_primary"
+        android:dashGap="5dp"
+        android:dashWidth="8dp" />
+    <corners android:radius="@dimen/radius_card" />
+</shape>

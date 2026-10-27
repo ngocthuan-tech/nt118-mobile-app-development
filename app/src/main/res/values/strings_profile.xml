@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên B — Hồ sơ & Cài đặt (Figma 43–47), tiền tố profile_ -->
+
+    <!-- 43 Hồ sơ & Cài đặt -->
+    <string name="profile_back">Quay lại</string>
+    <string name="profile_settings">Cài đặt</string>
+    <string name="profile_edit">Sửa hồ sơ</string>
+    <string name="profile_stat_streak">Chuỗi ngày</string>
+    <string name="profile_stat_sessions">Buổi tập</string>
+    <string name="profile_stat_badges">Huy hiệu</string>
+    <string name="profile_body_title">Chỉ số cơ thể</string>
+    <string name="profile_height">Chiều cao</string>
+    <string name="profile_weight">Cân nặng</string>
+    <string name="profile_bmi">BMI</string>
+    <string name="profile_badges_title">Huy hiệu</string>
+    <string name="profile_settings_title">Cài đặt</string>
+    <string name="profile_voice">Giọng nói tiếng Việt</string>
+    <string name="profile_reminder">Nhắc lịch tập</string>
+    <string name="profile_auto_check">Tự kiểm tra sẵn sàng</string>
+    <string name="profile_change_password">Đổi mật khẩu</string>
+    <string name="profile_privacy">Quyền riêng tư</string>
+    <string name="profile_privacy_value">Xử lý trên máy</string>
+    <string name="profile_language">Ngôn ngữ</string>
+    <string name="profile_language_value">Tiếng Việt</string>
+    <string name="profile_logout">Đăng xuất</string>
+
+    <!-- 44 Chỉnh sửa hồ sơ -->
+    <string name="profile_edit_title">Chỉnh sửa hồ sơ</string>
+    <string name="profile_save">Lưu</string>
+    <string name="profile_change_avatar">Đổi ảnh đại diện</string>
+    <string name="profile_name">Họ và tên</string>
+    <string name="profile_email_locked">Email (không thể thay đổi)</string>
+    <string name="profile_birth_year">Năm sinh</string>
+    <string name="profile_gender">Giới tính</string>
+    <string name="profile_goal">Mục tiêu</string>
+    <string name="profile_level">Trình độ</string>
+    <string name="profile_weekly_sessions">Số buổi/tuần</string>
+    <string name="profile_unit_cm">cm</string>
+    <string name="profile_unit_kg">kg</string>
+    <string name="profile_save_changes">Lưu thay đổi</string>
+    <string name="profile_delete_account">Xoá tài khoản</string>
+    <string name="profile_delete_unavailable">Xoá tài khoản sẽ có ở giai đoạn 2</string>
+
+    <!-- 45 Giọng nói & âm thanh -->
+    <string name="profile_voice_title">Giọng nói &amp; âm thanh</string>
+    <string name="profile_voice_hero">Nhắc bằng giọng nói</string>
+    <string name="profile_voice_hero_desc">Tiếng Việt • Text-to-Speech</string>
+    <string name="profile_voice_choose">Giọng đọc</string>
+    <string name="profile_voice_female_north">Nữ – miền Bắc</string>
+    <string name="profile_voice_female_north_desc">Rõ ràng, nhẹ nhàng</string>
+    <string name="profile_voice_male_north">Nam – miền Bắc</string>
+    <string name="profile_voice_male_north_desc">Trầm, mạnh mẽ</string>
+    <string name="profile_voice_female_south">Nữ – miền Nam</string>
+    <string name="profile_voice_female_south_desc">Thân thiện, gần gũi</string>
+    <string name="profile_voice_preview">Nghe thử</string>
+    <string name="profile_voice_speed">Tốc độ đọc</string>
+    <string name="profile_voice_volume">Âm lượng nhắc</string>
+    <string name="profile_voice_when">AI sẽ nhắc khi</string>
+    <string name="profile_voice_count">Đếm từng lần lặp</string>
+    <string name="profile_voice_count_sample">“Lần 12”</string>
+    <string name="profile_voice_form">Phát hiện sai tư thế</string>
+    <string name="profile_voice_form_sample">“Đẩy gối ra”</string>
+    <string name="profile_voice_praise">Làm đúng – khen ngợi</string>
+    <string name="profile_voice_praise_sample">“Rất tốt!”</string>
+    <string name="profile_voice_rest">Đếm ngược &amp; giờ nghỉ</string>
+    <string name="profile_voice_rest_sample">“Còn 10 giây”</string>
+
+    <!-- 46 Bộ sưu tập huy hiệu -->
+    <string name="profile_badges_screen">Huy hiệu</string>
+    <string name="profile_badges_all">Tất cả</string>
+    <string name="profile_badges_earned">Đã đạt</string>
+    <string name="profile_badges_locked">Chưa đạt</string>
+
+    <!-- 47 Xác nhận đăng xuất -->
+    <string name="profile_logout_title">Đăng xuất khỏi AI Coach?</string>
+    <string name="profile_logout_desc">Dữ liệu tập luyện đã được đồng bộ với tài khoản. Bạn có thể đăng nhập lại bất cứ lúc nào.</string>
+
+    <!-- Hộp thoại đổi mật khẩu (trong 43) -->
+    <string name="profile_password_title">Đổi mật khẩu</string>
+    <string name="profile_password_current">Mật khẩu hiện tại</string>
+    <string name="profile_password_new">Mật khẩu mới</string>
+    <string name="profile_password_confirm">Nhập lại mật khẩu mới</string>
+    <string name="profile_password_submit">Cập nhật mật khẩu</string>
+</resources>

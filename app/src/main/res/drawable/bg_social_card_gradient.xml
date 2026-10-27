@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Thẻ gradient xanh → navy (Figma 40 thử thách đang diễn ra, 42, 45, 46) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:endColor="@color/navy_900"
+        android:startColor="@color/brand_primary" />
+    <corners android:radius="@dimen/radius_card_large" />
+</shape>

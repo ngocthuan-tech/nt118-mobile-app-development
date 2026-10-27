@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thành viên B — Tiến độ (Figma 37, 38, 39), tiền tố progress_ -->
+
+    <!-- 37 Lịch sử & Biểu đồ -->
+    <string name="progress_title">Tiến độ</string>
+    <string name="progress_open_calendar">Mở lịch tập</string>
+    <string name="progress_tab_week">Tuần</string>
+    <string name="progress_tab_month">Tháng</string>
+    <string name="progress_tab_year">Năm</string>
+    <string name="progress_stat_sessions">buổi tập</string>
+    <string name="progress_stat_reps">lần lặp</string>
+    <string name="progress_stat_score">điểm TB</string>
+    <string name="progress_chart_title">Số lần tập theo ngày</string>
+    <string name="progress_history_title">Lịch sử buổi tập</string>
+    <string name="progress_empty_title">Chưa có buổi tập nào</string>
+    <string name="progress_empty_desc">Tập buổi đầu tiên để AI bắt đầu theo dõi tiến độ của bạn</string>
+    <string name="progress_empty_action">Tập buổi đầu tiên</string>
+
+    <!-- 38 Lịch tập tháng -->
+    <string name="progress_calendar_title">Lịch tập</string>
+    <string name="progress_prev_month">Tháng trước</string>
+    <string name="progress_next_month">Tháng sau</string>
+    <string name="progress_legend_done">Đã tập</string>
+    <string name="progress_legend_planned">Lịch tập</string>
+    <string name="progress_legend_today">Hôm nay</string>
+    <string name="progress_stat_time">thời gian</string>
+    <string name="progress_stat_kcal">kcal</string>
+
+    <!-- 39 Chi tiết buổi tập -->
+    <string name="progress_detail_title">Chi tiết buổi tập</string>
+    <string name="progress_share">Chia sẻ</string>
+    <string name="progress_score_unit">điểm</string>
+    <string name="progress_unit_reps">lần</string>
+    <string name="progress_unit_minutes">phút</string>
+    <string name="progress_unit_kcal">kcal</string>
+    <string name="progress_sets_title">Theo từng hiệp</string>
+    <string name="progress_col_set">Hiệp</string>
+    <string name="progress_col_reps">Số lần</string>
+    <string name="progress_col_score">Điểm tư thế</string>
+    <string name="progress_col_errors">Lỗi</string>
+    <string name="progress_angle_legend_bad">Chưa đủ sâu (&gt; 90°)</string>
+    <string name="progress_angle_legend_threshold">Ngưỡng</string>
+    <string name="progress_redo">Tập lại bài này</string>
+</resources>

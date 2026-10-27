@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chấm chú thích "Đã tập" (Figma 38) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/brand_primary" />
+    <size
+        android:width="12dp"
+        android:height="12dp" />
+</shape>

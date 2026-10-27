@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1 bài tập để chọn khi tạo thử thách (Figma 41). Bài đang chọn: B đặt card.strokeWidth = 2dp
+    và hiện imgCheck. Ảnh: ExerciseImages.bind(img, exerciseId).
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="@dimen/b_exercise_pick_width"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/space_8"
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardCornerRadius="@dimen/radius_card"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/brand_primary"
+    app:strokeWidth="0dp"
+    tools:strokeWidth="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_4">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/b_exercise_pick_image">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_exercise_photo"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/img_squat" />
+
+            <ImageView
+                android:id="@+id/imgCheck"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/space_4"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/brand_primary"
+                android:importantForAccessibility="no"
+                android:padding="3dp"
+                android:src="@drawable/ic_check_24"
+                android:visibility="gone"
+                app:tint="@color/white"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_4"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Squat" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

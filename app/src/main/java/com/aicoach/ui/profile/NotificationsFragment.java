@@ -7,23 +7,32 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
-import com.aicoach.R;
 import com.aicoach.common.BaseFragment;
-import com.aicoach.databinding.FragmentPlaceholderBinding;
+import com.aicoach.databinding.FragmentNotificationsBinding;
 
-/** Figma 22 Thông báo — MÀN TẠM. Thành viên B thay bằng giao diện + dữ liệu mẫu. */
-public class NotificationsFragment extends BaseFragment<FragmentPlaceholderBinding> {
+/**
+ * Figma 22 Thông báo (mở từ chuông ở Trang chủ).
+ *
+ * ĐÃ CÓ: giao diện + điều hướng giữa các màn.
+ * B TỰ VIẾT (xem TODO): NotificationAdapter cho rvNotifications (item_notification, nhóm theo ngày bằng tvSection), lọc Tất cả/Thử thách/Hệ thống, "Đọc tất cả", ẩn/hiện emptyState.
+ */
+public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding> {
 
     @Override
-    protected FragmentPlaceholderBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        return FragmentPlaceholderBinding.inflate(inflater, container, false);
+    protected FragmentNotificationsBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return FragmentNotificationsBinding.inflate(inflater, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.tvTitle.setText(R.string.placeholder_notifications);
-        binding.tvOwner.setText(R.string.placeholder_owner_b);
+        NavController nav = NavHostFragment.findNavController(this);
+        binding.btnBack.setOnClickListener(v -> nav.popBackStack());
+        // TODO(B): trong adapter, nút "Tham gia" của lời mời thử thách:
+        //   nav.navigate(NotificationsFragmentDirections.actionNotificationsToChallenges());
+        // TODO(B): btnReadAll + 3 nút lọc.
     }
 }

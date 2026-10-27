@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1 dòng bảng xếp hạng từ hạng 4 trở đi (Figma 40). Dòng của chính mình: B đặt card.strokeWidth = 1.5dp
+    và hiện chipChange ("↑ 2 hạng"). Màu avatar tuỳ người (B chọn theo tên).
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_8"
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardCornerRadius="@dimen/radius_card"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/brand_primary"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_16"
+        android:paddingEnd="@dimen/space_16">
+
+        <TextView
+            android:id="@+id/tvRank"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="4" />
+
+        <TextView
+            android:id="@+id/tvAvatar"
+            style="@style/Widget.AICoach.B.Avatar"
+            android:layout_marginStart="@dimen/space_8"
+            tools:backgroundTint="@color/navy_700"
+            tools:text="T" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="Thu Trang" />
+
+        <TextView
+            android:id="@+id/chipChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@drawable/bg_chip_light"
+            android:backgroundTint="@color/state_success_light"
+            android:drawablePadding="@dimen/space_2"
+            android:paddingStart="@dimen/space_8"
+            android:paddingTop="@dimen/space_2"
+            android:paddingEnd="@dimen/space_8"
+            android:paddingBottom="@dimen/space_2"
+            android:textColor="@color/state_success"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="↑ 2 hạng" />
+
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_8"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="1.280" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
