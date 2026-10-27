@@ -14,6 +14,7 @@
     <dimen name="b_podium_second_height">84dp</dimen>
     <dimen name="b_podium_third_height">64dp</dimen>
     <dimen name="b_avatar_small">36dp</dimen>
+    <dimen name="b_avatar_tiny">28dp</dimen>
     <dimen name="b_profile_avatar">96dp</dimen>
     <dimen name="b_badge_small">56dp</dimen>
     <dimen name="b_badge_large">72dp</dimen>
