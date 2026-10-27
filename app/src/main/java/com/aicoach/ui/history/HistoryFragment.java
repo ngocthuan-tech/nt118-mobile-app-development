@@ -38,7 +38,9 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
         binding.btnFirstWorkout.setOnClickListener(v ->
                 nav.navigate(NavRootDirections.actionGlobalToReadiness(DEFAULT_EXERCISE)));
 
-        // TODO(B): ViewModel quan sát dữ liệu; nút Tuần/Tháng/Năm đổi khoảng thời gian.
+        // Tuần / Tháng / Năm. TODO(B): onSelect -> viewModel.setRange(index) rồi vẽ lại biểu đồ.
+        SegmentGroup.bind(0, null, binding.btnWeek, binding.btnMonth, binding.btnYear);
+        // TODO(B): ViewModel quan sát dữ liệu.
         // TODO(B): adapter rvSessions — bấm 1 dòng:
         //   nav.navigate(HistoryFragmentDirections.actionHistoryToSessionDetail().setSessionId(id).setExerciseId(exerciseId));
     }

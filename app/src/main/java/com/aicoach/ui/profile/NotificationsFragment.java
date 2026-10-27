@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.aicoach.ui.history.SegmentGroup;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentNotificationsBinding;
 
@@ -33,6 +34,8 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         binding.btnBack.setOnClickListener(v -> nav.popBackStack());
         // TODO(B): trong adapter, nút "Tham gia" của lời mời thử thách:
         //   nav.navigate(NotificationsFragmentDirections.actionNotificationsToChallenges());
-        // TODO(B): btnReadAll + 3 nút lọc.
+        // Tất cả / Thử thách / Hệ thống. TODO(B): onSelect -> lọc danh sách.
+        SegmentGroup.bind(0, null, binding.btnFilterAll, binding.btnFilterChallenges, binding.btnFilterSystem);
+        // TODO(B): btnReadAll đánh dấu đã đọc tất cả.
     }
 }

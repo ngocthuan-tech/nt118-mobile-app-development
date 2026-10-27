@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.aicoach.ui.history.SegmentGroup;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentCreateChallengeBinding;
 
@@ -31,6 +32,9 @@ public class CreateChallengeFragment extends BaseFragment<FragmentCreateChalleng
         super.onViewCreated(view, savedInstanceState);
         NavController nav = NavHostFragment.findNavController(this);
         binding.btnBack.setOnClickListener(v -> nav.popBackStack());
+        // Thời gian thử thách, mặc định 7 ngày. TODO(B): onSelect -> lưu số ngày (3/7/14/30).
+        SegmentGroup.bind(1, null, binding.btnDays3, binding.btnDays7, binding.btnDays14, binding.btnDays30);
+
         // TODO(B): kiểm tra dữ liệu + gọi API tạo, thành công mới điều hướng kèm challengeId:
         //   CreateChallengeFragmentDirections.actionCreateToInvite().setChallengeId(id)
         binding.btnContinue.setOnClickListener(v -> nav.navigate(CreateChallengeFragmentDirections.actionCreateToInvite()));

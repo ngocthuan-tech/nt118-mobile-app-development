@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,5 +32,22 @@ public class VoiceSettingsFragment extends BaseFragment<FragmentVoiceSettingsBin
         super.onViewCreated(view, savedInstanceState);
         NavController nav = NavHostFragment.findNavController(this);
         binding.btnBack.setOnClickListener(v -> nav.popBackStack());
+
+        // 3 giọng đọc: chỉ chọn 1 (viền xanh + radio). TODO(B): lưu lựa chọn vào SettingsPrefs và đọc lại khi mở màn.
+        View[] options = {binding.optionFemaleNorth, binding.optionMaleNorth, binding.optionFemaleSouth};
+        RadioButton[] radios = {binding.radioFemaleNorth, binding.radioMaleNorth, binding.radioFemaleSouth};
+        for (int i = 0; i < options.length; i++) {
+            final int index = i;
+            options[i].setOnClickListener(v -> selectVoice(index, options, radios));
+        }
+        selectVoice(0, options, radios);
+        // TODO(B): btnPlay* nghe thử (TextToSpeech), 2 Slider cập nhật tvSpeed / tvVolume, 4 ô cb* lưu lại.
+    }
+
+    private static void selectVoice(int index, View[] options, RadioButton[] radios) {
+        for (int i = 0; i < options.length; i++) {
+            options[i].setSelected(i == index);
+            radios[i].setChecked(i == index);
+        }
     }
 }

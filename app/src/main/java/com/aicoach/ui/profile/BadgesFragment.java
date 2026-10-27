@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.aicoach.ui.history.SegmentGroup;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentBadgesBinding;
 
@@ -31,5 +32,7 @@ public class BadgesFragment extends BaseFragment<FragmentBadgesBinding> {
         super.onViewCreated(view, savedInstanceState);
         NavController nav = NavHostFragment.findNavController(this);
         binding.btnBack.setOnClickListener(v -> nav.popBackStack());
+        // Tất cả / Đã đạt / Chưa đạt. TODO(B): onSelect -> lọc danh sách huy hiệu.
+        SegmentGroup.bind(0, null, binding.btnAll, binding.btnEarned, binding.btnLocked);
     }
 }

@@ -330,6 +330,7 @@
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchVoice"
+                        android:checked="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/profile_voice" />
@@ -373,6 +374,7 @@
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switchAutoCheck"
+                        android:checked="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/profile_auto_check" />

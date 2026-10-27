@@ -298,7 +298,7 @@
 
         <com.google.android.material.slider.Slider
             android:id="@+id/sliderSpeed"
-            style="@style/Widget.AICoach.Survey.Slider"
+            style="@style/Widget.AICoach.B.Slider"
             android:contentDescription="@string/profile_voice_speed"
             android:stepSize="0.1"
             android:value="1.0"
@@ -331,7 +331,7 @@
 
         <com.google.android.material.slider.Slider
             android:id="@+id/sliderVolume"
-            style="@style/Widget.AICoach.Survey.Slider"
+            style="@style/Widget.AICoach.B.Slider"
             android:contentDescription="@string/profile_voice_volume"
             android:stepSize="5"
             android:value="70"
@@ -357,7 +357,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -385,11 +385,9 @@
                         android:textSize="12sp"
                         android:textStyle="italic" />
                 </LinearLayout>
-
-                <View style="@style/Widget.AICoach.B.Divider" android:layout_marginStart="@dimen/space_48" />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -417,11 +415,9 @@
                         android:textSize="12sp"
                         android:textStyle="italic" />
                 </LinearLayout>
-
-                <View style="@style/Widget.AICoach.B.Divider" android:layout_marginStart="@dimen/space_48" />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -449,11 +445,9 @@
                         android:textSize="12sp"
                         android:textStyle="italic" />
                 </LinearLayout>
-
-                <View style="@style/Widget.AICoach.B.Divider" android:layout_marginStart="@dimen/space_48" />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

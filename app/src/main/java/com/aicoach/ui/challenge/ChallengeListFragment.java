@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.aicoach.ui.history.SegmentGroup;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentChallengeListBinding;
 
@@ -34,6 +35,8 @@ public class ChallengeListFragment extends BaseFragment<FragmentChallengeListBin
         // Thẻ thử thách đang tham gia -> mời thêm bạn. TODO(B): truyền challengeId thật.
         binding.cardActive.setOnClickListener(v -> nav.navigate(ChallengeListFragmentDirections.actionChallengesToInvite()));
 
-        // TODO(B): ViewModel + nút btnFriends / btnNational đổi bảng xếp hạng.
+        // Bạn bè / Toàn quốc. TODO(B): onSelect -> tải bảng xếp hạng tương ứng.
+        SegmentGroup.bind(0, null, binding.btnFriends, binding.btnNational);
+        // TODO(B): ViewModel đổ thẻ thử thách, bục 3 hạng đầu, rvLeaderboard.
     }
 }

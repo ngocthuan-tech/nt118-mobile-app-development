@@ -128,7 +128,9 @@
         <item name="android:insetBottom">0dp</item>
         <item name="android:paddingStart">@dimen/space_12</item>
         <item name="android:paddingEnd">@dimen/space_12</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:letterSpacing">0</item>
         <item name="iconSize">@dimen/icon_size_small</item>
         <item name="iconTint">@color/brand_primary</item>
         <item name="iconPadding">@dimen/space_4</item>
@@ -230,8 +232,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">none</item>
         <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Thanh trượt núm tròn viền xanh như Figma 45 (Material 1.12 mặc định là núm dạng vạch) -->
+    <style name="Widget.AICoach.B.Slider" parent="Widget.AICoach.Survey.Slider">
+        <item name="thumbWidth">20dp</item>
+        <item name="thumbHeight">20dp</item>
+        <item name="thumbTrackGapSize">0dp</item>
+        <item name="trackStopIndicatorSize">0dp</item>
+        <item name="thumbColor">@color/white</item>
+        <item name="thumbStrokeColor">@color/brand_primary</item>
+        <item name="thumbStrokeWidth">3dp</item>
     </style>
 </resources>

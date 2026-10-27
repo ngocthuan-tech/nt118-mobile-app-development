@@ -145,29 +145,28 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCopyLink"
                     style="@style/Widget.AICoach.B.SmallOutline"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.2"
+                    android:layout_marginEnd="@dimen/space_8"
                     android:text="@string/social_copy_link"
                     app:icon="@drawable/ic_link_24" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnMessage"
                     style="@style/Widget.AICoach.B.SmallOutline"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_8"
                     android:layout_marginStart="@dimen/space_8"
-                    android:layout_weight="1"
                     android:text="@string/social_message"
                     app:icon="@drawable/ic_send_24" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnQr"
                     style="@style/Widget.AICoach.B.SmallOutline"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_8"
-                    android:layout_weight="0.9"
                     android:text="@string/social_qr"
                     app:icon="@drawable/ic_qr_code_24" />
             </LinearLayout>
