@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Trang chủ — dựng theo frame "08 Trang chủ" trong Figma.
-    Giao diện: Trưởng nhóm dựng sẵn. Dữ liệu thật (tên, streak, giáo án…): Thành viên A nối qua ViewModel.
+    Figma 21 Trang chủ. Giao diện: Trưởng nhóm dựng sẵn.
+    Dữ liệu thật: Thành viên A nối HomeFragment → HomeViewModel → HomeRepository → HomeApi (GET home).
 -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,6 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/space_24">
+
+        <!-- Thanh tải mảnh trên cùng khi đang gọi GET home -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/accent_cyan"
+            app:trackColor="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- ===== Header xanh: tự kéo dài tới dưới nút BẮT ĐẦU TẬP (mốc headerEnd) ===== -->
         <View

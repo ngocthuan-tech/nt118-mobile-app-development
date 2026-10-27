@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 loại thông báo + công tắc (Figma 20). Dùng bằng <include>. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_12"
+    android:paddingBottom="@dimen/space_12">
+
+    <FrameLayout
+        android:id="@+id/iconBox"
+        android:layout_width="@dimen/icon_circle_size"
+        android:layout_height="@dimen/icon_circle_size"
+        android:background="@drawable/bg_icon_box"
+        android:backgroundTint="@color/brand_primary_light">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/brand_primary"
+            tools:src="@drawable/ic_schedule_24" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="@string/notify_reminder" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            tools:text="19:00 • T2, T4, T6" />
+    </LinearLayout>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

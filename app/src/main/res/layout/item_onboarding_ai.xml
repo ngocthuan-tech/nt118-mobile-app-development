@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 02: khung camera kính mờ + khung xương AI + huy hiệu "12 lần" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="@dimen/onboarding_frame_height">
+
+        <FrameLayout
+            android:layout_width="@dimen/onboarding_frame_width"
+            android:layout_height="@dimen/onboarding_frame_height"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_glass_card">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_16"
+                android:background="@drawable/bg_body_frame"
+                android:backgroundTint="@color/accent_cyan" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/brand_sky" />
+
+            <ImageView
+                android:layout_width="@dimen/onboarding_body_size"
+                android:layout_height="@dimen/onboarding_body_size"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/accent_cyan" />
+        </FrameLayout>
+
+        <TextView
+            style="@style/Widget.AICoach.ChipDark"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="@dimen/space_48"
+            android:layout_marginEnd="110dp"
+            android:background="@drawable/bg_glass_card"
+            android:drawableStart="@drawable/ic_target_24"
+            android:drawableTint="@color/accent_cyan"
+            android:text="@string/onboarding_1_joints" />
+
+        <LinearLayout
+            android:layout_width="@dimen/onboarding_rep_badge_size"
+            android:layout_height="@dimen/onboarding_rep_badge_size"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginStart="200dp"
+            android:layout_marginBottom="@dimen/space_48"
+            android:background="@drawable/bg_auth_gradient_circle"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/onboarding_1_reps"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_1_reps_unit"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <include
+        android:id="@+id/text"
+        layout="@layout/item_onboarding_text" />
+</LinearLayout>

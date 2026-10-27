@@ -1,13 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Thành viên A: Onboarding, Đăng nhập, Đăng ký, Quên mật khẩu, Thiết lập hồ sơ -->
+<!--
+    Thành viên A — luồng trước khi vào app:
+    02–04 Onboarding → 05 Chào mừng → 06/07 Đăng nhập ⇄ 12 Đăng ký
+                                     ↳ 08 Quên mật khẩu → 09 Nhập mã → 10 Mật khẩu mới → 11 Thành công → 06
+    Đăng nhập/đăng ký xong, hồ sơ chưa hoàn tất:
+    13 Khảo sát 1/3 → 14 2/3 → 15 3/3 → 16 AI tạo giáo án → 17 Giáo án sẵn sàng → 20 Bật thông báo → Trang chủ
+    Lần mở app sau: Onboarding tự chuyển sang Chào mừng (đã xem rồi thì không hiện lại).
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_auth"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/onboardingFragment">
 
+    <!-- 02–04 Onboarding -->
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.aicoach.ui.auth.OnboardingFragment"
+        android:label="Onboarding">
+        <action
+            android:id="@+id/action_onboarding_to_welcome"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_onboarding_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- 05 Chào mừng -->
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.aicoach.ui.auth.WelcomeFragment"
+        android:label="Welcome">
+        <action
+            android:id="@+id/action_welcome_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcome_to_register"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <!-- 06 Đăng nhập, 07 trạng thái báo lỗi -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.aicoach.ui.auth.LoginFragment"
-        android:label="Login" />
+        android:label="Login">
+        <action
+            android:id="@+id/action_login_to_forgot"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <!-- 12 Đăng ký -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.aicoach.ui.auth.RegisterFragment"
+        android:label="Register">
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 08 Quên mật khẩu -->
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.aicoach.ui.auth.ForgotPasswordFragment"
+        android:label="ForgotPassword">
+        <action
+            android:id="@+id/action_forgot_to_verify"
+            app:destination="@id/verifyCodeFragment" />
+    </fragment>
+
+    <!-- 09 Nhập mã xác thực -->
+    <fragment
+        android:id="@+id/verifyCodeFragment"
+        android:name="com.aicoach.ui.auth.VerifyCodeFragment"
+        android:label="VerifyCode">
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_verify_to_new_password"
+            app:destination="@id/newPasswordFragment" />
+    </fragment>
+
+    <!-- 10 Mật khẩu mới -->
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.aicoach.ui.auth.NewPasswordFragment"
+        android:label="NewPassword">
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="code"
+            app:argType="string" />
+        <!-- Xong thì bỏ 08–10 khỏi back stack: Back ở màn 11 không quay lại nhập mã -->
+        <action
+            android:id="@+id/action_new_password_to_success"
+            app:destination="@id/resetSuccessFragment"
+            app:popUpTo="@id/forgotPasswordFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 11 Đổi mật khẩu thành công -->
+    <fragment
+        android:id="@+id/resetSuccessFragment"
+        android:name="com.aicoach.ui.auth.ResetSuccessFragment"
+        android:label="ResetSuccess">
+        <action
+            android:id="@+id/action_reset_success_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 13 Khảo sát 1/3 – Thông tin cơ thể -->
+    <fragment
+        android:id="@+id/surveyBodyFragment"
+        android:name="com.aicoach.ui.auth.SurveyBodyFragment"
+        android:label="SurveyBody">
+        <action
+            android:id="@+id/action_survey_body_to_goal"
+            app:destination="@id/surveyGoalFragment" />
+    </fragment>
+
+    <!-- 14 Khảo sát 2/3 – Mục tiêu -->
+    <fragment
+        android:id="@+id/surveyGoalFragment"
+        android:name="com.aicoach.ui.auth.SurveyGoalFragment"
+        android:label="SurveyGoal">
+        <action
+            android:id="@+id/action_survey_goal_to_schedule"
+            app:destination="@id/surveyScheduleFragment" />
+    </fragment>
+
+    <!-- 15 Khảo sát 3/3 – Trình độ & lịch tập -->
+    <fragment
+        android:id="@+id/surveyScheduleFragment"
+        android:name="com.aicoach.ui.auth.SurveyScheduleFragment"
+        android:label="SurveySchedule">
+        <action
+            android:id="@+id/action_survey_schedule_to_generating"
+            app:destination="@id/planGeneratingFragment" />
+    </fragment>
+
+    <!-- 16 AI đang tạo giáo án: xong thì tự thay bằng 17 (Back ở 17 về lại 15) -->
+    <fragment
+        android:id="@+id/planGeneratingFragment"
+        android:name="com.aicoach.ui.auth.PlanGeneratingFragment"
+        android:label="PlanGenerating">
+        <action
+            android:id="@+id/action_generating_to_ready"
+            app:destination="@id/planReadyFragment"
+            app:popUpTo="@id/planGeneratingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- 17 Giáo án đã sẵn sàng -->
+    <fragment
+        android:id="@+id/planReadyFragment"
+        android:name="com.aicoach.ui.auth.PlanReadyFragment"
+        android:label="PlanReady">
+        <action
+            android:id="@+id/action_ready_to_notifications"
+            app:destination="@id/notificationPermissionFragment"
+            app:popUpTo="@id/nav_auth" />
+        <action
+            android:id="@+id/action_ready_to_plan_preview"
+            app:destination="@id/planPreviewFragment" />
+    </fragment>
+
+    <!-- "Xem đủ 4 tuần" ở 17: dùng lại màn 26 Chi tiết giáo án, chế độ xem trước (ẩn nút tập) -->
+    <fragment
+        android:id="@+id/planPreviewFragment"
+        android:name="com.aicoach.ui.plan.PlanPreviewFragment"
+        android:label="PlanPreview">
+        <argument
+            android:name="planId"
+            app:argType="string" />
+        <argument
+            android:name="sessionsDone"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="preview"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <!-- 20 Bật thông báo nhắc tập → Trang chủ -->
+    <fragment
+        android:id="@+id/notificationPermissionFragment"
+        android:name="com.aicoach.ui.auth.NotificationPermissionFragment"
+        android:label="NotificationPermission" />
 
 </navigation>

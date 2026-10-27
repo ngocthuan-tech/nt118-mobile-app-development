@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hộp "AI gợi ý" nền xanh nhạt có ô icon lấp lánh (Figma 14, 17, 26). Dùng bằng <include>. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_16"
+    android:background="@drawable/bg_ai_note"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_12">
+
+    <FrameLayout
+        android:layout_width="@dimen/icon_circle_size"
+        android:layout_height="@dimen/icon_circle_size"
+        android:background="@drawable/bg_icon_box"
+        android:backgroundTint="@color/brand_primary">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_sparkle_24"
+            app:tint="@color/white" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        tools:text="@string/survey_ai_fit" />
+</LinearLayout>

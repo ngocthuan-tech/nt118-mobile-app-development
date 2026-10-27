@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 03: thẻ nhắc giọng nói + khung xương có điểm lỗi + chú thích Đúng / Cảnh báo / Sai -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/space_32"
+        android:paddingTop="@dimen/space_48"
+        android:paddingEnd="@dimen/space_32">
+
+        <!-- Thẻ nhắc bằng giọng nói -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12">
+
+            <FrameLayout
+                android:layout_width="@dimen/icon_circle_size"
+                android:layout_height="@dimen/icon_circle_size"
+                android:background="@drawable/bg_auth_gradient_circle">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_volume_24"
+                    app:tint="@color/white" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:text="@string/onboarding_2_voice"
+                android:textAppearance="@style/TextAppearance.AICoach.SectionTitle"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="@dimen/space_8">
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_body_24"
+                app:tint="@color/white" />
+
+            <TextView
+                style="@style/Widget.AICoach.ChipDark"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/space_32"
+                android:background="@drawable/bg_chip_light"
+                android:backgroundTint="@color/state_warning"
+                android:text="@string/onboarding_2_angle"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/Widget.AICoach.ChipDark"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="@dimen/space_32"
+                android:background="@drawable/bg_chip_light"
+                android:backgroundTint="@color/state_error"
+                android:drawableStart="@drawable/ic_alert_24"
+                android:drawableTint="@color/white"
+                android:text="@string/onboarding_2_error"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+        <!-- Chú thích màu điểm khớp -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/legendOk"
+                style="@style/Widget.AICoach.ChipDark"
+                android:background="@drawable/bg_glass_card"
+                android:drawableStart="@drawable/bg_dot"
+                android:drawableTint="@color/state_success"
+                android:text="@string/onboarding_2_ok"
+                android:textStyle="normal" />
+
+            <TextView
+                style="@style/Widget.AICoach.ChipDark"
+                android:layout_marginStart="@dimen/space_8"
+                android:background="@drawable/bg_glass_card"
+                android:drawableStart="@drawable/bg_dot"
+                android:drawableTint="@color/state_warning"
+                android:text="@string/onboarding_2_warn"
+                android:textStyle="normal" />
+
+            <TextView
+                style="@style/Widget.AICoach.ChipDark"
+                android:layout_marginStart="@dimen/space_8"
+                android:background="@drawable/bg_glass_card"
+                android:drawableStart="@drawable/bg_dot"
+                android:drawableTint="@color/state_error"
+                android:text="@string/onboarding_2_bad"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/text"
+        layout="@layout/item_onboarding_text" />
+</LinearLayout>

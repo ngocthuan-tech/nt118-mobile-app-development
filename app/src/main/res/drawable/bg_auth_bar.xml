@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vạch độ mạnh mật khẩu (Figma 10, 12) và vạch bước khảo sát (13–15). Đổi màu bằng backgroundTint. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/white" />
+    <corners android:radius="2dp" />
+</shape>

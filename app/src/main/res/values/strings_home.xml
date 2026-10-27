@@ -21,4 +21,13 @@
     <string name="day_fri">T6</string>
     <string name="day_sat">T7</string>
     <string name="day_sun">CN</string>
+
+    <!-- Nối API GET home (Thành viên A) -->
+    <string name="home_greeting_fallback">bạn</string>
+    <string name="home_week_goal_done">Đã đạt mục tiêu tuần – tuyệt vời!</string>
+    <string name="home_plan_meta">Tuần %1$d • Buổi %2$d/%3$d • %4$d phút/buổi</string>
+    <string name="home_plan_percent">%1$d%%</string>
+    <string name="home_plan_completed">Đã hoàn thành giáo án 🎉</string>
+    <string name="home_choose_plan">Chọn giáo án cho bạn</string>
+    <string name="home_choose_plan_desc">AI gợi ý lộ trình theo mục tiêu và trình độ</string>
 </resources>

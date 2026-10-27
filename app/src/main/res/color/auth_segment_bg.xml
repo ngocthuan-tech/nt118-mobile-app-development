@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút trong nhóm phân đoạn (Figma 15 thời lượng, 24 kiểu AI): chọn = nền trắng -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/bg_card" android:state_checked="true" />
+    <item android:color="@color/transparent" />
+</selector>

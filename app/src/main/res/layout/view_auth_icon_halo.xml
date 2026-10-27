@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon lớn trong vòng sáng xanh (Figma 08 chìa khoá, 09 phong bì, 10 khiên). Dùng bằng <include>. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/auth_icon_halo_size"
+    android:layout_height="@dimen/auth_icon_halo_size"
+    android:background="@drawable/bg_auth_icon_halo">
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="@dimen/auth_icon_inner_size"
+        android:layout_height="@dimen/auth_icon_inner_size"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        app:tint="@color/white"
+        tools:src="@drawable/ic_key_24" />
+</FrameLayout>

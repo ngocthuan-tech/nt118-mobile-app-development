@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style riêng của Thành viên A (màn tài khoản, khảo sát, bài tập). Không đụng styles.xml chung. -->
+
+    <!-- Ô nhập bo góc nền trắng, nhãn đặt phía trên bằng TextView (Figma 06–12) -->
+    <style name="Widget.AICoach.Auth.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_4</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxBackgroundColor">@color/bg_card</item>
+        <item name="boxStrokeColor">@color/brand_primary</item>
+        <item name="boxCornerRadiusTopStart">@dimen/radius_card</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_card</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_card</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_card</item>
+        <item name="startIconTint">@color/text_secondary</item>
+        <item name="endIconTint">@color/text_secondary</item>
+    </style>
+
+    <style name="Widget.AICoach.Auth.EditText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Nhãn phía trên ô nhập: "Email", "Mật khẩu" -->
+    <style name="Widget.AICoach.Auth.Label" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_16</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Tiêu đề lớn màn sáng: "Tạo tài khoản", "Quên mật khẩu?" -->
+    <style name="Widget.AICoach.Auth.Title" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/auth_title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.AICoach.Auth.Subtitle" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_8</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+
+    <!-- Tiêu đề nhóm trong khảo sát: "Giới tính", "Năm sinh" -->
+    <style name="Widget.AICoach.Survey.Section" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_20</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Nút tròn quay lại -->
+    <style name="Widget.AICoach.Auth.BackButton" parent="Widget.AICoach.CircleIconButton">
+        <item name="android:background">@drawable/bg_auth_back_button</item>
+        <item name="android:src">@drawable/ic_chevron_left_24</item>
+        <item name="android:contentDescription">@string/auth_back</item>
+        <item name="tint">@color/text_primary</item>
+    </style>
+
+    <!-- Chip chọn nhiều nền trắng / xanh (Figma 14, 24) -->
+    <style name="Widget.AICoach.FilterChip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/auth_chip_bg</item>
+        <item name="chipStrokeColor">@color/auth_chip_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/auth_chip_text</item>
+        <item name="checkedIconTint">@color/white</item>
+        <item name="chipCornerRadius">@dimen/radius_pill</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Chip chọn 1 (thanh nhóm cơ ở Thư viện 23) -->
+    <style name="Widget.AICoach.ChoiceChip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/auth_chip_bg</item>
+        <item name="chipStrokeColor">@color/auth_chip_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/auth_chip_text</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipCornerRadius">@dimen/radius_pill</item>
+        <item name="chipMinHeight">38dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Nút trong nhóm phân đoạn (Figma 15 thời lượng, 24 kiểu AI) -->
+    <style name="Widget.AICoach.Segment" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:checkable">true</item>
+        <item name="backgroundTint">@color/auth_segment_bg</item>
+        <item name="android:textColor">@color/auth_segment_text</item>
+        <item name="cornerRadius">@dimen/radius_pill</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- 1 ô mã xác thực (Figma 09) -->
+    <style name="Widget.AICoach.Auth.OtpBox" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginEnd">@dimen/space_8</item>
+        <item name="android:background">@drawable/bg_auth_otp_box</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/auth_otp_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <!-- Mảnh giấy màu trang trí (Figma 11) -->
+    <style name="Widget.AICoach.Auth.Confetti" parent="">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:background">@drawable/bg_auth_bar</item>
+    </style>
+
+    <!-- Thanh trượt chiều cao / cân nặng (Figma 13) -->
+    <style name="Widget.AICoach.Survey.Slider" parent="Widget.Material3.Slider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="labelBehavior">gone</item>
+        <item name="tickVisible">false</item>
+        <item name="trackHeight">6dp</item>
+        <item name="trackColorActive">@color/brand_primary</item>
+        <item name="trackColorInactive">@color/divider</item>
+        <item name="thumbColor">@color/brand_primary</item>
+        <item name="haloColor">@color/brand_primary_light</item>
+    </style>
+
+    <!-- Ô tròn ngày tập T2…CN (Figma 15) -->
+    <style name="Widget.AICoach.Survey.Day" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/survey_day_size</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:background">@drawable/bg_survey_day</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textColor">@color/survey_day_text</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 1 cột trong thẻ "Dự kiến mỗi tuần" (Figma 15) -->
+    <style name="Widget.AICoach.Survey.Estimate" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.AICoach.Survey.EstimateValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/survey_estimate_value_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Ảnh nhỏ bài tập trong thẻ buổi tập (Figma 17) -->
+    <style name="Widget.AICoach.Plan.Thumb" parent="">
+        <item name="android:layout_width">@dimen/plan_thumb_size</item>
+        <item name="android:layout_height">@dimen/plan_thumb_size</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:background">@drawable/bg_exercise_photo</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+
+    <!-- Ô chỉ số kính mờ trên header xanh (Figma 17: 4 tuần / 12 buổi / 25′) -->
+    <style name="Widget.AICoach.Plan.Stat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_glass_card</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/space_12</item>
+    </style>
+
+    <style name="Widget.AICoach.Plan.StatValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/plan_stat_value_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Nhãn nhỏ dạng viên thuốc ở Chi tiết bài tập (Figma 25) -->
+    <style name="Widget.AICoach.Exercise.Tag" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

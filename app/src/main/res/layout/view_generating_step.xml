@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 bước trong thẻ tiến trình (Figma 16): tích xanh / vòng đang chạy / vòng trống. Dùng bằng <include>. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_8"
+    android:paddingBottom="@dimen/space_8">
+
+    <FrameLayout
+        android:layout_width="@dimen/plan_generating_step_icon"
+        android:layout_height="@dimen/plan_generating_step_icon">
+
+        <ImageView
+            android:id="@+id/imgState"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            tools:src="@drawable/ic_check_circle_24"
+            tools:tint="@color/state_success" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/accent_cyan"
+            app:indicatorSize="@dimen/plan_generating_step_icon"
+            app:trackColor="@color/white_20"
+            app:trackThickness="2dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_on_dark"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="@string/plan_generating_step_body" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+            tools:text="170 cm • 62 kg • BMI 21.5" />
+    </LinearLayout>
+</LinearLayout>

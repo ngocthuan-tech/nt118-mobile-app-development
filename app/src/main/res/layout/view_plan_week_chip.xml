@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chip tuần trên header xanh (Figma 26): đang chọn = nền trắng chữ xanh; đã xong = tích; chưa mở = khoá -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.Chip.Filter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/plan_week_chip_text"
+    android:textSize="13sp"
+    android:textStyle="bold"
+    app:checkedIconVisible="false"
+    app:chipBackgroundColor="@color/plan_week_chip_bg"
+    app:chipCornerRadius="@dimen/radius_pill"
+    app:chipIconTint="@color/plan_week_chip_text"
+    app:chipStrokeWidth="0dp" />

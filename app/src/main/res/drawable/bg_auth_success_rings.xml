@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 3 vòng xanh lá đồng tâm sau dấu tích (Figma 11) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/state_success_light" />
+        </shape>
+    </item>
+    <item
+        android:bottom="26dp"
+        android:left="26dp"
+        android:right="26dp"
+        android:top="26dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/state_success_light" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/white" />
+        </shape>
+    </item>
+    <item
+        android:bottom="50dp"
+        android:left="50dp"
+        android:right="50dp"
+        android:top="50dp">
+        <shape android:shape="oval">
+            <gradient
+                android:angle="315"
+                android:endColor="@color/state_success"
+                android:startColor="@color/state_success" />
+        </shape>
+    </item>
+</layer-list>

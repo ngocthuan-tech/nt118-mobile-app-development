@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 thẻ lựa chọn dạng hàng (Figma 14 mục tiêu): ô icon màu + tiêu đề + mô tả + nút radio. Dùng bằng <include>. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_12"
+    android:background="@drawable/bg_survey_option"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_12">
+
+    <FrameLayout
+        android:id="@+id/iconBox"
+        android:layout_width="@dimen/survey_option_icon_box"
+        android:layout_height="@dimen/survey_option_icon_box"
+        android:background="@drawable/bg_icon_box"
+        android:backgroundTint="@color/state_warning_light">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/medal_orange"
+            tools:src="@drawable/ic_fire_24" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="@string/survey_goal_lose" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption"
+            tools:text="@string/survey_goal_lose_desc" />
+    </LinearLayout>
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        app:buttonTint="@color/brand_primary" />
+</LinearLayout>

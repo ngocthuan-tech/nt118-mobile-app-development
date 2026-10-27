@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 06 Đăng nhập + 07 trạng thái báo lỗi (Thành viên A) -->
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_screen"
@@ -15,6 +17,18 @@
         android:paddingEnd="@dimen/auth_horizontal_padding"
         android:paddingBottom="@dimen/space_24">
 
+        <!-- Quay lại (Figma 07) — chỉ hiện khi có màn trước đó (Chào mừng / Onboarding) -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.AICoach.CircleIconButton"
+            android:background="@drawable/bg_auth_back_button"
+            android:contentDescription="@string/auth_back"
+            android:src="@drawable/ic_chevron_left_24"
+            android:visibility="gone"
+            app:tint="@color/text_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!-- Logo -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgLogo"
@@ -24,7 +38,7 @@
             android:importantForAccessibility="no"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/img_logo_tile"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Tiêu đề -->
@@ -55,17 +69,65 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Figma 07: khung báo "Đăng nhập thất bại" -->
+        <LinearLayout
+            android:id="@+id/errorBanner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:background="@drawable/bg_auth_error_banner"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/auth_banner_icon_size"
+                android:layout_height="@dimen/auth_banner_icon_size"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_alert_24"
+                app:tint="@color/state_error" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_login_failed"
+                    android:textColor="@color/state_error"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvErrorMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/state_error"
+                    android:textSize="12sp"
+                    tools:text="Email hoặc mật khẩu chưa chính xác" />
+            </LinearLayout>
+        </LinearLayout>
+
         <!-- Email -->
         <TextView
             android:id="@+id/tvEmailLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_32"
+            android:layout_marginTop="@dimen/space_16"
             android:labelFor="@id/etEmail"
             android:text="@string/auth_email_hint"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="@color/text_secondary"
-            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+            app:layout_goneMarginTop="@dimen/space_32"
+            app:layout_constraintTop_toBottomOf="@id/errorBanner"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -119,6 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_4"
             app:hintEnabled="false"
+            app:errorEnabled="false"
             app:startIconDrawable="@drawable/ic_lock_24"
             app:startIconTint="@color/text_secondary"
             app:endIconMode="password_toggle"
@@ -171,6 +234,21 @@
             app:layout_constraintTop_toBottomOf="@id/btnForgotPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/brand_primary"
+            app:indicatorSize="24dp"
+            app:trackThickness="3dp"
+            app:layout_constraintTop_toTopOf="@id/btnLogin"
+            app:layout_constraintBottom_toBottomOf="@id/btnLogin"
+            app:layout_constraintStart_toStartOf="@id/btnLogin"
+            app:layout_constraintEnd_toEndOf="@id/btnLogin" />
 
         <!-- Phân cách -->
         <TextView

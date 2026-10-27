@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 dòng có icon nhỏ trong ô tròn (Figma 25 "AI sẽ theo dõi", lỗi thường gặp) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_4"
+    android:paddingBottom="@dimen/space_4">
+
+    <FrameLayout
+        android:id="@+id/iconBox"
+        android:layout_width="@dimen/exercise_step_number_size"
+        android:layout_height="@dimen/exercise_step_number_size"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/state_success_light">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_check_24"
+            app:tint="@color/state_success" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        tools:text="Đếm 1 lần mỗi khi đứng lên từ đáy" />
+</LinearLayout>

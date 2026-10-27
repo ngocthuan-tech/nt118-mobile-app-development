@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tiêu đề + mô tả dưới hình minh hoạ, dùng chung cho 3 trang Onboarding (Figma 02–04) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/space_24"
+    android:paddingEnd="@dimen/space_24">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AICoach.OnDark.Title"
+        android:textSize="@dimen/onboarding_title_size"
+        tools:text="@string/onboarding_1_title" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:lineSpacingExtra="4dp"
+        android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+        android:textSize="15sp"
+        tools:text="@string/onboarding_1_desc" />
+</LinearLayout>

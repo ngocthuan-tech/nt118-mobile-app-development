@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 bước thực hiện: số tròn xanh + nội dung (Figma 25 "Cách thực hiện") -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_8"
+    android:paddingBottom="@dimen/space_8">
+
+    <TextView
+        android:id="@+id/tvNumber"
+        android:layout_width="@dimen/exercise_step_number_size"
+        android:layout_height="@dimen/exercise_step_number_size"
+        android:background="@drawable/bg_auth_gradient_circle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        tools:text="Đứng thẳng, hai chân rộng bằng vai" />
+</LinearLayout>

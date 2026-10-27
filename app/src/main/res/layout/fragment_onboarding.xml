@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma 02–04 Onboarding (Thành viên A): 3 trang vuốt ngang trên nền navy -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen_dark">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/rowDots"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSkip"
+        style="@style/Widget.AICoach.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
+        android:text="@string/onboarding_skip"
+        android:textColor="@color/text_on_dark_secondary"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Chấm trang: chấm đang chọn dài hơn, màu cyan -->
+    <LinearLayout
+        android:id="@+id/rowDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_24"
+        android:layout_marginBottom="@dimen/space_24"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/barrierBottom"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="@dimen/onboarding_dot_active_width"
+            android:layout_height="@dimen/onboarding_dot_size"
+            android:background="@drawable/bg_onboarding_dot" />
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="@dimen/onboarding_dot_size"
+            android:layout_height="@dimen/onboarding_dot_size"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@drawable/bg_onboarding_dot" />
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="@dimen/onboarding_dot_size"
+            android:layout_height="@dimen/onboarding_dot_size"
+            android:layout_marginStart="@dimen/space_8"
+            android:background="@drawable/bg_onboarding_dot" />
+    </LinearLayout>
+
+    <!-- Trang 1, 2: nút tròn "Tiếp" -->
+    <ImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="@dimen/onboarding_next_size"
+        android:layout_height="@dimen/onboarding_next_size"
+        android:layout_marginEnd="@dimen/space_24"
+        android:background="@drawable/bg_auth_gradient_circle_ripple"
+        android:contentDescription="@string/onboarding_next"
+        android:elevation="6dp"
+        android:src="@drawable/ic_chevron_right_24"
+        app:layout_constraintBottom_toBottomOf="@id/rowDots"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rowDots"
+        app:tint="@color/white" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="btnStart,bottomSpace" />
+
+    <Space
+        android:id="@+id/bottomSpace"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Trang 3: nút "Bắt đầu ngay" + "Đã có tài khoản? Đăng nhập" -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStart"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginStart="@dimen/space_24"
+        android:layout_marginEnd="@dimen/space_24"
+        android:layout_marginBottom="@dimen/space_8"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/onboarding_start"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rowLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/rowLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_16"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onboarding_have_account"
+            android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/Widget.AICoach.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:paddingStart="@dimen/space_4"
+            android:paddingEnd="@dimen/space_4"
+            android:text="@string/onboarding_login"
+            android:textColor="@color/accent_cyan" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

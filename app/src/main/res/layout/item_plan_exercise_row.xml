@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1 bài trong buổi đang mở (Figma 26): ảnh nhỏ + tên + "3 × 15 lần" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_8"
+    android:background="@drawable/bg_auth_info_box"
+    android:backgroundTint="@color/bg_screen"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_8">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/plan_exercise_thumb"
+        android:layout_height="@dimen/plan_exercise_thumb"
+        android:background="@drawable/bg_exercise_photo"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Squat" />
+
+    <TextView
+        android:id="@+id/tvVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AICoach.Caption"
+        android:textSize="13sp"
+        tools:text="3 × 15 lần" />
+</LinearLayout>

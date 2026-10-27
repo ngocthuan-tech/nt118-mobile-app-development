@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút "Tiếp tục" + vòng xoay khi đang lưu (Figma 13–15). Dùng bằng <include>. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/survey_continue" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/brand_primary"
+        app:indicatorSize="24dp"
+        app:trackThickness="3dp" />
+</FrameLayout>

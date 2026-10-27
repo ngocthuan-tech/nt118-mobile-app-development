@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nút bộ lọc vuông bo góc gradient xanh (Figma 23) -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/white_40">
+    <item android:drawable="@drawable/bg_auth_gradient_square" />
+</ripple>
