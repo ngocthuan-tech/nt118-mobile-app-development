@@ -11,6 +11,7 @@
     app:checkedIconVisible="false"
     app:chipBackgroundColor="@color/plan_week_chip_bg"
     app:chipCornerRadius="@dimen/radius_pill"
+    app:chipIconSize="14dp"
     app:chipIconTint="@color/plan_week_chip_text"
     app:chipStrokeWidth="0dp"
     app:chipSurfaceColor="@color/transparent" />

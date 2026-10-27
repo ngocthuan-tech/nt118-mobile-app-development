@@ -37,5 +37,6 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.AICoach.Caption"
+        android:textSize="11sp"
         tools:text="@string/survey_level_beginner_desc" />
 </LinearLayout>
