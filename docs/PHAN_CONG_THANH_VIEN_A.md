@@ -27,6 +27,7 @@ date: "22/10/2026"
 - **Backend:** `https://aicoach-r15.koreacentral.cloudapp.azure.com/api/v1/` — xem và gọi thử mọi API tại **[Swagger](https://aicoach-r15.koreacentral.cloudapp.azure.com/swagger-ui.html)** (bấm *Authorize*, dán `accessToken`).
 - **Tài khoản demo:** `demo@aicoach.vn` / `Demo1234` — có sẵn giáo án và 8 buổi tập, dùng để test màn có số liệu.
 - **Bỏ Firebase.** App giờ chỉ nói chuyện với backend qua Retrofit. Không ai thêm lại thư viện Firebase.
+- **Database:** PostgreSQL trên server. Cấu trúc bảng nằm trong `backend/src/main/resources/db/migration/` (Flyway), sơ đồ quan hệ ở [`docs/DATABASE.md`](DATABASE.md).
 
 | Lớp có sẵn | Nằm ở | Dùng để |
 |---|---|---|
@@ -48,7 +49,7 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
-| GET | `home` | `HomeApi.getHome` | A — Trang chủ (21) |
+| GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
 | GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |
@@ -285,23 +286,34 @@ res/drawable-nodpi/  9 ảnh bài tập: img_squat, img_pushup, img_plank, img_l
 
 `OnboardingRepository` là của bạn: dùng `UserApi.updateMe` cho khảo sát và chọn giáo án. **Không sửa** `UserRepository` (của B) — hai Repository gọi chung một interface là bình thường.
 
-## A.4 Trang chủ (Figma 21) — field nào lấy ở đâu
+## A.4 Trang chủ (Figma 21) — Chuỗi 7 ngày + Bài tập hôm nay
 
-Gọi **một** API `GET home` → `HomeData`. Giao diện đã dựng sẵn trong `HomeFragment` + `fragment_home.xml`, bạn chỉ thay `bindDemoData()` bằng dữ liệu thật.
+Thầy chấm Trang chủ giữa kỳ ở 2 khối: **Chuỗi 7 ngày** và **Bài tập hôm nay**, dữ liệu thật từ database. Cả hai nằm trong **một** API `GET home` → `HomeData`. Giao diện đã dựng sẵn trong `HomeFragment` + `fragment_home.xml`; bạn thay `bindDemoData()` bằng dữ liệu thật. Các khối khác (phút/kcal, thẻ giáo án) có sẵn trong cùng API, làm thêm nếu kịp.
 
 | Trên màn | Lấy từ `HomeData` |
 |---|---|
 | "Xin chào, Minh" · chữ "M" trong avatar | `getDisplayName()` · chữ cái đầu của tên cuối |
-| "Chuỗi 7 ngày" | `getStreak()` |
-| "Còn 1 buổi để đạt mục tiêu tuần" | `getWeek().getRemainingSessions()` (= 0 → "Đã đạt mục tiêu tuần 🎉") |
-| 7 chấm T2 → CN | `getWeek().getDays()`: `isActive()` tô màu, `isToday()` viền |
-| "18 phút hôm nay" · "320 kcal" | `getToday().getMinutes()` · `getToday().getCalories()` |
-| Thẻ giáo án: tên, "Tuần 2 • Buổi 5/12 • 25 phút/buổi", thanh % | `getActivePlan()`: `getTitle()`, `getCurrentWeek()`, `getSessionsDone() + 1`, `getTotalSessions()`, `getMinutesPerSession()`, `getProgressPercent()` |
-| Chưa có giáo án | `getActivePlan() == null` → thẻ "Chọn giáo án" → mở 26 |
-| "Bài tập hôm nay — 3 bài • ~18 phút" + dải thẻ | `getTodayWorkout().getExercises()` (`Plan.PlanItem`), `getEstimatedMinutes()`; plank: `isTimeBased()` → "3 × 45 giây" |
+| **"Chuỗi 7 ngày"** | `getStreak()` |
+| "Còn 1 buổi để đạt mục tiêu tuần" | `getWeek().getRemainingSessions()` (= 0 → "Đã đạt mục tiêu tuần") |
+| **7 chấm T2 → CN** | `getWeek().getDays()`: `getLabel()`, `isActive()` tô màu, `isToday()` viền |
+| **"Bài tập hôm nay — 3 bài • ~18 phút"** | `getTodayWorkout().getExercises().size()`, `getTodayWorkout().getEstimatedMinutes()` |
+| **Dải thẻ bài tập** | `getTodayWorkout().getExercises()` (`Plan.PlanItem`): `getExerciseName()`, `getSets()` × `getReps()`; plank `isTimeBased()` → "3 × 45 giây"; ảnh `ExerciseImages.bind(img, item.getImageName())` |
 | Nút tròn "BẮT ĐẦU TẬP" | `action_global_to_readiness` với `exerciseId` của bài đầu tiên |
+| "18 phút hôm nay" · "320 kcal" | `getToday().getMinutes()` · `getToday().getCalories()` |
+| Thẻ giáo án | `getActivePlan()` (null = chưa chọn → thẻ "Chọn giáo án" → mở 26) |
 
-Thêm `SwipeRefreshLayout` để kéo làm mới. Đăng nhập `demo@aicoach.vn` để thấy đủ số liệu; tài khoản mới đăng ký sẽ ra trạng thái rỗng (streak 0, chưa có giáo án) — **cả hai trạng thái đều phải đẹp**.
+```java
+public class HomeRepository extends BaseRepository {
+    private final HomeApi api;
+    public HomeRepository(Context context) { api = ApiClient.create(context, HomeApi.class); }
+
+    public LiveData<Resource<HomeData>> getHome() { return execute(api.getHome()); }
+}
+```
+
+ViewModel đúng khuôn ở mục 3 (gọi `load()` trong constructor). Thêm `SwipeRefreshLayout` để kéo làm mới.
+
+Đăng nhập `demo@aicoach.vn` để thấy đủ số liệu (streak 5, đang theo giáo án). Tài khoản mới đăng ký: streak 0, 7 chấm trống, 3 bài gợi ý Squat · Hít đất · Plank — **cả hai trạng thái đều phải đẹp**.
 
 ## A.5 Code mẫu phần Đăng nhập
 
@@ -420,5 +432,5 @@ Ngày 1 = ngày Trưởng nhóm báo `feature/lead-backend` đã vào `develop`.
 | Token lưu ở đâu, có an toàn không? | SharedPreferences chế độ PRIVATE qua `TokenManager`, chỉ app đọc được; chỉ gửi qua HTTPS; hết hạn sau 7 ngày, server trả 401 thì app tự xoá token và về màn Đăng nhập |
 | Mật khẩu có bị lộ không? | Đi qua HTTPS; server băm BCrypt, không lưu mật khẩu gốc; log mạng tắt ở bản release và luôn che header Authorization |
 | Sao kiểm tra dữ liệu cả ở app lẫn server? | App kiểm tra để phản hồi ngay, đỡ tốn request; server kiểm tra lại vì không bao giờ tin dữ liệu từ client |
-| Sao Trang chủ chỉ gọi một API? | `GET home` gộp mọi số liệu (mô hình Backend-for-Frontend): một lần gọi trên 4G thay vì 4–5 lần, server tính sẵn streak và tiến độ |
+| Sao Trang chủ chỉ gọi một API? | `GET home` gộp Chuỗi 7 ngày và Bài tập hôm nay (mô hình Backend-for-Frontend): một lần gọi trên 4G thay vì nhiều lần; server tính sẵn từ database, app chỉ hiển thị |
 | Sao không gọi API thẳng trong Fragment? | Tách tầng MVVM: Fragment chỉ hiển thị, Repository lo dữ liệu → đổi dữ liệu mẫu sang API không phải sửa giao diện, ViewModel giữ dữ liệu khi xoay màn |

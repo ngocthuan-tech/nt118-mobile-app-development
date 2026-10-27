@@ -21,6 +21,22 @@ jobs:
       run:
         working-directory: backend
 
+    # Database PostgreSQL thật cho test — giống hệt server
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: aicoach_test
+          POSTGRES_USER: aicoach
+          POSTGRES_PASSWORD: aicoach
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U aicoach -d aicoach_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +48,7 @@ jobs:
           cache: maven
           cache-dependency-path: backend/pom.xml
 
-      - name: Chạy test (H2 in-memory)
+      - name: Chạy Flyway + test trên PostgreSQL
         run: mvn -B verify
 
       - name: Build Docker image

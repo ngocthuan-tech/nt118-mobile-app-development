@@ -1,11 +1,10 @@
+# Test chạy trên PostgreSQL thật (GitHub Actions dựng sẵn service postgres) —
+# cùng loại database với server, cùng file Flyway, Hibernate kiểm tra entity khớp bảng.
 spring:
   datasource:
-    url: jdbc:h2:mem:aicoach;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/aicoach_test}
+    username: ${TEST_DB_USER:aicoach}
+    password: ${TEST_DB_PASSWORD:aicoach}
 
 app:
   jwt:
