@@ -51,6 +51,8 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
 
         b.tvDay.setText(s.dayLabel);
         b.tvSessionNo.setText(c.getString(R.string.plan_session_number, s.sessionNumber));
+        // 26 đã ghi "Buổi 5" ở tiêu đề → ô ngày chỉ còn "T4" như Figma
+        b.tvSessionNo.setVisibility(s.compact ? View.VISIBLE : View.GONE);
 
         boolean today = s.state == PlanSessionItem.State.TODAY;
         boolean filledDay = s.highlighted || today;
