@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="auth_login_title">Đăng nhập</string>
+    <string name="auth_login_title">Chào mừng trở lại</string>
     <string name="auth_email_hint">Email</string>
     <string name="auth_password_hint">Mật khẩu</string>
     <string name="auth_login_button">Đăng nhập</string>
     <string name="auth_forgot_password">Quên mật khẩu?</string>
     <string name="auth_register_button">Tạo tài khoản</string>
+    <string name="auth_login_subtitle">Đăng nhập để tiếp tục hành trình luyện tập</string>
+    <string name="auth_or">hoặc</string>
+    <string name="auth_google_button">Tiếp tục với Google</string>
+    <string name="auth_no_account">Chưa có tài khoản?</string>
+    <string name="auth_register_link">Đăng ký</string>
 </resources>
