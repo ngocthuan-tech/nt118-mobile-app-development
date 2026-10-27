@@ -27,6 +27,7 @@ date: "22/10/2026"
 - **Backend:** `https://aicoach-r15.koreacentral.cloudapp.azure.com/api/v1/` — xem và gọi thử mọi API tại **[Swagger](https://aicoach-r15.koreacentral.cloudapp.azure.com/swagger-ui.html)** (bấm *Authorize*, dán `accessToken`).
 - **Tài khoản demo:** `demo@aicoach.vn` / `Demo1234` — có sẵn giáo án và 8 buổi tập, dùng để test màn có số liệu.
 - **Bỏ Firebase.** App giờ chỉ nói chuyện với backend qua Retrofit. Không ai thêm lại thư viện Firebase.
+- **Database:** PostgreSQL trên server. Cấu trúc bảng nằm trong `backend/src/main/resources/db/migration/` (Flyway), sơ đồ quan hệ ở [`docs/DATABASE.md`](DATABASE.md).
 
 | Lớp có sẵn | Nằm ở | Dùng để |
 |---|---|---|
@@ -37,7 +38,7 @@ date: "22/10/2026"
 | `TokenManager` | `data/local/` | `saveToken()`, `isLoggedIn()`, `clear()` |
 | `Resource<T>`, `BaseFragment`, `ErrorMapper` | `common/` | Trạng thái LOADING / SUCCESS / ERROR; ViewBinding; câu lỗi tiếng Việt |
 | `ExerciseImages.bind(imageView, idHoặcImageName)` | `common/` | Gắn ảnh người tập của 9 bài; chưa có ảnh thì hiện hình người mờ |
-| `User`, `HomeData`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
+| `User`, `HomeStreak`, `TodayWorkout`, `Exercise`, `Plan`, `WorkoutSession`, `Challenge` | `data/model/` | Khớp 1-1 với JSON backend — muốn thêm field thì báo Trưởng nhóm |
 | `ProfileDtos.UpdateProfileRequest`, `AuthDtos.*` | `data/remote/dto/` | Body gửi lên server |
 
 ## 2. Danh sách API
@@ -48,7 +49,8 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
-| GET | `home` | `HomeApi.getHome` | A — Trang chủ (21) |
+| GET | `home/streak` → `HomeStreak` | `HomeApi.getStreak` | A — Trang chủ (21): thẻ **Chuỗi 7 ngày** |
+| GET | `home/today-workout` → `TodayWorkout` | `HomeApi.getTodayWorkout` | A — Trang chủ (21): dải **Bài tập hôm nay** |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
 | GET | `users/me` | `UserApi.getMe` | B — Hồ sơ (43) |

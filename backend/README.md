@@ -15,10 +15,19 @@ REST API cho app AI Coach — Spring Boot 3 (Java 17), PostgreSQL, JWT, Swagger.
 ☁️ Azure VM (Ubuntu, Korea Central)
    ├─ caddy    : HTTPS Let's Encrypt, chuyển tiếp vào api:8080
    ├─ api      : Spring Boot — controller → service → repository (JPA)
-   └─ db       : PostgreSQL 16 (không mở ra Internet)
+   └─ db       : PostgreSQL 16 (không mở ra Internet), cấu trúc bảng do Flyway tạo
 ```
 
 Mỗi module một package: `auth`, `user`, `home`, `exercise`, `plan`, `session`, `progress` (luật streak/XP), `security` (JWT), `common` (envelope, xử lý lỗi).
+
+## Database
+
+PostgreSQL 16, 10 bảng. Cấu trúc nằm trong `src/main/resources/db/migration/` và được **Flyway** áp dụng tự động khi server khởi động:
+
+- `V1__init_schema.sql` — tạo bảng
+- `V2__relations.sql` — khoá ngoại, ràng buộc, index
+
+Hibernate chạy ở chế độ `validate`: entity Java lệch với bảng thì server không khởi động. Sơ đồ quan hệ: [`docs/DATABASE.md`](../docs/DATABASE.md). Muốn đổi cấu trúc → thêm file `V3__...sql`, **không sửa file đã chạy**.
 
 ## Danh sách API
 
@@ -33,7 +42,9 @@ Các API (trừ auth, health, swagger) cần header `Authorization: Bearer <acce
 | GET | `/api/v1/users/me` | Hồ sơ + tiến độ (streak, XP, tổng rep) |
 | PUT | `/api/v1/users/me` | Sửa hồ sơ, chỉ gửi field cần đổi (khảo sát, sửa hồ sơ, chọn giáo án qua `activePlanId`) |
 | PUT | `/api/v1/users/me/password` | Đổi mật khẩu `{currentPassword, newPassword}` |
-| GET | `/api/v1/home` | Toàn bộ dữ liệu Trang chủ trong 1 lần gọi |
+| GET | `/api/v1/home/streak` | **Chuỗi 7 ngày**: số ngày liên tiếp + 7 ngày T2–CN tuần này |
+| GET | `/api/v1/home/today-workout` | **Bài tập hôm nay**: buổi tiếp theo của giáo án, hoặc 3 bài gợi ý |
+| GET | `/api/v1/home` | Gộp toàn bộ Trang chủ trong 1 lần gọi (tuỳ chọn) |
 | GET | `/api/v1/exercises?muscleGroup=&difficulty=&q=` | 9 bài tập, lọc + tìm không dấu |
 | GET | `/api/v1/exercises/{id}` | Chi tiết bài tập (`squat`, `pushup`, `plank`, `lunge`, `glute_bridge`, `chair_dip`, `jumping_jack`, `high_knees`, `toe_touch`) |
 | GET | `/api/v1/plans` · `/api/v1/plans/{id}` | Giáo án và các buổi |
