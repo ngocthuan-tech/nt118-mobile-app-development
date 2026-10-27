@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Logo AI Coach dạng ô vuông bo góc nền xanh (Figma 05, 06, 07, 20).
+    Dùng: <ImageView android:layout_width="56dp" android:layout_height="56dp" android:src="@drawable/img_logo_tile" />
+    Chỉ cần nét logo trắng (đặt trên nền tối, Figma 16) → dùng @drawable/ic_logo_mark.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:endColor="@color/brand_gradient_end"
+                android:startColor="@color/brand_gradient_start" />
+            <corners android:radius="@dimen/radius_card" />
+        </shape>
+    </item>
+    <item
+        android:bottom="10dp"
+        android:drawable="@drawable/ic_logo_mark"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp" />
+</layer-list>
