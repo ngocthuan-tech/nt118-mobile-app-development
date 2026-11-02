@@ -1,5 +1,6 @@
 package com.aicoach.api.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -44,20 +45,30 @@ public class JwtService {
                 .compact();
     }
 
-    /** Trả về id người dùng nếu token hợp lệ và chưa hết hạn. */
-    public Optional<String> parseUserId(String token) {
+    /** Nội dung đã kiểm chữ ký của một token: ai, cấp lúc nào. */
+    public record TokenInfo(String userId, Instant issuedAt) {
+    }
+
+    /** Trả về id người dùng + thời điểm cấp nếu token hợp lệ và chưa hết hạn. */
+    public Optional<TokenInfo> parse(String token) {
         try {
-            String subject = Jwts.parser()
+            Claims claims = Jwts.parser()
                     .verifyWith(key)
                     .clock(() -> Date.from(clock.instant()))
                     .build()
                     .parseSignedClaims(token)
-                    .getPayload()
-                    .getSubject();
-            return Optional.ofNullable(subject);
+                    .getPayload();
+            if (claims.getSubject() == null || claims.getIssuedAt() == null) {
+                return Optional.empty();
+            }
+            return Optional.of(new TokenInfo(claims.getSubject(), claims.getIssuedAt().toInstant()));
         } catch (JwtException | IllegalArgumentException e) {
             return Optional.empty();
         }
+    }
+
+    public Optional<String> parseUserId(String token) {
+        return parse(token).map(TokenInfo::userId);
     }
 
     public long ttlSeconds() {

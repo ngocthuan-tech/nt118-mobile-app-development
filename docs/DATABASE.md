@@ -1,6 +1,6 @@
 # Database AI Coach
 
-PostgreSQL 16 chạy trong Docker trên máy ảo Azure (container `db`, không mở cổng ra Internet). **10 bảng**, chia 4 nhóm: người dùng, bài tập, giáo án, buổi tập.
+PostgreSQL 16 chạy trong Docker trên máy ảo Azure (container `db`, không mở cổng ra Internet). **11 bảng**, chia 4 nhóm: người dùng, bài tập, giáo án, buổi tập.
 
 Cấu trúc bảng nằm trong code, không tạo tay: Flyway chạy các file SQL trong [`backend/src/main/resources/db/migration/`](../backend/src/main/resources/db/migration/) theo thứ tự khi server khởi động.
 
@@ -8,12 +8,14 @@ Cấu trúc bảng nằm trong code, không tạo tay: Flyway chạy các file S
 |---|---|
 | `V1__init_schema.sql` | Tạo 10 bảng, khoá chính, khoá ngoại bảng con, unique email, index `(user_id, started_at)` |
 | `V2__relations.sql` | Khoá ngoại giữa bảng chính, ràng buộc `correct_reps ≤ total_reps`, index cho lịch sử và giáo án |
+| `V3__password_reset.sql` | Bảng `password_reset_codes` (quên mật khẩu), cột `users.password_changed_at` |
 
 ## Sơ đồ quan hệ (ERD)
 
 ```mermaid
 erDiagram
     USERS ||--o{ WORKOUT_SESSIONS : "tập"
+    USERS ||--o{ PASSWORD_RESET_CODES : "quên mật khẩu"
     PLANS |o--o{ USERS : "đang theo (active_plan_id)"
     PLANS ||--|{ PLAN_ITEMS : "gồm các bài theo buổi"
     EXERCISES ||--o{ PLAN_ITEMS : "được xếp vào"
@@ -42,6 +44,15 @@ erDiagram
         bigint weekly_xp
         bigint total_xp
         bigint total_reps
+        timestamptz password_changed_at "token cũ hơn bị huỷ"
+    }
+    PASSWORD_RESET_CODES {
+        bigint id PK
+        varchar user_id FK
+        varchar code_hash "BCrypt mã 6 số"
+        int attempts "sai 5 lần thì khoá"
+        timestamptz expires_at "10 phút"
+        timestamptz created_at
     }
     EXERCISES {
         varchar id PK "squat, pushup..."
