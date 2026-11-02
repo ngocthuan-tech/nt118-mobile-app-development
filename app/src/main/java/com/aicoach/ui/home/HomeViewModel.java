@@ -38,6 +38,9 @@ public class HomeViewModel extends AndroidViewModel {
     public HomeData getLast() { return last; }
 
     public void load() {
+        Resource<HomeData> current = home.getValue();
+        if (current != null && current.status == Resource.Status.LOADING) return;
+
         if (source != null) home.removeSource(source);
         source = repo.getHome();
         LiveData<Resource<HomeData>> src = source;

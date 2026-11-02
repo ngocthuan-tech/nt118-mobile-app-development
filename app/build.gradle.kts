@@ -78,4 +78,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
+
+   // làm mới trang home
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
 }
