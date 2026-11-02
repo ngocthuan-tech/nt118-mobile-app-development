@@ -81,6 +81,14 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <argument
+            android:name="resendAvailableAt"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="expiresInSeconds"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_verify_to_new_password"
             app:destination="@id/newPasswordFragment" />
