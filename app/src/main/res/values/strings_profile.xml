@@ -82,4 +82,11 @@
     <string name="profile_password_new">Mật khẩu mới</string>
     <string name="profile_password_confirm">Nhập lại mật khẩu mới</string>
     <string name="profile_password_submit">Cập nhật mật khẩu</string>
+    <string name="profile_password_current_required">Vui lòng nhập mật khẩu hiện tại</string>
+    <string name="profile_password_rule">Mật khẩu mới cần 8–64 ký tự, có chữ và số</string>
+    <string name="profile_password_same">Mật khẩu mới phải khác mật khẩu hiện tại</string>
+    <string name="profile_password_confirm_required">Vui lòng nhập lại mật khẩu mới</string>
+    <string name="profile_password_mismatch">Mật khẩu nhập lại không khớp</string>
+    <string name="profile_password_processing">Đang cập nhật…</string>
+    <string name="profile_password_success">Đổi mật khẩu thành công</string>
 </resources>
