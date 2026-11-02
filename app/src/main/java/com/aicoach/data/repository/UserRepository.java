@@ -9,6 +9,7 @@ import com.aicoach.common.Resource;
 import com.aicoach.data.model.User;
 import com.aicoach.data.remote.ApiClient;
 import com.aicoach.data.remote.api.UserApi;
+import com.aicoach.data.remote.dto.ProfileDtos;
 
 /** Lấy hồ sơ của người dùng đang đăng nhập. */
 public class UserRepository extends BaseRepository {
@@ -25,4 +26,18 @@ public class UserRepository extends BaseRepository {
     public LiveData<Resource<User>> getMe() {
         return execute(api.getMe());
     }
+
+    public LiveData<Resource<Void>> changePassword(
+            @NonNull String currentPassword,
+            @NonNull String newPassword
+    ) {
+        ProfileDtos.ChangePasswordRequest request =
+                new ProfileDtos.ChangePasswordRequest(
+                        currentPassword,
+                        newPassword
+                );
+
+        return execute(api.changePassword(request));
+    }
+
 }
