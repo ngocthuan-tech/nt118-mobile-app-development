@@ -22,10 +22,11 @@ Mỗi module một package: `auth`, `user`, `home`, `exercise`, `plan`, `session
 
 ## Database
 
-PostgreSQL 16, 10 bảng. Cấu trúc nằm trong `src/main/resources/db/migration/` và được **Flyway** áp dụng tự động khi server khởi động:
+PostgreSQL 16, 11 bảng. Cấu trúc nằm trong `src/main/resources/db/migration/` và được **Flyway** áp dụng tự động khi server khởi động:
 
 - `V1__init_schema.sql` — tạo bảng
 - `V2__relations.sql` — khoá ngoại, ràng buộc, index
+- `V3__password_reset.sql` — bảng mã quên mật khẩu, mốc đổi mật khẩu
 
 Hibernate chạy ở chế độ `validate`: entity Java lệch với bảng thì server không khởi động. Sơ đồ quan hệ: [`docs/DATABASE.md`](../docs/DATABASE.md). Muốn đổi cấu trúc → thêm file `V3__...sql`, **không sửa file đã chạy**.
 
@@ -39,6 +40,9 @@ Các API (trừ auth, health, swagger) cần header `Authorization: Bearer <acce
 | GET | `/api/v1/health` | Kiểm tra server + database |
 | POST | `/api/v1/auth/register` | Đăng ký `{displayName, email, password}` → token + hồ sơ (201) |
 | POST | `/api/v1/auth/login` | Đăng nhập `{email, password}` → token + hồ sơ |
+| POST | `/api/v1/auth/forgot-password` | Quên mật khẩu `{email}` → gửi mã 6 số qua email (hiệu lực 10 phút, 60 giây mới gửi lại) |
+| POST | `/api/v1/auth/verify-code` | Kiểm tra mã `{email, code}`; sai 5 lần thì khoá mã |
+| POST | `/api/v1/auth/reset-password` | Đặt mật khẩu mới `{email, code, newPassword}`; mọi token cũ bị huỷ |
 | GET | `/api/v1/users/me` | Hồ sơ + tiến độ (streak, XP, tổng rep) |
 | PUT | `/api/v1/users/me` | Sửa hồ sơ, chỉ gửi field cần đổi (khảo sát, sửa hồ sơ, chọn giáo án qua `activePlanId`) |
 | PUT | `/api/v1/users/me/password` | Đổi mật khẩu `{currentPassword, newPassword}` |
@@ -76,3 +80,16 @@ cd backend && docker compose up -d --build
 - Mật khẩu băm BCrypt, không lưu bản gốc; đăng nhập sai trả cùng một câu lỗi để không lộ email nào đã đăng ký.
 - JWT HS256 hết hạn sau 7 ngày, khoá ký đọc từ biến môi trường, không nằm trong code.
 - Database chỉ nằm trong mạng nội bộ Docker; cổng SSH của VM chỉ mở cho IP của Trưởng nhóm.
+
+## Gửi email (quên mật khẩu)
+
+Điền vào `.env` trên server rồi `docker compose up -d`:
+
+```
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=<gmail riêng của app>
+MAIL_PASSWORD=<Mật khẩu ứng dụng 16 ký tự, viết liền>
+```
+
+Để trống `MAIL_HOST` thì không gửi email, mã được ghi vào log: `docker compose logs api | grep "Mã quên"`.

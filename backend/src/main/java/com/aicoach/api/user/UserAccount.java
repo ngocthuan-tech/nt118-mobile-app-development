@@ -55,6 +55,9 @@ public class UserAccount {
     private long totalXp;
     private long totalReps;
 
+    /** Lần đặt lại mật khẩu gần nhất — token cấp trước thời điểm này bị từ chối. */
+    private Instant passwordChangedAt;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -114,4 +117,7 @@ public class UserAccount {
 
     public long getTotalReps() { return totalReps; }
     public void setTotalReps(long totalReps) { this.totalReps = totalReps; }
+
+    public Instant getPasswordChangedAt() { return passwordChangedAt; }
+    public void setPasswordChangedAt(Instant passwordChangedAt) { this.passwordChangedAt = passwordChangedAt; }
 }

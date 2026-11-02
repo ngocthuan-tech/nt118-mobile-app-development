@@ -50,6 +50,9 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
+| POST | `auth/forgot-password` `{email}` → `CodeSent` | `AuthApi.forgotPassword` | A — Quên mật khẩu (08) |
+| POST | `auth/verify-code` `{email, code}` | `AuthApi.verifyCode` | A — Nhập mã xác thực (09) |
+| POST | `auth/reset-password` `{email, code, newPassword}` | `AuthApi.resetPassword` | A — Mật khẩu mới (10 → 11) |
 | GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |
@@ -254,7 +257,7 @@ Thứ tự ưu tiên: ★ làm thật + API trước buổi giữa kỳ · ○ k
 | 02–04 | Onboarding 1–3 | Tĩnh, `ViewPager2` | Bỏ qua / Tiếp → 05; lưu `SettingsPrefs.setOnboardingDone(true)` | ○ |
 | 05 | Chào mừng | Tĩnh | "Đăng nhập" → 06 · "Tạo tài khoản" → 12 | ○ |
 | 06 + 07 | Đăng nhập + trạng thái báo lỗi | **POST `auth/login`** | Thành công: `profileCompleted` = true → `action_global_to_main`, = false → 13 · "Quên mật khẩu" → 08 · "Đăng ký" → 12 | ★ |
-| 08–11 | Quên mật khẩu → Nhập mã → Mật khẩu mới → Thành công | Dữ liệu mẫu (mã đúng: `123456`) | 08 → 09 → 10 → 11 → về 06 | ○ |
+| 08–11 | Quên mật khẩu → Nhập mã → Mật khẩu mới → Thành công | **POST `auth/forgot-password`, `auth/verify-code`, `auth/reset-password`** (xem A.5b) | 08 → 09 → 10 → 11 → về 06 | ★ |
 | 12 | Đăng ký | **POST `auth/register`** | Thành công → 13 | ★ |
 | 13–15 | Khảo sát 1/3, 2/3, 3/3 | **PUT `users/me`** (chiều cao, cân nặng, mục tiêu, trình độ, số buổi/tuần) | 13 → 14 → 15 → 16 | ★ |
 | 16 | AI đang tạo giáo án | **GET `plans`**, chọn giáo án khớp `level` | Hiệu ứng ~2 giây → 17 | ○ |
@@ -393,6 +396,42 @@ public LiveData<Resource<User>> choosePlan(String planId) {
             .activePlanId(planId).profileCompleted(true)));
 }
 ```
+
+## A.5b Quên mật khẩu — đổi từ dữ liệu mẫu sang API thật
+
+Giao diện 08–11 đã xong. Chỉ cần thay 3 hàm trong `AuthRepository` (đang dùng `MockAuthData`):
+
+```java
+/** Figma 08 → 09 */
+public LiveData<Resource<AuthDtos.CodeSent>> requestResetCode(@NonNull String email) {
+    return execute(api.forgotPassword(new AuthDtos.ForgotPasswordRequest(email)));
+}
+
+/** Figma 09 → 10 */
+public LiveData<Resource<Void>> verifyResetCode(@NonNull String email, @NonNull String code) {
+    return execute(api.verifyCode(new AuthDtos.VerifyCodeRequest(email, code)));
+}
+
+/** Figma 10 → 11 */
+public LiveData<Resource<Void>> resetPassword(@NonNull String email, @NonNull String code,
+                                              @NonNull String newPassword) {
+    return execute(api.resetPassword(new AuthDtos.ResetPasswordRequest(email, code, newPassword)));
+}
+```
+
+Rồi sửa kiểu `Resource<Boolean>` → `Resource<CodeSent>` / `Resource<Void>` trong 3 ViewModel tương ứng. Thành công là `status == SUCCESS` (với `Void` thì `data` luôn `null`, không dùng `data`).
+
+| Quy tắc server | App làm gì |
+|---|---|
+| Mã 6 số, hiệu lực **10 phút** | 08: hộp "Mã có hiệu lực trong 10 phút" lấy `expiresInSeconds / 60` |
+| Gửi lại sau **60 giây** | 09: đếm ngược "Gửi lại mã sau 00:60" từ `resendAfterSeconds`; bấm gửi lại sớm hơn thì server bỏ qua |
+| Email chưa đăng ký vẫn trả thành công (chống dò email) | Luôn sang màn 09, không báo "email không tồn tại" |
+| Sai mã → 400 kèm "Mã xác thực không đúng. Bạn còn N lần thử" | Hiện `res.message` dưới ô nhập mã, tô đỏ ô (`bg_auth_otp_box_error`) |
+| Sai **5 lần** → mã bị khoá | Hiện `res.message`, người dùng bấm "Gửi lại mã" |
+| Mật khẩu mới: 8–64 ký tự, có chữ và số, khác mật khẩu cũ | 10: kiểm tra ngay trên app như màn Đăng ký |
+| Đặt lại thành công → mọi phiên đăng nhập cũ bị đăng xuất | 11: nút "Đăng nhập ngay" về 06 |
+
+**Lấy mã khi test:** server chưa cấu hình email thì mã **không gửi về hộp thư**, mà ghi vào log server. Nhắn Trưởng nhóm đọc giúp (`docker compose logs api | grep "Mã quên"`). Khi đã cấu hình Gmail thì mã về thẳng hộp thư. `MockAuthData` xoá được sau khi nối xong.
 
 ## A.6 Những lỗi thầy hay bấm thử
 

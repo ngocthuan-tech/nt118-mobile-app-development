@@ -50,6 +50,9 @@ Mọi response: `{ "success": true|false, "message": "câu tiếng Việt", "dat
 |---|---|---|---|
 | POST | `auth/register` `{displayName, email, password}` | `AuthApi.register` | A — Đăng ký (12) |
 | POST | `auth/login` `{email, password}` | `AuthApi.login` | A — Đăng nhập (06, 07) |
+| POST | `auth/forgot-password` `{email}` → `CodeSent` | `AuthApi.forgotPassword` | A — Quên mật khẩu (08) |
+| POST | `auth/verify-code` `{email, code}` | `AuthApi.verifyCode` | A — Nhập mã xác thực (09) |
+| POST | `auth/reset-password` `{email, code, newPassword}` | `AuthApi.resetPassword` | A — Mật khẩu mới (10 → 11) |
 | GET | `home` → `HomeData` (Chuỗi 7 ngày + Bài tập hôm nay) | `HomeApi.getHome` | A — Trang chủ (21) |
 | GET | `exercises?muscleGroup=&difficulty=&q=` · `exercises/{id}` | `ExerciseApi` | A — Thư viện (23), Tìm kiếm (24), Chi tiết (25.x) |
 | GET | `plans` · `plans/{id}` | `PlanApi` | A — Giáo án (16, 17, 26) |

@@ -35,6 +35,37 @@ public final class AuthDtos {
             String password) {
     }
 
+    /** Figma 08: gửi mã xác thực tới email. */
+    public record ForgotPasswordRequest(
+            @NotBlank(message = "Vui lòng nhập email")
+            @Email(message = "Email không đúng định dạng")
+            String email) {
+    }
+
+    /** Figma 09: kiểm tra mã 6 số. */
+    public record VerifyCodeRequest(
+            @NotBlank(message = "Vui lòng nhập email")
+            String email,
+
+            @NotBlank(message = "Vui lòng nhập mã xác thực")
+            @Pattern(regexp = "\\d{6}", message = "Mã xác thực gồm 6 chữ số")
+            String code) {
+    }
+
+    /** Figma 10: đặt mật khẩu mới (gửi lại email + mã đã xác thực ở bước 09). */
+    public record ResetPasswordRequest(
+            @NotBlank(message = "Vui lòng nhập email")
+            String email,
+
+            @NotBlank(message = "Vui lòng nhập mã xác thực")
+            @Pattern(regexp = "\\d{6}", message = "Mã xác thực gồm 6 chữ số")
+            String code,
+
+            @NotBlank(message = "Vui lòng nhập mật khẩu mới")
+            @Pattern(regexp = UserDtos.PASSWORD_REGEX, message = UserDtos.PASSWORD_MESSAGE)
+            String newPassword) {
+    }
+
     /** Đăng ký và đăng nhập đều trả về cấu trúc này: token + hồ sơ để app vào thẳng Trang chủ. */
     public record AuthResponse(
             String accessToken,
