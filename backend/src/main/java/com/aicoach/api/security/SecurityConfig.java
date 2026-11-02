@@ -1,6 +1,7 @@
 package com.aicoach.api.security;
 
 import com.aicoach.api.common.ApiResponse;
+import com.aicoach.api.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,8 @@ public class SecurityConfig {
     };
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtService jwtService, ObjectMapper mapper)
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtService jwtService, UserRepository users,
+                                           ObjectMapper mapper)
             throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
@@ -48,7 +50,7 @@ public class SecurityConfig {
                                 HttpServletResponse.SC_UNAUTHORIZED, "Phiên đăng nhập không hợp lệ hoặc đã hết hạn"))
                         .accessDeniedHandler((req, res, e) -> writeError(res, mapper,
                                 HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền thực hiện thao tác này")))
-                .addFilterBefore(new JwtAuthFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService, users), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

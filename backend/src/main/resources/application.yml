@@ -37,6 +37,24 @@ spring:
     # Database trống → chạy từ V1.
     baseline-on-migrate: true
     baseline-version: 1
+  # Gửi email mã quên mật khẩu. Để trống MAIL_HOST = không gửi email, mã ghi vào log server.
+  # Gmail: MAIL_HOST=smtp.gmail.com, MAIL_PORT=587, MAIL_USERNAME=<gmail>, MAIL_PASSWORD=<Mật khẩu ứng dụng 16 ký tự>
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
   jackson:
     time-zone: UTC
     serialization:
@@ -49,6 +67,8 @@ app:
     expiration-days: 7
   seed:
     demo: ${SEED_DEMO:true}
+  mail:
+    from: ${MAIL_FROM:${MAIL_USERNAME:}}
 
 springdoc:
   swagger-ui:
