@@ -13,9 +13,9 @@
 | 05 | Chào mừng | Thành viên A | `WelcomeFragment` — đã dựng | [xem](figma/05_chao_mung.webp) |
 | 06 | Đăng nhập | Thành viên A | `LoginFragment` — đã dựng, nối POST auth/login | [xem](figma/06_dang_nhap.webp) |
 | 07 | Đăng nhập – báo lỗi | Thành viên A | `LoginFragment` (khung `errorBanner`) — đã dựng | [xem](figma/07_dang_nhap_bao_loi.webp) |
-| 08 | Quên mật khẩu | Thành viên A | `ForgotPasswordFragment` — đã dựng (dữ liệu mẫu) | [xem](figma/08_quen_mat_khau.webp) |
-| 09 | Nhập mã xác thực | Thành viên A | `VerifyCodeFragment` — đã dựng (mã demo 123456) | [xem](figma/09_nhap_ma_xac_thuc.webp) |
-| 10 | Mật khẩu mới | Thành viên A | `NewPasswordFragment` — đã dựng | [xem](figma/10_mat_khau_moi.webp) |
+| 08 | Quên mật khẩu | Thành viên A | `ForgotPasswordFragment` — đã nối POST auth/forgot-password (gửi mã qua email) | [xem](figma/08_quen_mat_khau.webp) |
+| 09 | Nhập mã xác thực | Thành viên A | `VerifyCodeFragment` — đã nối POST auth/verify-code | [xem](figma/09_nhap_ma_xac_thuc.webp) |
+| 10 | Mật khẩu mới | Thành viên A | `NewPasswordFragment` — đã nối POST auth/reset-password | [xem](figma/10_mat_khau_moi.webp) |
 | 11 | Đổi mật khẩu thành công | Thành viên A | `ResetSuccessFragment` — đã dựng | [xem](figma/11_doi_mat_khau_thanh_cong.webp) |
 | 12 | Đăng ký | Thành viên A | `RegisterFragment` — đã dựng, nối POST auth/register | [xem](figma/12_dang_ky.webp) |
 | 13 | Khảo sát 1/3 – Thông tin cơ thể | Thành viên A | `SurveyBodyFragment` — đã dựng, PUT users/me | [xem](figma/13_khao_sat_1_3_thong_tin_co_the.webp) |
