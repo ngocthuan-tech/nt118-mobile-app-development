@@ -63,8 +63,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding.btnNotifications.setOnClickListener(v -> nav.navigate(R.id.action_global_to_notifications));
         binding.cardPlan.setOnClickListener(v -> openPlan());
         binding.btnSeeAllPlans.setOnClickListener(v -> openPlan());
+        binding.swipeRefresh.setColorSchemeResources(R.color.brand_primary);
+
+        // Chỉ cho kéo làm mới khi nội dung đang ở đầu trang.
+        binding.swipeRefresh.setOnChildScrollUpCallback(
+                (parent, child) -> binding.scrollHome.canScrollVertically(-1)
+        );
+
+        binding.swipeRefresh.setOnRefreshListener(() -> vm.load());
 
         vm.getHome().observe(getViewLifecycleOwner(), this::render);
+
     }
 
     @Override
@@ -75,7 +84,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
     private void render(@Nullable Resource<HomeData> r) {
         if (r == null) return;
-        binding.progressHome.setVisibility(r.status == Resource.Status.LOADING ? View.VISIBLE : View.GONE);
+        boolean loading = r.status == Resource.Status.LOADING;
+
+        // Giữ vòng xoay trong lúc tải; dừng cả khi thành công hoặc lỗi.
+        boolean refreshing = loading && vm.getLast() != null;
+        binding.swipeRefresh.setRefreshing(refreshing);
+        binding.progressHome.setVisibility(loading && !refreshing ? View.VISIBLE : View.GONE);
         if (r.status == Resource.Status.SUCCESS && r.data != null) {
             bind(r.data);
         } else if (r.status == Resource.Status.LOADING && vm.getLast() != null) {

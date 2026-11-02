@@ -114,7 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/auth_otp_demo_hint"
+            android:id="@+id/tvCodeValid"
+            tools:text="Mã có hiệu lực trong 600 giây kể từ lần gửi."
             android:textAppearance="@style/TextAppearance.AICoach.Caption" />
 
         <com.google.android.material.button.MaterialButton

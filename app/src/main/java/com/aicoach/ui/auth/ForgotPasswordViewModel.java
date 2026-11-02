@@ -13,12 +13,13 @@ import com.aicoach.common.Resource;
 import com.aicoach.data.repository.AuthRepository;
 import com.aicoach.util.RequestTracker;
 import com.aicoach.util.ValidationUtils;
+import com.aicoach.data.remote.dto.AuthDtos;
 
-/** Figma 08 — kiểm tra email rồi xin mã xác thực (dữ liệu mẫu giữa kỳ). */
+/** Figma 08 — kiểm tra email rồi gọi API gửi mã xác thực. */
 public class ForgotPasswordViewModel extends AndroidViewModel {
 
     private final AuthRepository repo;
-    private final RequestTracker<Boolean> request = new RequestTracker<>();
+    private final RequestTracker<AuthDtos.CodeSent> request = new RequestTracker<>();
     private final MutableLiveData<Integer> emailError = new MutableLiveData<>();
     private String email = "";
 
@@ -27,7 +28,9 @@ public class ForgotPasswordViewModel extends AndroidViewModel {
         repo = new AuthRepository(app);
     }
 
-    public LiveData<Resource<Boolean>> getState() { return request.getState(); }
+    public LiveData<Resource<AuthDtos.CodeSent>> getState() {
+        return request.getState();
+    }
 
     public LiveData<Integer> getEmailError() { return emailError; }
 
@@ -35,6 +38,7 @@ public class ForgotPasswordViewModel extends AndroidViewModel {
     public String getEmail() { return email; }
 
     public void send(@Nullable String raw) {
+        if (request.isLoading()) return;
         email = ValidationUtils.normalizeEmail(raw);
         Integer err = email.isEmpty() ? Integer.valueOf(R.string.auth_error_email_empty)
                 : !ValidationUtils.isValidEmail(email) ? Integer.valueOf(R.string.auth_error_email) : null;

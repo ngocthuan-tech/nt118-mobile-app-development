@@ -49,8 +49,15 @@ public class NewPasswordFragment extends BaseFragment<FragmentNewPasswordBinding
         vm.getState().observe(getViewLifecycleOwner(), r -> {
             boolean loading = r != null && r.status == Resource.Status.LOADING;
             binding.btnSubmit.setEnabled(!loading && NewPasswordViewModel.canSubmit(password(), confirm()));
+            binding.etPassword.setEnabled(!loading);
+            binding.etConfirm.setEnabled(!loading);
+            binding.btnCancel.setEnabled(!loading);
+            binding.btnSubmit.setText(loading ? R.string.auth_reset_processing : R.string.auth_new_password_submit);
             if (r == null) return;
-            if (r.status == Resource.Status.ERROR) showError(r.message);
+            if (r.status == Resource.Status.ERROR) {
+                showError(r.message);
+                vm.consume();
+            }
             if (r.status == Resource.Status.SUCCESS) {
                 vm.consume();
                 nav.navigate(R.id.action_new_password_to_success);
@@ -80,6 +87,6 @@ public class NewPasswordFragment extends BaseFragment<FragmentNewPasswordBinding
         binding.tilConfirm.setHelperText(match ? getString(R.string.auth_password_match) : null);
         boolean showRule = !p.isEmpty() && !ValidationUtils.isValidPassword(p);
         binding.tilPassword.setError(showRule ? getString(R.string.auth_error_password_rule) : null);
-        binding.btnSubmit.setEnabled(NewPasswordViewModel.canSubmit(p, c));
+        binding.btnSubmit.setEnabled(!vm.isLoading() && NewPasswordViewModel.canSubmit(p, c));
     }
 }

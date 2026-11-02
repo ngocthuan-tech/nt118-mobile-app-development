@@ -76,10 +76,9 @@
     <string name="auth_otp_desc">Mã gồm 6 số đã được gửi tới</string>
     <string name="auth_otp_resend_in">Gửi lại mã sau %1$s</string>
     <string name="auth_otp_resend">Gửi lại mã</string>
-    <string name="auth_otp_resent">Đã gửi lại mã. Mã thử khi demo: 123456</string>
+    <string name="auth_otp_resent">Đã gửi lại mã xác thực. Vui lòng kiểm tra email.</string>
     <string name="auth_otp_confirm">Xác nhận</string>
     <string name="auth_otp_wrong">Mã xác thực chưa đúng, vui lòng kiểm tra lại</string>
-    <string name="auth_otp_demo_hint">Demo: mã đúng là 123456</string>
 
     <!-- 10 Mật khẩu mới -->
     <string name="auth_new_password_title">Tạo mật khẩu mới</string>
@@ -195,4 +194,8 @@
     <string name="notify_weekly_desc">Tóm tắt tiến độ vào Chủ nhật</string>
     <string name="notify_enable">Bật thông báo</string>
     <string name="notify_skip">Không, cảm ơn</string>
+    <string name="auth_otp_processing">Đang xử lý…</string>
+    <string name="auth_otp_valid_seconds">Mã có hiệu lực trong %1$d giây kể từ lần gửi.</string>
+    <string name="auth_reset_processing">Đang đặt lại mật khẩu…</string>
+    <string name="auth_forgot_code_info">Mã xác thực gồm 6 chữ số. Thời hạn mã sẽ hiển thị sau khi gửi.</string>
 </resources>
