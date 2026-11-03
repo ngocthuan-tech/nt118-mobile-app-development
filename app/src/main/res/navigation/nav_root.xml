@@ -4,7 +4,8 @@
     Mỗi module có graph riêng để 3 người không đụng file của nhau:
       nav_auth, nav_main  -> Thành viên A
       nav_workout         -> Trưởng nhóm
-      nav_social          -> Thành viên B
+      nav_social          -> Thành viên B (tab Tiến độ)
+      nav_challenge       -> Thành viên B (tab Thử thách)
       nav_profile         -> Thành viên B (hồ sơ, cài đặt, huy hiệu)
       nav_notifications   -> Thành viên B (thông báo)
     Điều hướng sang module người khác: chỉ dùng global action ở cuối file (trỏ tới id của graph).
@@ -19,6 +20,7 @@
     <include app:graph="@navigation/nav_auth" />
     <include app:graph="@navigation/nav_workout" />
     <include app:graph="@navigation/nav_social" />
+    <include app:graph="@navigation/nav_challenge" />
     <include app:graph="@navigation/nav_profile" />
     <include app:graph="@navigation/nav_notifications" />
 
