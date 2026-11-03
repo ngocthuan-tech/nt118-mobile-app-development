@@ -27,6 +27,10 @@ public class UserRepository extends BaseRepository {
         return execute(api.getMe());
     }
 
+    public LiveData<Resource<User>> updateMe(@NonNull ProfileDtos.UpdateProfileRequest request) {
+        return execute(api.updateMe(request));
+    }
+
     public LiveData<Resource<Void>> changePassword(
             @NonNull String currentPassword,
             @NonNull String newPassword
