@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Thành viên B — tab "Thử thách": 40 Thử thách & Xếp hạng, 41 Tạo thử thách, 42 Mời bạn bè.
+    Tách khỏi nav_social để thanh tab trỏ được tới id graph (nav_challenge), giống tab "Tập AI" (nav_workout).
+    Màn con khai báo hideBottomNav = true để MainActivity ẩn thanh tab.
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_challenge"
+    app:startDestination="@id/challengeListFragment">
+
+    <!-- 40 Thử thách & Xếp hạng (tab "Thử thách") -->
+    <fragment
+        android:id="@+id/challengeListFragment"
+        android:name="com.aicoach.ui.challenge.ChallengeListFragment"
+        android:label="@string/nav_challenges"
+        tools:layout="@layout/fragment_challenge_list">
+        <action
+            android:id="@+id/action_challenges_to_create"
+            app:destination="@id/createChallengeFragment" />
+        <action
+            android:id="@+id/action_challenges_to_invite"
+            app:destination="@id/inviteFriendsFragment" />
+    </fragment>
+
+    <!-- 41 Tạo thử thách -->
+    <fragment
+        android:id="@+id/createChallengeFragment"
+        android:name="com.aicoach.ui.challenge.CreateChallengeFragment"
+        android:label="@string/social_create_title"
+        tools:layout="@layout/fragment_create_challenge">
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_create_to_invite"
+            app:destination="@id/inviteFriendsFragment" />
+    </fragment>
+
+    <!-- 42 Mời bạn bè. Gửi lời mời xong: popBackStack(challengeListFragment) — bỏ 41 khỏi back stack. -->
+    <fragment
+        android:id="@+id/inviteFriendsFragment"
+        android:name="com.aicoach.ui.challenge.InviteFriendsFragment"
+        android:label="@string/social_invite_title"
+        tools:layout="@layout/fragment_invite_friends">
+        <argument
+            android:name="challengeId"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="hideBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+</navigation>

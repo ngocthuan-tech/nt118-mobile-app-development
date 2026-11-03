@@ -11,11 +11,11 @@
         android:name="com.aicoach.ui.profile.NotificationsFragment"
         android:label="@string/placeholder_notifications"
         tools:layout="@layout/fragment_notifications">
-        <!-- Nút "Tham gia" trên thông báo lời mời thử thách -> tab Thử thách (40, ở nav_social).
+        <!-- Nút "Tham gia" trên thông báo lời mời thử thách -> tab Thử thách (graph nav_challenge, mở màn 40).
              B gọi trong adapter: NotificationsFragmentDirections.actionNotificationsToChallenges() -->
         <action
             android:id="@+id/action_notifications_to_challenges"
-            app:destination="@id/challengeListFragment"
+            app:destination="@id/nav_challenge"
             app:popUpTo="@id/notificationsFragment"
             app:popUpToInclusive="true" />
     </fragment>
