@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Figma 43 Hồ sơ & Cài đặt (mở từ avatar Trang chủ) — Thành viên B.
-    B tự viết: ProfileViewModel → UserRepository → UserApi (GET users/me) đổ tên, chỉ số, BMI;
+    Đã nối: ProfileViewModel → UserRepository → UserApi (GET users/me) đổ tên, chỉ số, BMI;
     adapter rvBadges (item_badge_small); lưu công tắc vào SettingsPrefs.
     Đã nối: Sửa hồ sơ → 44 · bánh răng / Giọng nói → 45 · "6/20" → 46 · Đổi mật khẩu → hộp thoại · Đăng xuất → 47.
 -->
@@ -85,6 +85,14 @@
                 android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
                 tools:text="Giảm mỡ • Mới bắt đầu • Tham gia 09/2026" />
 
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/space_4"
+                android:textAppearance="@style/TextAppearance.AICoach.OnDark.Caption"
+                tools:text="demo@aicoach.vn" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEdit"
                 style="@style/Widget.AICoach.Button.OnDark"
@@ -156,14 +164,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvSessions"
+                        android:id="@+id/tvTotalReps"
                         style="@style/Widget.AICoach.B.MiniValue"
                         android:textSize="20sp"
                         tools:text="24" />
 
                     <TextView
                         style="@style/Widget.AICoach.B.StatLabel"
-                        android:text="@string/profile_stat_sessions" />
+                        android:text="@string/profile_stat_total_reps" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -181,14 +189,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvBadgeCount"
+                        android:id="@+id/tvTotalXp"
                         style="@style/Widget.AICoach.B.MiniValue"
                         android:textSize="20sp"
                         tools:text="6" />
 
                     <TextView
                         style="@style/Widget.AICoach.B.StatLabel"
-                        android:text="@string/profile_stat_badges" />
+                        android:text="@string/profile_stat_total_xp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -200,6 +208,28 @@
             android:paddingStart="@dimen/space_20"
             android:paddingEnd="@dimen/space_20">
 
+        <ProgressBar
+            android:id="@+id/profileProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/space_12"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/profileError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_20"
+            android:textColor="@color/state_error"
+            android:accessibilityLiveRegion="polite"
+            android:visibility="gone" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRefreshProfile"
+            style="@style/Widget.AICoach.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/profile_refresh" />
             <!-- Chỉ số cơ thể (từ GET users/me) -->
             <TextView
                 style="@style/Widget.AICoach.Survey.Section"
@@ -437,6 +467,7 @@
                     <ImageView style="@style/Widget.AICoach.B.Chevron" />
                 </LinearLayout>
             </LinearLayout>
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

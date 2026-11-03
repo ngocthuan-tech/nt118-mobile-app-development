@@ -3,6 +3,24 @@
     <!-- Thành viên B — Hồ sơ & Cài đặt (Figma 43–47), tiền tố profile_ -->
 
     <!-- 43 Hồ sơ & Cài đặt -->
+    <string name="profile_refresh">Làm mới hồ sơ</string>
+    <string name="profile_retry">Thử lại</string>
+    <string name="profile_empty_response">Chưa tải được hồ sơ. Vui lòng thử lại.</string>
+    <string name="profile_missing">—</string>
+    <string name="profile_unset">Chưa cập nhật</string>
+    <string name="profile_body_missing">Chưa đủ chỉ số</string>
+    <string name="profile_view_badges">Xem huy hiệu</string>
+    <string name="profile_stat_total_reps">Tổng rep</string>
+    <string name="profile_stat_total_xp">Tổng XP</string>
+    <string name="profile_meta">%1$s • %2$s</string>
+    <string name="profile_height_value">%1$.1f cm</string>
+    <string name="profile_weight_value">%1$.1f kg</string>
+    <string name="profile_goal_lose">Giảm cân</string>
+    <string name="profile_goal_build">Tăng cơ</string>
+    <string name="profile_goal_fit">Giữ dáng</string>
+    <string name="profile_level_beginner">Mới bắt đầu</string>
+    <string name="profile_level_intermediate">Trung cấp</string>
+    <string name="profile_level_advanced">Nâng cao</string>
     <string name="profile_back">Quay lại</string>
     <string name="profile_settings">Cài đặt</string>
     <string name="profile_edit">Sửa hồ sơ</string>
@@ -82,4 +100,11 @@
     <string name="profile_password_new">Mật khẩu mới</string>
     <string name="profile_password_confirm">Nhập lại mật khẩu mới</string>
     <string name="profile_password_submit">Cập nhật mật khẩu</string>
+    <string name="profile_password_current_required">Vui lòng nhập mật khẩu hiện tại</string>
+    <string name="profile_password_rule">Mật khẩu mới cần 8–64 ký tự, có chữ và số</string>
+    <string name="profile_password_same">Mật khẩu mới phải khác mật khẩu hiện tại</string>
+    <string name="profile_password_confirm_required">Vui lòng nhập lại mật khẩu mới</string>
+    <string name="profile_password_mismatch">Mật khẩu nhập lại không khớp</string>
+    <string name="profile_password_processing">Đang cập nhật…</string>
+    <string name="profile_password_success">Đổi mật khẩu thành công</string>
 </resources>

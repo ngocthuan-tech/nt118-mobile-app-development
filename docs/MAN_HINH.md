@@ -56,7 +56,7 @@
 | 40 | Thử thách & Bảng xếp hạng | Thành viên B | `ChallengeListFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/40_thu_thach_bang_xep_hang.webp) |
 | 41 | Tạo thử thách | Thành viên B | `CreateChallengeFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/41_tao_thu_thach.webp) |
 | 42 | Mời bạn bè | Thành viên B | `InviteFriendsFragment` (arg `challengeId`) — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/42_moi_ban_be.webp) |
-| 43 | Hồ sơ & Cài đặt | Thành viên B | `ProfileFragment` (`nav_profile`) + bottom sheet `ChangePasswordDialogFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/43_ho_so_cai_dat.webp) |
+| 43 | Hồ sơ & Cài đặt | Thành viên B | `ProfileFragment` (`nav_profile`) — giao diện + điều hướng; `ChangePasswordDialogFragment` đã nối API đổi mật khẩu, kiểm tra dữ liệu và trạng thái gửi. Đã nối GET users/me: tên/email, mục tiêu/trình độ, streak/tổng rep/XP, chiều cao/cân nặng/BMI; tải/lỗi/thử lại và làm mới. Huy hiệu, lưu cài đặt và sửa hồ sơ còn làm tiếp | [xem](figma/43_ho_so_cai_dat.webp) |
 | 44 | Chỉnh sửa hồ sơ | Thành viên B | `EditProfileFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/44_chinh_sua_ho_so.webp) |
 | 45 | Cài đặt giọng nói | Thành viên B | `VoiceSettingsFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/45_cai_dat_giong_noi.webp) |
 | 46 | Bộ sưu tập huy hiệu | Thành viên B | `BadgesFragment` — giao diện + điều hướng xong, B nối dữ liệu | [xem](figma/46_bo_suu_tap_huy_hieu.webp) |
