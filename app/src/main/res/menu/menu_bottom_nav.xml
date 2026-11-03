@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    id của mỗi item PHẢI trùng id màn hình trong file navigation
-    để NavigationUI tự chuyển tab và tô sáng đúng tab.
+    id của mỗi item PHẢI trùng id trong file navigation để NavigationUI tự chuyển tab và tô sáng đúng tab.
+    Tab nằm ở graph khác nav_main thì dùng id của GRAPH (nav_workout, nav_social, nav_challenge),
+    không dùng id màn bên trong: khi đang ở Trang chủ, Navigation chỉ tìm thấy graph con trực tiếp của nav_root.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
@@ -17,11 +18,11 @@
         android:icon="@drawable/ic_blank_24"
         android:title="@string/nav_train_ai" />
     <item
-        android:id="@+id/historyFragment"
+        android:id="@+id/nav_social"
         android:icon="@drawable/ic_chart_24"
         android:title="@string/nav_progress" />
     <item
-        android:id="@+id/challengeListFragment"
+        android:id="@+id/nav_challenge"
         android:icon="@drawable/ic_trophy_24"
         android:title="@string/nav_challenges" />
 </menu>
