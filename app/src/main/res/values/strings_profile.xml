@@ -107,4 +107,8 @@
     <string name="profile_password_mismatch">Mật khẩu nhập lại không khớp</string>
     <string name="profile_password_processing">Đang cập nhật…</string>
     <string name="profile_password_success">Đổi mật khẩu thành công</string>
+    <string name="profile_edit_name_error">Tên hiển thị cần 2–50 ký tự.</string>
+    <string name="profile_edit_height_error">Nhập chiều cao từ 100 đến 250 cm.</string>
+    <string name="profile_edit_weight_error">Nhập cân nặng từ 30 đến 250 kg.</string>
+    <string name="profile_edit_saved">Đã lưu hồ sơ.</string>
 </resources>

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Figma 44 Chỉnh sửa hồ sơ — Thành viên B.
-    B tự viết: EditProfileViewModel → UserRepository (PUT users/me, chỉ gửi field đã đổi), kiểm tra
-    chiều cao 100–250 / cân nặng 30–250 (lỗi dưới ô), danh sách chọn cho 4 ô thả xuống, khoá nút Lưu khi đang gửi.
-    Hiện tại "Lưu" / "Lưu thay đổi" chỉ quay lại 43.
--->
+<!-- Edit profile: server-backed fields only. -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -63,32 +58,33 @@
                 android:textStyle="bold"
                 tools:text="M" />
 
-            <ImageButton
-                android:id="@+id/btnCamera"
-                android:layout_width="@dimen/b_avatar_small"
-                android:layout_height="@dimen/b_avatar_small"
-                android:layout_gravity="bottom|end"
-                android:background="@drawable/bg_fab_train"
-                android:contentDescription="@string/profile_change_avatar"
-                android:padding="@dimen/space_8"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_camera_24"
-                app:tint="@color/white" />
+
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/btnChangeAvatar"
+
+
+        <ProgressBar
+            android:id="@+id/editProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/space_8"
-            android:background="?attr/selectableItemBackground"
-            android:padding="@dimen/space_4"
-            android:text="@string/profile_change_avatar"
-            android:textColor="@color/brand_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/editError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/state_error"
+            android:accessibilityLiveRegion="polite"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetryEdit"
+            style="@style/Widget.AICoach.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_retry"
+            android:visibility="gone" />
         <!-- Họ và tên -->
         <TextView
             style="@style/Widget.AICoach.Auth.Label"
@@ -189,61 +185,6 @@
                         android:inputType="numberDecimal"
                         android:maxLength="5"
                         tools:text="62" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Năm sinh | Giới tính -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Widget.AICoach.Auth.Label"
-                    android:labelFor="@id/ddBirthYear"
-                    android:text="@string/profile_birth_year" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilBirthYear"
-                    style="@style/Widget.AICoach.B.Dropdown">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/ddBirthYear"
-                        style="@style/Widget.AICoach.B.DropdownText"
-                        tools:text="2003" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="@dimen/space_12"
-                android:layout_height="0dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Widget.AICoach.Auth.Label"
-                    android:labelFor="@id/ddGender"
-                    android:text="@string/profile_gender" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilGender"
-                    style="@style/Widget.AICoach.B.Dropdown">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/ddGender"
-                        style="@style/Widget.AICoach.B.DropdownText"
-                        tools:text="Nam" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>

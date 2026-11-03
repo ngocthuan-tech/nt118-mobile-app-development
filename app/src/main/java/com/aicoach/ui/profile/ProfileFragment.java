@@ -44,6 +44,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
         binding.btnLogout.setOnClickListener(v -> nav.navigate(ProfileFragmentDirections.actionProfileToLogout()));
 
         ProfileViewModel vm = new ViewModelProvider(this).get(ProfileViewModel.class);
+        getParentFragmentManager().setFragmentResultListener(EditProfileFragment.UPDATED, getViewLifecycleOwner(), (key, result) -> {
+            vm.refresh();
+            com.google.android.material.snackbar.Snackbar.make(binding.getRoot(), R.string.profile_edit_saved,
+                    com.google.android.material.snackbar.Snackbar.LENGTH_SHORT).show();
+        });
         renderUser(vm.getLast());
         binding.btnRefreshProfile.setOnClickListener(v -> vm.refresh());
         binding.btnAllBadges.setText(R.string.profile_view_badges);
