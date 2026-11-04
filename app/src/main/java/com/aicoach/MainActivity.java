@@ -51,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
 
         NavigationUI.setupWithNavController(binding.bottomNav, navController);
+        binding.bottomNav.setOnItemSelectedListener(item -> {
+            if (NavigationUI.onNavDestinationSelected(item, navController)) return true;
+            if (!navController.popBackStack(R.id.homeFragment, false, true)) return false;
+            return item.getItemId() == R.id.homeFragment
+                    || NavigationUI.onNavDestinationSelected(item, navController);
+        });
         // Nút tròn "Tập AI" nổi giữa thanh tab = chọn tab giữa
         binding.fabTrain.setOnClickListener(v -> binding.bottomNav.setSelectedItemId(R.id.nav_workout));
 
