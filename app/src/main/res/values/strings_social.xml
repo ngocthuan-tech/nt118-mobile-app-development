@@ -23,7 +23,7 @@
     <string name="social_duration_30">30 ngày</string>
     <string name="social_challenge_name">Tên thử thách</string>
     <string name="social_private">Chỉ người được mời</string>
-    <string name="social_private_desc">Bạn bè cần mã mời để tham gia</string>
+    <string name="social_private_desc">Tuỳ chọn riêng tư của thử thách mẫu</string>
     <string name="social_continue_invite">Tiếp tục – Mời bạn bè</string>
 
     <!-- 42 Mời bạn bè -->
@@ -34,7 +34,7 @@
     <string name="social_copy_link">Sao chép link</string>
     <string name="social_message">Tin nhắn</string>
     <string name="social_qr">Mã QR</string>
-    <string name="social_search_friends">Tìm bạn bè theo tên hoặc email</string>
+    <string name="social_search_friends">Tìm bạn bè mẫu theo tên</string>
     <string name="social_friends">Bạn bè</string>
     <string name="social_send_invites">Gửi lời mời</string>
 
@@ -47,4 +47,25 @@
     <string name="social_join">Tham gia</string>
     <string name="social_decline">Từ chối</string>
     <string name="social_notifications_empty">Chưa có thông báo nào</string>
+<string name="social_demo_notice">Dữ liệu mẫu trên máy; không gửi lời mời thật.</string>
+<string name="social_demo_no_reward">Bản mẫu — không cộng XP thật</string>
+<string name="social_name_validation">Tên thử thách cần 3–50 ký tự.</string>
+<string name="social_challenge_missing">Không tìm thấy thử thách. Hãy quay lại.</string>
+<string name="social_code_copied">Đã sao chép mã thử thách mẫu.</string>
+<string name="social_invited_demo">Đã mời (mẫu)</string>
+<string name="social_friend_demo">Bạn bè mẫu</string>
+<string name="social_selected_count">Đã chọn: %1$d</string>
+<string name="social_found_count">Tìm thấy %1$d bạn</string>
+<string name="social_active_meta">%1$s · %2$d lần · %3$d ngày · %4$d bạn được mời (mẫu) · %5$s</string>
+<string name="social_choose_challenge">Chọn thử thách để mời bạn</string>
+<string name="social_notification_read">Đã đọc</string>
+    <string name="social_public">Công khai (mẫu)</string>
+    <string name="social_exercise_squat">Squat</string>
+    <string name="social_exercise_pushup">Chống đẩy</string>
+    <string name="social_exercise_lunge">Chùng chân</string>
+    <string name="social_exercise_jumping_jack">Bật nhảy</string>
+    <string name="social_friends_empty">Không tìm thấy bạn. Hãy thử tên khác.</string>
+    <string name="social_notification_unread">Chưa đọc</string>
+    <string name="social_notification_accepted">Đã tham gia (mẫu)</string>
+    <string name="social_notification_declined">Đã từ chối (mẫu)</string>
 </resources>
