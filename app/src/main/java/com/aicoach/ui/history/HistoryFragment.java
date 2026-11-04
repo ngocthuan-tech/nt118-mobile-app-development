@@ -40,8 +40,8 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
         vm.state().observe(getViewLifecycleOwner(), result -> { HistoryUi.request(binding.requestState, result); render(); });
     }
     private void render() {
-        LocalDate today = LocalDate.now();
-        List<WorkoutSession> sessions = HistoryStats.between(vm.sessions(), HistoryStats.rangeStart(vm.range(), today), today, ZoneId.systemDefault());
+        LocalDate today = LocalDate.now(HistoryStats.ZONE);
+        List<WorkoutSession> sessions = HistoryStats.between(vm.sessions(), HistoryStats.rangeStart(vm.range(), today), today, HistoryStats.ZONE);
         String missing = getString(R.string.progress_missing);
         binding.tvSessions.setText(vm.hasData() ? String.valueOf(sessions.size()) : missing);
         binding.tvReps.setText(vm.hasData() ? String.valueOf(HistoryStats.reps(sessions)) : missing);

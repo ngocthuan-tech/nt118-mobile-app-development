@@ -27,7 +27,7 @@ final class HistoryChart {
         for (int i = 0; i < size; i++) labels.add(range == 2 ? String.valueOf(i + 1)
                 : start.plusDays(i).format(DateTimeFormatter.ofPattern("dd/MM")));
         for (WorkoutSession session : sessions) {
-            LocalDate day = HistoryStats.date(session, ZoneId.systemDefault());
+            LocalDate day = HistoryStats.date(session, HistoryStats.ZONE);
             if (day == null) continue;
             int index = range == 2 ? day.getMonthValue() - 1 : (int) ChronoUnit.DAYS.between(start, day);
             if (index >= 0 && index < size) values[index] += Math.max(0, session.getTotalReps());

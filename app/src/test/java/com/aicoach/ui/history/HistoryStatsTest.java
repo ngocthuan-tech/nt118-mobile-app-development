@@ -12,10 +12,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class HistoryStatsTest {
-    private final ZoneId zone = ZoneId.of("Asia/Bangkok");
+    private final ZoneId zone = HistoryStats.ZONE;
     private WorkoutSession session(String time, int reps) {
         return new Gson().fromJson("{\"startedAt\":\"" + time + "\",\"totalReps\":" + reps
                 + ",\"durationSec\":60,\"calories\":2.5,\"accuracy\":0.8}", WorkoutSession.class);
+    }
+    @Test public void vietnamGroupingDoesNotFollowDeviceTimeZone() {
+        java.util.TimeZone previous = java.util.TimeZone.getDefault();
+        try {
+            java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("America/Los_Angeles"));
+            assertEquals(LocalDate.of(2026, 11, 1), HistoryStats.date(session("2026-10-31T18:00:00Z", 10), HistoryStats.ZONE));
+        } finally { java.util.TimeZone.setDefault(previous); }
     }
     @Test public void groupsUtcAcrossLocalMidnight() {
         WorkoutSession s = session("2026-10-31T18:00:00Z", 10);

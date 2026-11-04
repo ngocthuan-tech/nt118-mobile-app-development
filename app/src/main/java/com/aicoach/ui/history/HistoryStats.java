@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/** Pure date/aggregation rules. All grouping uses the device's time zone. */
+/** Pure date/aggregation rules. UI grouping uses Vietnam time, matching server streak/date rules. */
 public final class HistoryStats {
+    public static final ZoneId ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
     private HistoryStats() {}
 
     public static Instant instant(WorkoutSession session) {

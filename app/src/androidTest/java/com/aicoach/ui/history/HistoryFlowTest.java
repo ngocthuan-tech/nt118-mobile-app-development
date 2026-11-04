@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class HistoryFlowTest {
     private static WorkoutSession session(String id, LocalDate date, int reps) {
-        String time = date.atTime(12,0).atZone(ZoneId.systemDefault()).toInstant().toString();
+        String time = date.atTime(12,0).atZone(HistoryStats.ZONE).toInstant().toString();
         return new Gson().fromJson("{\"id\":\""+id+"\",\"exerciseId\":\"pushup\",\"exerciseName\":\"Push-up\",\"startedAt\":\""+time
                 +"\",\"totalReps\":"+reps+",\"correctReps\":8,\"targetReps\":15,\"durationSec\":90,\"accuracy\":0.8,\"calories\":12.5,\"xpEarned\":24,\"formErrors\":{\"back_not_straight\":2}}",WorkoutSession.class);
     }
@@ -54,7 +54,7 @@ public class HistoryFlowTest {
             vm.refresh(); assertEquals(1,calls.get());
             Observer<Resource<List<WorkoutSession>>> observer=ignored->{};
             vm.state().observeForever(observer);
-            response.setValue(Resource.success(Collections.singletonList(session("one",LocalDate.now(),10))));
+            response.setValue(Resource.success(Collections.singletonList(session("one",LocalDate.now(HistoryStats.ZONE),10))));
             assertTrue(vm.hasData());
             vm.range(2); vm.moveMonth(-1); vm.day(vm.month().atDay(2));
             response.setValue(Resource.loading()); vm.refresh(); vm.refresh(); assertEquals(2,calls.get());
@@ -77,13 +77,13 @@ public class HistoryFlowTest {
             SessionDetailViewModel vm=new SessionDetailViewModel(app(),"session-id",id->{assertEquals("session-id",id);calls.incrementAndGet();return response;});
             Observer<Resource<WorkoutSession>> observer=ignored->{};
             vm.state().observeForever(observer); assertNull(vm.session());
-            response.setValue(Resource.success(session("session-id",LocalDate.now(),10))); vm.refresh();
+            response.setValue(Resource.success(session("session-id",LocalDate.now(HistoryStats.ZONE),10))); vm.refresh();
             assertEquals("session-id",vm.session().getId()); assertEquals(2,calls.get());
             vm.state().removeObserver(observer);
         });
     }
     @Test public void historyCalendarDetailAndRotationUseRealIds() throws Exception {
-        LocalDate today=LocalDate.now();
+        LocalDate today=LocalDate.now(HistoryStats.ZONE);
         List<WorkoutSession> fixtures=Arrays.asList(session("one",today,10),session("two",today,20),session("old",today.minusDays(40),30));
         MutableLiveData<Resource<List<WorkoutSession>>> response=new MutableLiveData<>(Resource.success(fixtures));
         MutableLiveData<Resource<WorkoutSession>> detail=new MutableLiveData<>(Resource.success(fixtures.get(0)));
@@ -127,7 +127,7 @@ public class HistoryFlowTest {
             }); idle();
             scenario.onActivity(a->{
                 RecyclerView days=a.findViewById(R.id.rvDays);
-                int pos=HistoryStats.calendar(java.time.YearMonth.now()).indexOf(today);
+                int pos=HistoryStats.calendar(java.time.YearMonth.now(HistoryStats.ZONE)).indexOf(today);
                 days.findViewHolderForAdapterPosition(pos).itemView.performClick();
                 assertEquals(2,((RecyclerView)a.findViewById(R.id.rvSessions)).getAdapter().getItemCount());
             }); idle(); screenshot("calendar");

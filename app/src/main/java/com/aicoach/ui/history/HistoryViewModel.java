@@ -32,7 +32,7 @@ public class HistoryViewModel extends AndroidViewModel {
     public int range() { Integer value = saved.get("range"); return value == null ? 0 : value; }
     public void range(int value) { saved.set("range", value); }
     public YearMonth month() {
-        String value = saved.get("month"); return value == null ? YearMonth.now() : YearMonth.parse(value);
+        String value = saved.get("month"); return value == null ? YearMonth.now(HistoryStats.ZONE) : YearMonth.parse(value);
     }
     public void moveMonth(int delta) { saved.set("month", month().plusMonths(delta).toString()); saved.set("day", null); }
     public LocalDate day() { String value = saved.get("day"); return value == null ? null : LocalDate.parse(value); }

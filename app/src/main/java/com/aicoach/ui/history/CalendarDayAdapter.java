@@ -29,7 +29,7 @@ final class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.H
     void submit(YearMonth month, LocalDate selected, List<WorkoutSession> sessions) {
         this.selected = selected; days = HistoryStats.calendar(month); counts.clear();
         for (WorkoutSession s : sessions) {
-            LocalDate date = HistoryStats.date(s, ZoneId.systemDefault());
+            LocalDate date = HistoryStats.date(s, HistoryStats.ZONE);
             if (date != null) counts.put(date, counts.getOrDefault(date, 0) + 1);
         }
         notifyDataSetChanged();
@@ -51,7 +51,7 @@ final class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.H
         b.tvDay.setText(String.valueOf(day.getDayOfMonth()));
         b.tvDay.setBackgroundResource(chosen ? R.drawable.bg_progress_day_planned
                 : count > 0 ? R.drawable.bg_progress_day_done
-                : day.equals(LocalDate.now()) ? R.drawable.bg_progress_day_today : 0);
+                : day.equals(LocalDate.now(HistoryStats.ZONE)) ? R.drawable.bg_progress_day_today : 0);
         b.tvDay.setTextColor(ContextCompat.getColor(c, chosen ? R.color.brand_primary : count > 0 ? R.color.white : R.color.text_primary));
         b.getRoot().setSelected(chosen);
         b.getRoot().setContentDescription(c.getString(R.string.progress_day_accessibility,

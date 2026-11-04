@@ -45,7 +45,7 @@ public class MonthCalendarFragment extends BaseFragment<FragmentMonthCalendarBin
     }
     private void render() {
         YearMonth month = vm.month();
-        ZoneId zone = ZoneId.systemDefault();
+        ZoneId zone = HistoryStats.ZONE;
         List<WorkoutSession> all = HistoryStats.between(vm.sessions(), month.atDay(1), month.atEndOfMonth(), zone);
         LocalDate selected = vm.day();
         List<WorkoutSession> filtered = selected == null ? all : HistoryStats.between(all, selected, selected, zone);

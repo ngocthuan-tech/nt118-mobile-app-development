@@ -30,7 +30,7 @@ final class HistoryUi {
         Instant instant = HistoryStats.instant(session);
         return instant == null ? context.getString(R.string.progress_unknown_date)
                 : DateTimeFormatter.ofPattern("dd/MM/yyyy · HH:mm", Locale.getDefault())
-                        .format(instant.atZone(ZoneId.systemDefault()));
+                        .format(instant.atZone(HistoryStats.ZONE));
     }
     static String duration(long seconds) {
         seconds = Math.max(0, seconds);
