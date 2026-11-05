@@ -119,6 +119,36 @@
             android:text="@string/profile_badges_locked" />
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/loadingBadges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/tvBadgeError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="polite"
+        android:textColor="@color/text_primary"
+        android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRetryBadges"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/profile_refresh" />
+    <TextView
+        android:id="@+id/tvBadgeEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:textAppearance="@style/TextAppearance.AICoach.Caption"
+        android:text="@string/profile_badge_empty"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBadges"
         android:layout_width="match_parent"
