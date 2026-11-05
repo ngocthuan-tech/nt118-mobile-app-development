@@ -181,6 +181,12 @@
             android:layout_height="wrap_content"
             android:text="@string/social_invite_more" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/social_ranking_demo"
+            android:padding="@dimen/space_8"
+            android:textAppearance="@style/TextAppearance.AICoach.Caption" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
