@@ -31,13 +31,25 @@ public abstract class BaseRepository {
     /** onSuccess chạy trước khi phát SUCCESS — dùng để lưu token sau khi đăng nhập. */
     protected <T> LiveData<Resource<T>> execute(@NonNull Call<ApiResponse<T>> call,
                                                 @Nullable Consumer<T> onSuccess) {
+        return executeResponse(call, onSuccess, false);
+    }
+
+    /** Successful commands can return data: null (for example changing a password). */
+    protected LiveData<Resource<Void>> executeCompletion(@NonNull Call<ApiResponse<Void>> call,
+                                                          @NonNull Runnable onSuccess) {
+        return executeResponse(call, ignored -> onSuccess.run(), true);
+    }
+
+    private <T> LiveData<Resource<T>> executeResponse(@NonNull Call<ApiResponse<T>> call,
+                                                     @Nullable Consumer<T> onSuccess,
+                                                     boolean acceptNullData) {
         MutableLiveData<Resource<T>> result = new MutableLiveData<>(Resource.loading());
         call.enqueue(new Callback<ApiResponse<T>>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse<T>> c, @NonNull Response<ApiResponse<T>> response) {
                 ApiResponse<T> body = response.body();
                 if (response.isSuccessful() && body != null && body.isSuccess()) {
-                    if (onSuccess != null && body.getData() != null) onSuccess.accept(body.getData());
+                    if (onSuccess != null && (acceptNullData || body.getData() != null)) onSuccess.accept(body.getData());
                     result.setValue(Resource.success(body.getData()));
                 } else {
                     result.setValue(Resource.error(ErrorMapper.fromResponse(response)));

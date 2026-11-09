@@ -31,6 +31,13 @@ public class UserController {
         return ApiResponse.ok(userService.getMe(userId));
     }
 
+    @GetMapping("/me/session")
+    @Operation(summary = "Kiểm tra phiên đăng nhập (không tải hồ sơ)")
+    public ApiResponse<Void> session() {
+        // JwtAuthFilter checks account existence and session version before this protected endpoint.
+        return ApiResponse.ok(null);
+    }
+
     @PutMapping("/me")
     @Operation(summary = "Sửa hồ sơ (chỉ gửi field cần đổi). Dùng cho khảo sát, sửa hồ sơ, chọn giáo án")
     public ApiResponse<UserDto> update(@AuthenticationPrincipal String userId,
@@ -43,6 +50,6 @@ public class UserController {
     public ApiResponse<Void> changePassword(@AuthenticationPrincipal String userId,
                                             @Valid @RequestBody ChangePasswordRequest body) {
         userService.changePassword(userId, body);
-        return ApiResponse.ok("Đã đổi mật khẩu", null);
+        return ApiResponse.ok("Đã đổi mật khẩu và đăng xuất các phiên cũ. Vui lòng đăng nhập lại.", null);
     }
 }
