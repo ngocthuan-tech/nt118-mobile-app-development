@@ -20,6 +20,8 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private static final String PREFIX = "Bearer ";
+    public static final String REASON_HEADER = "X-Session-Reason";
+    public static final String PASSWORD_CHANGED = "PASSWORD_CHANGED";
 
     private final JwtService jwtService;
     private final UserRepository users;
@@ -35,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith(PREFIX)) {
             jwtService.parse(header.substring(PREFIX.length()).trim())
-                    .filter(this::stillValid)
+                    .filter(info -> stillValid(info, response))
                     .ifPresent(info -> {
                         var auth = new UsernamePasswordAuthenticationToken(info.userId(), null, List.of());
                         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -45,9 +47,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     /** Token cấp trước lần đặt lại mật khẩu gần nhất thì không còn hiệu lực (đăng xuất mọi thiết bị cũ). */
-    private boolean stillValid(JwtService.TokenInfo info) {
+    private boolean stillValid(JwtService.TokenInfo info, HttpServletResponse response) {
         return users.findById(info.userId())
-                .map(u -> u.getPasswordChangedAt() == null || !info.issuedAt().isBefore(u.getPasswordChangedAt()))
+                .map(u -> {
+                    boolean valid = info.sessionVersion() != null
+                            ? info.sessionVersion() == u.getSessionVersion()
+                            : u.getSessionVersion() == 0 && (u.getPasswordChangedAt() == null
+                                || !info.issuedAt().isBefore(u.getPasswordChangedAt()));
+                    if (!valid) response.setHeader(REASON_HEADER, PASSWORD_CHANGED);
+                    return valid;
+                })
                 .orElse(false);
     }
 }

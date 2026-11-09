@@ -47,7 +47,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((req, res, e) -> writeError(res, mapper,
-                                HttpServletResponse.SC_UNAUTHORIZED, "Phiên đăng nhập không hợp lệ hoặc đã hết hạn"))
+                                HttpServletResponse.SC_UNAUTHORIZED,
+                                JwtAuthFilter.PASSWORD_CHANGED.equals(res.getHeader(JwtAuthFilter.REASON_HEADER))
+                                        ? "Mật khẩu đã thay đổi. Vui lòng đăng nhập lại."
+                                        : "Phiên đăng nhập không hợp lệ hoặc đã hết hạn"))
                         .accessDeniedHandler((req, res, e) -> writeError(res, mapper,
                                 HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền thực hiện thao tác này")))
                 .addFilterBefore(new JwtAuthFilter(jwtService, users), UsernamePasswordAuthenticationFilter.class);

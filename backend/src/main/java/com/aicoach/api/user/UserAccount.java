@@ -58,6 +58,12 @@ public class UserAccount {
     /** Lần đặt lại mật khẩu gần nhất — token cấp trước thời điểm này bị từ chối. */
     private Instant passwordChangedAt;
 
+    // Written only by the atomic repository UPDATE; unrelated profile/workout saves cannot roll it back.
+    @Column(nullable = false, insertable = false, updatable = false)
+    private long sessionVersion;
+
+    public long getSessionVersion() { return sessionVersion; }
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
