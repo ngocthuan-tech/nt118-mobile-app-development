@@ -16,7 +16,6 @@ import com.aicoach.databinding.DialogChangePasswordBinding;
 import com.aicoach.util.SimpleTextWatcher;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 /**
@@ -93,8 +92,7 @@ public class ChangePasswordDialogFragment extends BottomSheetDialogFragment {
         if (result != null && result.status == Resource.Status.SUCCESS && isResumed()
                 && !getParentFragmentManager().isStateSaved()) {
             vm.consume();
-            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                    R.string.profile_password_success, Snackbar.LENGTH_LONG).show();
+            // The repository ends this session; MainActivity shows the persistent reason dialog.
             binding.etCurrent.setText(null);
             binding.etNew.setText(null);
             binding.etConfirm.setText(null);

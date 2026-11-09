@@ -13,6 +13,9 @@ import retrofit2.http.PUT;
 /** User Profile — hồ sơ của người đang đăng nhập. */
 public interface UserApi {
 
+    @GET("users/me/session")
+    Call<ApiResponse<Void>> checkSession();
+
     @GET("users/me/achievements")
     Call<ApiResponse<com.aicoach.data.model.AchievementSummary>> getAchievements();
 
@@ -23,5 +26,6 @@ public interface UserApi {
     Call<ApiResponse<User>> updateMe(@Body UpdateProfileRequest body);
 
     @PUT("users/me/password")
-    Call<ApiResponse<Void>> changePassword(@Body ChangePasswordRequest body);
+    Call<ApiResponse<Void>> changePassword(@Body ChangePasswordRequest body,
+            @retrofit2.http.Tag com.aicoach.data.remote.AuthenticatedSession session);
 }
