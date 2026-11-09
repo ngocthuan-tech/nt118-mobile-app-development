@@ -13,6 +13,9 @@ import retrofit2.http.PUT;
 /** User Profile — hồ sơ của người đang đăng nhập. */
 public interface UserApi {
 
+    @GET("users/me/achievements")
+    Call<ApiResponse<com.aicoach.data.model.AchievementSummary>> getAchievements();
+
     @GET("users/me")
     Call<ApiResponse<User>> getMe();
 
