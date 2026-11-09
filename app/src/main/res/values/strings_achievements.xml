@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="achievement_title">Hành trình danh hiệu</string>
+    <string name="achievement_realm_title">Cảnh giới tu luyện</string>
+    <string name="achievement_realm_caption">Từ tổng EXP tích lũy của tất cả bài tập</string>
+    <string name="achievement_total">%1$s EXP tổng</string>
+    <string name="achievement_next">Còn %1$s EXP để đạt %2$s</string>
+    <string name="achievement_max">Đã đạt bậc cao nhất · Tiếp tục hành trình của bạn!</string>
+    <string name="achievement_threshold">Từ %1$s EXP</string>
+    <string name="achievement_current">Hiện tại</string>
+    <string name="achievement_unlocked">Đã mở</string>
+    <string name="achievement_locked">Chưa mở</string>
+    <string name="achievement_rank_title">Rank từng bài tập</string>
+    <string name="achievement_rank_caption">EXP của bài nào, nâng rank bài đó. Tích lũy trọn đời, không reset theo tuần.</string>
+    <string name="achievement_rank_rules">Xem 6 mốc rank</string>
+    <string name="achievement_rank_xp">%1$s EXP · %2$s</string>
+    <string name="achievement_no_workout">Chưa tập · Bắt đầu với Novice</string>
+    <string name="achievement_rank_unavailable">Chưa tải được rank từng bài. Kiểm tra kết nối và thử lại. Nếu vẫn lỗi, tính năng có thể chưa được cập nhật trên máy chủ.</string>
+    <string name="achievement_stale">Đang hiển thị lần tải thành công trước. Hãy làm mới để cập nhật EXP.</string>
+    <string name="achievement_invalid">Dữ liệu danh hiệu chưa đầy đủ. Vui lòng thử lại.</string>
+    <string name="achievement_empty">Chưa có bài tập trong thư viện.</string>
+    <string name="achievement_explanation">Mốc 0 EXP là bậc khởi đầu. EXP chỉ được cộng khi buổi tập được lưu thành công. Nghỉ tập không làm mất cảnh giới hay rank.</string>
+    <string name="achievement_rules_body">Novice — Nhập môn: 0 EXP\nIntermediate — Trung cấp: 200 EXP\nAdvanced — Nâng cao: 750 EXP\nExpert — Chuyên gia: 2.000 EXP\nMaster — Cao thủ: 5.000 EXP\nGrandmaster — Đại cao thủ: 12.000 EXP\n\nCác mốc tính riêng trên EXP trọn đời của từng bài. Plank dùng EXP từ thời gian tập được lưu, theo công thức hiện có của ứng dụng.</string>
+    <string name="achievement_realm_profile">Cảnh giới: %1$s</string>
+    <string name="achievement_close">Đã hiểu</string>
+</resources>

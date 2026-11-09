@@ -27,6 +27,10 @@ public class UserRepository extends BaseRepository {
         return execute(api.getMe());
     }
 
+    public LiveData<Resource<com.aicoach.data.model.AchievementSummary>> getAchievements() {
+        return execute(api.getAchievements());
+    }
+
     public LiveData<Resource<User>> updateMe(@NonNull ProfileDtos.UpdateProfileRequest request) {
         return execute(api.updateMe(request));
     }
