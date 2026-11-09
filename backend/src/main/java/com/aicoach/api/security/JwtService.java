@@ -47,7 +47,7 @@ public class JwtService {
                 .compact();
     }
 
-    /** Nội dung đã kiểm chữ ký của một token: ai, cấp lúc nào. */
+    /** Verified claims; null sessionVersion identifies a token issued before the V4 rollout. */
     public record TokenInfo(String userId, Instant issuedAt, Long sessionVersion) {
     }
 

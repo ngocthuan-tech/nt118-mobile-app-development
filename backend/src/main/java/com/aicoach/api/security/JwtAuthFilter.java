@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Đọc header "Authorization: Bearer &lt;token&gt;". Token hợp lệ (đúng chữ ký, chưa hết hạn, tài khoản còn tồn tại,
- * cấp sau lần đặt lại mật khẩu gần nhất) thì gắn id người dùng vào SecurityContext;
+ * đúng phiên bản phiên đăng nhập hiện tại) thì gắn id người dùng vào SecurityContext;
  * không hợp lệ thì bỏ qua — Spring Security sẽ trả 401 ở các API cần đăng nhập.
  */
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -46,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
     }
 
-    /** Token cấp trước lần đặt lại mật khẩu gần nhất thì không còn hiệu lực (đăng xuất mọi thiết bị cũ). */
+    /** Version check avoids the second-level precision race of JWT iat; old tokens keep the legacy check. */
     private boolean stillValid(JwtService.TokenInfo info, HttpServletResponse response) {
         return users.findById(info.userId())
                 .map(u -> {

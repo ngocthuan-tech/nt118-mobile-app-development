@@ -37,6 +37,8 @@ class SessionRevocationFlowTest {
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper mapper;
     @Autowired Clock clock;
+    @Autowired com.aicoach.api.user.UserRepository users;
+    @Autowired org.springframework.transaction.PlatformTransactionManager transactions;
     private record Account(String email, String token, String id) { }
     private Account register() throws Exception {
         String email="session-"+UUID.randomUUID()+"@example.com";
@@ -107,5 +109,23 @@ class SessionRevocationFlowTest {
                 .andExpect(header().doesNotExist("X-Session-Reason"));
         mvc.perform(get("/api/v1/users/me/session").header("Authorization","Bearer bad.token.signature"))
                 .andExpect(status().isUnauthorized()).andExpect(header().doesNotExist("X-Session-Reason"));
+    }
+
+    @Test void staleInFlightProfileWriteCannotRestoreOldPasswordOrSessionVersion() throws Exception {
+        Account a=register();
+        java.util.concurrent.ExecutorService secondDevice=java.util.concurrent.Executors.newSingleThreadExecutor();
+        try {
+            new org.springframework.transaction.support.TransactionTemplate(transactions).executeWithoutResult(tx -> {
+                var stale=users.findById(a.id()).orElseThrow();
+                try {
+                    secondDevice.submit(() -> { change(a.token(),"OldPass123","NewPass456",200); return null; })
+                            .get(15,java.util.concurrent.TimeUnit.SECONDS);
+                } catch(Exception e) { throw new RuntimeException(e); }
+                stale.setDisplayName("Slow profile request");
+                users.saveAndFlush(stale);
+            });
+            login(a.email(),"OldPass123",401);
+            valid(login(a.email(),"NewPass456",200)); revoked(a.token());
+        } finally { secondDevice.shutdownNow(); }
     }
 }
