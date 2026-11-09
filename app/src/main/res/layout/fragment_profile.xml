@@ -296,6 +296,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvBmiReference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                android:text="@string/profile_bmi_reference" />
+
             <!-- Huy hiệu -->
             <LinearLayout
                 android:layout_width="match_parent"

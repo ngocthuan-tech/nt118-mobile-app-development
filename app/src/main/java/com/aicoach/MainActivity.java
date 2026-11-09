@@ -51,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
 
         NavigationUI.setupWithNavController(binding.bottomNav, navController);
+        // Home/library are nested in nav_main, which cannot be resolved from sibling graphs.
+        binding.bottomNav.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.homeFragment || item.getItemId() == R.id.exerciseLibraryFragment) {
+                navController.navigate(R.id.nav_main, null, new androidx.navigation.NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_root, false).setLaunchSingleTop(true).build());
+                if (item.getItemId() == R.id.exerciseLibraryFragment) navController.navigate(R.id.exerciseLibraryFragment);
+                return true;
+            }
+            return NavigationUI.onNavDestinationSelected(item, navController);
+        });
         // Nút tròn "Tập AI" nổi giữa thanh tab = chọn tab giữa
         binding.fabTrain.setOnClickListener(v -> binding.bottomNav.setSelectedItemId(R.id.nav_workout));
 
