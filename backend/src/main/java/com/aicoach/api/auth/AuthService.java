@@ -74,7 +74,7 @@ public class AuthService {
     }
 
     private AuthResponse toResponse(UserAccount u) {
-        return new AuthResponse(jwtService.generate(u.getId()), "Bearer", jwtService.ttlSeconds(),
+        return new AuthResponse(jwtService.generate(u.getId(), u.getSessionVersion()), "Bearer", jwtService.ttlSeconds(),
                 userService.toDto(u));
     }
 }

@@ -78,6 +78,15 @@
                 tools:text="Nguyễn Minh" />
 
             <TextView
+                android:id="@+id/tvProfileRealm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gold_light"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/tvMeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -295,6 +304,14 @@
                         tools:text="Bình thường" />
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBmiReference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                android:text="@string/profile_bmi_reference" />
 
             <!-- Huy hiệu -->
             <LinearLayout

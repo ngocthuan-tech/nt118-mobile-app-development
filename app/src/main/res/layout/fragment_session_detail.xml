@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Figma 39 Chi tiết buổi tập — Thành viên B.
-    B tự viết: SessionDetailViewModel → HistoryRepository → SessionApi (GET sessions/{id}),
-    adapter cho rvSets (item_session_set), dữ liệu cho chartAngles (LineChart), nhãn lỗi vào groupErrors.
-    Nút "Tập lại bài này" đã nối sang luồng tập AI (action_global_to_readiness).
--->
+<!-- Chi tiết buổi tập từ SessionApi. Chỉ hiển thị các số liệu server cung cấp. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -47,6 +42,8 @@
                     android:src="@drawable/ic_share_24" />
             </LinearLayout>
 
+<include android:id="@+id/requestState" layout="@layout/view_progress_request" />
+<LinearLayout android:id="@+id/detailContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
             <!-- Tóm tắt: vòng điểm + bài + 3 chỉ số -->
             <LinearLayout
                 style="@style/Widget.AICoach.B.Card"
@@ -67,6 +64,7 @@
                         android:max="100"
                         app:indicatorColor="@color/state_success"
                         app:indicatorSize="@dimen/b_score_ring"
+                        app:indicatorInset="0dp"
                         app:trackColor="@color/state_success_light"
                         app:trackCornerRadius="4dp"
                         app:trackThickness="8dp"
@@ -115,10 +113,10 @@
 
                     <TextView
                         android:id="@+id/tvDate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AICoach.Caption"
-                        tools:text="Thứ 7, 10/10 • 19:30" />
+                        tools:text="Thứ 7, 10/10 • 19:30"  android:maxLines="2" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,7 +145,7 @@
 
                             <TextView
                                 style="@style/Widget.AICoach.B.StatLabel"
-                                android:text="@string/progress_unit_minutes" />
+                                android:text="@string/progress_duration_unit" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/Widget.AICoach.B.MiniStat">
@@ -165,102 +163,10 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Theo từng hiệp -->
-            <TextView
-                style="@style/Widget.AICoach.Survey.Section"
-                android:text="@string/progress_sets_title" />
 
-            <LinearLayout
-                style="@style/Widget.AICoach.B.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/space_8"
-                android:paddingBottom="@dimen/space_8">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.TableHead"
-                        android:layout_weight="1.1"
-                        android:text="@string/progress_col_set" />
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.TableHead"
-                        android:layout_weight="0.9"
-                        android:text="@string/progress_col_reps" />
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.TableHead"
-                        android:layout_weight="1.8"
-                        android:text="@string/progress_col_score" />
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.TableHead"
-                        android:layout_weight="0.8"
-                        android:gravity="end"
-                        android:text="@string/progress_col_errors" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_session_set" />
-            </LinearLayout>
-
-            <!-- Biểu đồ góc khớp theo từng lần -->
-            <TextView
-                android:id="@+id/tvChartTitle"
-                style="@style/Widget.AICoach.Survey.Section"
-                tools:text="Góc gối ở đáy mỗi lần squat" />
-
-            <LinearLayout
-                style="@style/Widget.AICoach.B.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
-                android:orientation="vertical">
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chartAngles"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/b_line_chart_height" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/space_4"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.Legend"
-                        android:text="@string/progress_angle_legend_bad"
-                        app:drawableStartCompat="@drawable/bg_dot_small"
-                        app:drawableTint="@color/state_error" />
-
-                    <TextView
-                        style="@style/Widget.AICoach.B.Legend"
-                        android:text="@string/progress_angle_legend_threshold"
-                        app:drawableStartCompat="@drawable/bg_dot_small"
-                        app:drawableTint="@color/state_success" />
-                </LinearLayout>
-            </LinearLayout>
-
+ <TextView android:id="@+id/tvTotals" style="@style/Widget.AICoach.Survey.Section" />
+ <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/progress_detail_unavailable" android:textAppearance="@style/TextAppearance.AICoach.Caption" />
+ <TextView android:id="@+id/tvErrorsTitle" style="@style/Widget.AICoach.Survey.Section" android:text="@string/progress_errors_title" />
             <!-- Nhãn lỗi tư thế (view_session_error_chip) -->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/groupErrors"
@@ -269,6 +175,7 @@
                 android:layout_marginTop="@dimen/space_12"
                 app:chipSpacingHorizontal="@dimen/space_8"
                 app:chipSpacingVertical="@dimen/space_8" />
+        </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

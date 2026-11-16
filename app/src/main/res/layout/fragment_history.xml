@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Figma 37 Lịch sử & Biểu đồ (tab "Tiến độ") — Thành viên B.
-    Giao diện + điều hướng đã dựng. B tự viết: HistoryViewModel → HistoryRepository → SessionApi (GET sessions?limit=50),
-    adapter cho rvSessions (item_history_session), dữ liệu cho chartReps (MPAndroidChart BarChart).
--->
+<!-- Tiến độ: lịch sử và biểu đồ từ SessionApi; thống kê trong phạm vi các buổi đã tải. -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -43,6 +39,8 @@
                 android:src="@drawable/ic_calendar_24" />
         </LinearLayout>
 
+<include android:id="@+id/requestState" layout="@layout/view_progress_request" />
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/progress_scope" android:textAppearance="@style/TextAppearance.AICoach.Caption" />
         <!-- Tuần / Tháng / Năm -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +151,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/progress_chart_title"
+                android:id="@+id/tvChartTitle" android:text="@string/progress_chart_title"
                 android:textAppearance="@style/TextAppearance.AICoach.SectionTitle" />
 
             <TextView
@@ -200,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/space_4"
-                android:text="@string/common_see_all"
+                android:text="@string/progress_open_calendar"
                 android:textColor="@color/brand_primary"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -238,7 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:text="@string/progress_empty_title"
+                android:text="@string/progress_range_empty"
                 android:textAppearance="@style/TextAppearance.AICoach.SectionTitle" />
 
             <TextView
@@ -246,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_4"
                 android:gravity="center"
-                android:text="@string/progress_empty_desc"
+                android:text="@string/progress_range_hint"
                 android:textAppearance="@style/TextAppearance.AICoach.Caption" />
 
             <com.google.android.material.button.MaterialButton

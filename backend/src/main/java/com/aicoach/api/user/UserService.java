@@ -79,7 +79,8 @@ public class UserService {
 
     @Transactional
     public void changePassword(String userId, ChangePasswordRequest req) {
-        UserAccount u = require(userId);
+        UserAccount u = users.lockForPasswordChange(userId)
+                .orElseThrow(() -> ApiException.unauthorized("Phiên đăng nhập không hợp lệ hoặc đã hết hạn"));
         if (!passwordEncoder.matches(req.currentPassword(), u.getPasswordHash())) {
             throw ApiException.badRequest("Mật khẩu hiện tại không đúng");
         }
@@ -87,6 +88,8 @@ public class UserService {
             throw ApiException.badRequest("Mật khẩu mới phải khác mật khẩu hiện tại");
         }
         u.setPasswordHash(passwordEncoder.encode(req.newPassword()));
+        u.setPasswordChangedAt(clock.instant());
+        users.revokeSessions(userId);
     }
 
     public UserDto toDto(UserAccount u) {

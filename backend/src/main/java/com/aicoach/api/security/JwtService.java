@@ -35,18 +35,20 @@ public class JwtService {
         this.clock = clock;
     }
 
-    public String generate(String userId) {
+    public String generate(String userId, long sessionVersion) {
         Instant now = clock.instant();
         return Jwts.builder()
                 .subject(userId)
+                .id(java.util.UUID.randomUUID().toString())
+                .claim("sv", sessionVersion)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(ttl)))
                 .signWith(key)
                 .compact();
     }
 
-    /** Nội dung đã kiểm chữ ký của một token: ai, cấp lúc nào. */
-    public record TokenInfo(String userId, Instant issuedAt) {
+    /** Verified claims; null sessionVersion identifies a token issued before the V4 rollout. */
+    public record TokenInfo(String userId, Instant issuedAt, Long sessionVersion) {
     }
 
     /** Trả về id người dùng + thời điểm cấp nếu token hợp lệ và chưa hết hạn. */
@@ -61,7 +63,9 @@ public class JwtService {
             if (claims.getSubject() == null || claims.getIssuedAt() == null) {
                 return Optional.empty();
             }
-            return Optional.of(new TokenInfo(claims.getSubject(), claims.getIssuedAt().toInstant()));
+            Long version = claims.get("sv", Long.class);
+            if (version != null && version < 0) return Optional.empty();
+            return Optional.of(new TokenInfo(claims.getSubject(), claims.getIssuedAt().toInstant(), version));
         } catch (JwtException | IllegalArgumentException e) {
             return Optional.empty();
         }

@@ -211,6 +211,15 @@
                     tools:text="Đã chọn 3" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvFriendsEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_16"
+                android:text="@string/social_friends_empty"
+                android:textAppearance="@style/TextAppearance.AICoach.Caption"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFriends"
                 android:layout_width="match_parent"

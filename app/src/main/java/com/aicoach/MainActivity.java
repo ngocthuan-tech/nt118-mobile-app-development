@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String ARG_HIDE_BOTTOM_NAV = "hideBottomNav";
 
     private ActivityMainBinding binding;
+    private com.aicoach.data.local.SessionMonitor sessionMonitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         applySystemBarInsets();
         setupNavigation(savedInstanceState == null);
+        sessionMonitor = new com.aicoach.data.local.SessionMonitor(this);
     }
 
     private void setupNavigation(boolean firstLaunch) {
@@ -51,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
 
         NavigationUI.setupWithNavController(binding.bottomNav, navController);
+        // Home/library are nested in nav_main, which cannot be resolved from sibling graphs.
+        binding.bottomNav.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.homeFragment || item.getItemId() == R.id.exerciseLibraryFragment) {
+                navController.navigate(R.id.nav_main, null, new androidx.navigation.NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_root, false).setLaunchSingleTop(true).build());
+                if (item.getItemId() == R.id.exerciseLibraryFragment) navController.navigate(R.id.exerciseLibraryFragment);
+                return true;
+            }
+            return NavigationUI.onNavDestinationSelected(item, navController);
+        });
         // Nút tròn "Tập AI" nổi giữa thanh tab = chọn tab giữa
         binding.fabTrain.setOnClickListener(v -> binding.bottomNav.setSelectedItemId(R.id.nav_workout));
 
@@ -74,9 +86,40 @@ public class MainActivity extends AppCompatActivity {
         SessionEvents.expired().observe(this, expired -> {
             if (Boolean.TRUE.equals(expired)) {
                 SessionEvents.consume();
-                navController.navigate(R.id.action_global_to_auth);
+                showPendingSessionEnd();
             }
         });
+    }
+
+    @Override protected void onStart() {
+        super.onStart();
+        if (sessionMonitor != null) sessionMonitor.start();
+    }
+
+    @Override protected void onStop() {
+        if (sessionMonitor != null) sessionMonitor.stop();
+        super.onStop();
+    }
+
+    @Override protected void onPostResume() {
+        super.onPostResume();
+        // The Activity lifecycle reaches RESUMED after this callback returns.
+        binding.getRoot().post(this::showPendingSessionEnd);
+    }
+
+    private void showPendingSessionEnd() {
+        if (!getLifecycle().getCurrentState().isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+                || getSupportFragmentManager().isStateSaved()) return;
+        NavHostFragment host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        if (host == null) return;
+        com.aicoach.data.local.SessionEndReason reason = TokenManager.getInstance(this).takeEndReason();
+        if (reason == null) return; // A delayed 401 event must not affect a newer login.
+        host.getNavController().navigate(R.id.nav_auth, null, new androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.nav_root, false).setLaunchSingleTop(true).build());
+        host.getNavController().navigate(R.id.loginFragment, null, new androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.nav_auth, false).setLaunchSingleTop(true).build());
+        if (getSupportFragmentManager().findFragmentByTag(com.aicoach.ui.auth.SessionEndedDialog.TAG) == null)
+            com.aicoach.ui.auth.SessionEndedDialog.create(reason).show(getSupportFragmentManager(), com.aicoach.ui.auth.SessionEndedDialog.TAG);
     }
 
     private static boolean isInsideGraph(@NonNull NavDestination destination, int graphId) {

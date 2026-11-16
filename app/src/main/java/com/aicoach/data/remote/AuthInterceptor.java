@@ -29,7 +29,8 @@ public class AuthInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         boolean isAuthCall = request.url().encodedPath().contains("/auth/");
-        String token = tokenManager.getToken();
+        AuthenticatedSession session = request.tag(AuthenticatedSession.class);
+        String token = session == null ? tokenManager.getToken() : session.token;
 
         if (token != null && !isAuthCall) {
             request = request.newBuilder().header("Authorization", "Bearer " + token).build();
@@ -37,8 +38,9 @@ public class AuthInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         if (response.code() == 401 && !isAuthCall && token != null) {
-            tokenManager.clear();
-            SessionEvents.notifyExpired();
+            com.aicoach.data.local.SessionEndReason reason = "PASSWORD_CHANGED".equals(response.header("X-Session-Reason"))
+                    ? com.aicoach.data.local.SessionEndReason.PASSWORD_CHANGED : com.aicoach.data.local.SessionEndReason.EXPIRED;
+            if (tokenManager.expireIfMatches(token, reason)) SessionEvents.notifyExpired();
         }
         return response;
     }
