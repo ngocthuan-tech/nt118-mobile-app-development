@@ -26,7 +26,15 @@ import java.util.Locale;
  */
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
     private android.app.TimePickerDialog reminderDialog;
-    private com.aicoach.ui.challenge.SocialRows<com.aicoach.domain.BadgeRules.Badge> badgeAdapter;
+    private com.aicoach.ui.challenge.SocialRows<RealmPreview> badgeAdapter;
+    private static final class RealmPreview {
+        final com.aicoach.domain.AchievementRules.Tier tier;
+        final boolean earned, current;
+        RealmPreview(com.aicoach.domain.AchievementRules.Tier tier, long xp) {
+            this.tier = tier; earned = xp >= tier.minimumXp;
+            current = com.aicoach.domain.AchievementRules.realm(xp).current == tier;
+        }
+    }
 
     @Override
     protected FragmentProfileBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -63,13 +71,12 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
             }, hour, minute, true);
             reminderDialog.show();
         });
-        badgeAdapter = new com.aicoach.ui.challenge.SocialRows<>(R.layout.item_badge_small, b -> b.id, (row, badge, position) -> {
+        badgeAdapter = new com.aicoach.ui.challenge.SocialRows<>(R.layout.item_badge_small, b -> b.tier.id, (row, badge, position) -> {
             com.aicoach.databinding.ItemBadgeSmallBinding b = com.aicoach.databinding.ItemBadgeSmallBinding.bind(row);
-            boolean streak = badge.id.startsWith("streak");
-            b.tvName.setText(getString(streak ? R.string.profile_badge_streak : R.string.profile_badge_reps, badge.target));
-            b.imgIcon.setImageResource(!badge.earned() ? R.drawable.ic_lock_24 : streak ? R.drawable.ic_fire_24 : R.drawable.ic_medal_24);
-            b.circle.setBackgroundTintList(android.content.res.ColorStateList.valueOf(androidx.core.content.ContextCompat.getColor(requireContext(),
-                    badge.earned() ? R.color.state_success : R.color.text_secondary)));
+            b.tvName.setText(badge.tier.name);
+            AchievementArt.bind(b.imgIcon, badge.tier);
+            b.imgIcon.setAlpha(badge.earned ? 1f : .35f);
+            b.tvState.setText(badge.current ? R.string.achievement_current : badge.earned ? R.string.achievement_unlocked : R.string.achievement_locked);
             b.getRoot().setOnClickListener(v -> nav.navigate(ProfileFragmentDirections.actionProfileToBadges()));
         });
         binding.rvBadges.setAdapter(badgeAdapter);
@@ -95,8 +102,12 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
     }
 
     private void renderUser(@Nullable User user) {
-        badgeAdapter.submit(user == null ? java.util.Collections.emptyList()
-                : com.aicoach.domain.BadgeRules.evaluate(user.getTotalReps(), user.getStreak()));
+        java.util.List<RealmPreview> previews = new java.util.ArrayList<>();
+        if (user != null) for (com.aicoach.domain.AchievementRules.Tier tier : com.aicoach.domain.AchievementRules.REALMS)
+            previews.add(new RealmPreview(tier, user.getTotalXp()));
+        badgeAdapter.submit(previews);
+        binding.tvProfileRealm.setText(user == null ? getString(R.string.profile_missing)
+                : getString(R.string.achievement_realm_profile, com.aicoach.domain.AchievementRules.realm(user.getTotalXp()).current.name));
         String missing = getString(R.string.profile_missing);
         binding.tvAvatar.setText(user == null ? "?" : user.getInitial());
         binding.tvName.setText(user == null || user.getDisplayName() == null ? missing : user.getDisplayName());

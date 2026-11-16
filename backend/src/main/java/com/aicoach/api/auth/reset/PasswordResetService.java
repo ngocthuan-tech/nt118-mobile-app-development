@@ -100,9 +100,8 @@ public class PasswordResetService {
             throw ApiException.badRequest("Mật khẩu mới phải khác mật khẩu cũ");
         }
         user.setPasswordHash(passwordEncoder.encode(newPassword));
-        // JWT ghi thời điểm cấp theo giây → mốc = giây kế tiếp: mọi token cấp tới giây hiện tại đều bị huỷ,
-        // token đăng nhập lại bằng mật khẩu mới (từ giây kế tiếp) hợp lệ.
-        user.setPasswordChangedAt(clock.instant().truncatedTo(ChronoUnit.SECONDS).plusSeconds(1));
+        user.setPasswordChangedAt(clock.instant());
+        users.revokeSessions(user.getId());
         codes.deleteAllForUser(user.getId());
     }
 

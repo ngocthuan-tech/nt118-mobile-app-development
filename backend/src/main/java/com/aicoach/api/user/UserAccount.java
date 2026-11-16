@@ -15,6 +15,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "users")
+@org.hibernate.annotations.DynamicUpdate // A stale profile/workout write must not restore the old password hash.
 public class UserAccount {
 
     @Id
@@ -55,8 +56,14 @@ public class UserAccount {
     private long totalXp;
     private long totalReps;
 
-    /** Lần đặt lại mật khẩu gần nhất — token cấp trước thời điểm này bị từ chối. */
+    /** Lần đổi/đặt lại mật khẩu gần nhất, giữ để kiểm tra token từ phiên bản server cũ. */
     private Instant passwordChangedAt;
+
+    // Written only by the atomic repository UPDATE; unrelated profile/workout saves cannot roll it back.
+    @Column(nullable = false, insertable = false, updatable = false)
+    private long sessionVersion;
+
+    public long getSessionVersion() { return sessionVersion; }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

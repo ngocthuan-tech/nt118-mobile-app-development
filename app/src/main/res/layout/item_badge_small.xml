@@ -1,39 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Huy hiệu nhỏ trên dải ở Hồ sơ (Figma 43). Đã đạt: nền màu + icon trắng; chưa đạt: nền xám + ổ khoá (B đặt). -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="64dp"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="88dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/space_8"
+    android:layout_marginEnd="8dp"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-    <FrameLayout
-        android:id="@+id/circle"
-        android:layout_width="@dimen/b_badge_small"
-        android:layout_height="@dimen/b_badge_small"
-        android:background="@drawable/bg_circle"
-        android:backgroundTint="@color/state_success"
-        tools:backgroundTint="@color/state_success">
-
-        <ImageView
-            android:id="@+id/imgIcon"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="center"
-            android:importantForAccessibility="no"
-            app:tint="@color/white"
-            tools:src="@drawable/ic_target_24" />
-    </FrameLayout>
-
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:importantForAccessibility="no" />
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_4"
-        android:maxLines="1"
         android:textColor="@color/text_primary"
-        android:textSize="11sp"
-        tools:text="Khởi đầu" />
+        android:gravity="center"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/tvState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:gravity="center"
+        android:textSize="11sp" />
 </LinearLayout>

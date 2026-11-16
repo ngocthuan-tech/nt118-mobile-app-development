@@ -65,6 +65,14 @@ public class SettingsSocialFlowTest {
     private static void injectProfile(MainActivity a, MutableLiveData<Resource<User>> response) {
         host(a).getChildFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
             @Override public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
+                if (f instanceof BadgesFragment) {
+                    new ViewModelProvider(f, new ViewModelProvider.Factory() {
+                        @Override public <T extends ViewModel> T create(Class<T> type) {
+                            return type.cast(new AchievementsViewModel(a.getApplication(),
+                                    () -> new MutableLiveData<>(Resource.error("Not deployed"))));
+                        }
+                    }).get(AchievementsViewModel.class);
+                }
                 if (f instanceof ProfileFragment || f instanceof BadgesFragment) {
                     new ViewModelProvider(f, new ViewModelProvider.Factory() {
                         @Override public <T extends ViewModel> T create(Class<T> type) {
@@ -187,7 +195,7 @@ public class SettingsSocialFlowTest {
     }
 
     @Test public void badgesHandleLoadingRetryEmptyFiltersAndRotation() throws Exception {
-        User user = new Gson().fromJson("{\"displayName\":\"Test B\",\"totalReps\":500,\"streak\":7}", User.class);
+        User user = new Gson().fromJson("{\"displayName\":\"Test B\",\"totalXp\":5000,\"totalReps\":500,\"streak\":7}", User.class);
         MutableLiveData<Resource<User>> response = new MutableLiveData<>(Resource.loading());
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             scenario.onActivity(a -> {
@@ -201,18 +209,18 @@ public class SettingsSocialFlowTest {
                 assertEquals("offline", text(a, R.id.tvBadgeError));
                 response.setValue(Resource.success(user)); a.findViewById(R.id.btnRetryBadges).performClick();
             });
-            await(scenario, a -> count(a, R.id.rvBadges) == 6);
+            await(scenario, a -> count(a, R.id.rvBadges) == 5);
             screenshot("badges");
             scenario.onActivity(a -> {
-                assertTrue(text(a, R.id.tvSummary).contains("4 / 6"));
+                assertEquals("Kết Đan", text(a, R.id.tvSummary));
                 a.findViewById(R.id.btnLocked).performClick();
             }); await(scenario, a -> count(a, R.id.rvBadges) == 2);
             scenario.recreate(); idle();
             await(scenario, a -> count(a, R.id.rvBadges) == 2);
             scenario.onActivity(a -> {
-                response.setValue(Resource.success(new Gson().fromJson("{}", User.class)));
+                response.setValue(Resource.success(new Gson().fromJson("{\"totalXp\":40000}", User.class)));
                 a.findViewById(R.id.btnRetryBadges).performClick();
-                a.findViewById(R.id.btnEarned).performClick();
+                a.findViewById(R.id.btnLocked).performClick();
             }); await(scenario, a -> count(a, R.id.rvBadges) == 0);
             scenario.onActivity(a -> assertEquals(View.VISIBLE, a.findViewById(R.id.tvBadgeEmpty).getVisibility()));
         }

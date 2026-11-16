@@ -78,6 +78,15 @@
                 tools:text="Nguyễn Minh" />
 
             <TextView
+                android:id="@+id/tvProfileRealm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/gold_light"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/tvMeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

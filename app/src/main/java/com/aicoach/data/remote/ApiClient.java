@@ -34,7 +34,7 @@ public final class ApiClient {
                 if (retrofit == null) {
                     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                     logging.setLevel(BuildConfig.DEBUG
-                            ? HttpLoggingInterceptor.Level.BODY
+                            ? HttpLoggingInterceptor.Level.BASIC
                             : HttpLoggingInterceptor.Level.NONE);
                     logging.redactHeader("Authorization");
 

@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 
 /**
  * Báo cho MainActivity biết phiên đăng nhập đã hết (server trả 401) để đưa người dùng về màn Đăng nhập.
- * AuthInterceptor phát sự kiện, MainActivity lắng nghe — các màn khác không cần tự xử lý 401.
+ * AuthInterceptor hoặc đổi mật khẩu thành công phát tín hiệu; lý do lưu ở TokenManager.
+ * MainActivity chỉ xử lý nếu lý do vẫn thuộc phiên đã kết thúc, không ảnh hưởng lần đăng nhập mới.
  */
 public final class SessionEvents {
 

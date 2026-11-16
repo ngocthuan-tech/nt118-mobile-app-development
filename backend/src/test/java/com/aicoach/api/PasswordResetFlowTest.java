@@ -135,7 +135,7 @@ class PasswordResetFlowTest {
 
         // Mật khẩu cũ hết tác dụng, mật khẩu mới đăng nhập được
         login(email, "abc12345", 401);
-        Thread.sleep(1100);
+        // A fresh token must work immediately, including within the reset's second.
         String newToken = login(email, "moi98765", 200);
         mvc.perform(get("/api/v1/users/me").header("Authorization", newToken))
                 .andExpect(status().isOk())
