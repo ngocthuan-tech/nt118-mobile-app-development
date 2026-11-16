@@ -26,7 +26,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /** Same frozen second for registration, every device login and repeated password changes. */
-@SpringBootTest
+// This suite creates its own users. Its frozen clock must not date the shared demo history.
+@SpringBootTest(properties = "app.seed.demo=false")
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Import(SessionRevocationFlowTest.FrozenTime.class)
