@@ -72,17 +72,17 @@ public class AchievementFlowTest {
     private static int ranks(MainActivity a) { return ((RecyclerView) a.findViewById(R.id.rvExerciseRanks)).getAdapter().getItemCount(); }
     private static View row(MainActivity a, int index) { return ((RecyclerView)a.findViewById(R.id.rvExerciseRanks)).findViewHolderForAdapterPosition(index).itemView; }
 
-    @Test public void realmAndExerciseRanksRenderIndependentlyAndRefreshAfterWorkout() throws Exception {
+    @Test public void accountRankAndExerciseBadgesRenderIndependentlyAndRefreshAfterWorkout() throws Exception {
         MutableLiveData<Resource<AchievementSummary>> replies = new MutableLiveData<>(Resource.success(data(6000, 2500)));
         try (ActivityScenario<MainActivity> s = ActivityScenario.launch(MainActivity.class)) {
             s.onActivity(a -> inject(a, replies)); idle();
             s.onActivity(a -> {
-                assertEquals("Cảnh giới: Kết Đan", text(a, R.id.tvProfileRealm));
+                assertEquals("Hạng: Master", text(a, R.id.tvProfileRank));
                 a.findViewById(R.id.btnAllBadges).performClick();
             }); idle();
             await(s, a -> ranks(a) == 2);
             s.onActivity(a -> {
-                assertEquals("Kết Đan", text(a, R.id.tvSummary));
+                assertEquals("Master", text(a, R.id.tvSummary));
                 assertEquals("6.000 EXP tổng", text(a, R.id.tvTotalAchievementXp));
                 a.findViewById(R.id.achievementScroll).scrollTo(0, 0);
             });
@@ -91,16 +91,21 @@ public class AchievementFlowTest {
                     new android.graphics.Rect(0,0,600,650), true)); idle();
             await(s, a -> ((RecyclerView)a.findViewById(R.id.rvExerciseRanks)).findViewHolderForAdapterPosition(1) != null);
             s.onActivity(a -> {
-                assertEquals("2.500 EXP · Expert", ((TextView)row(a,0).findViewById(R.id.tvExerciseRank)).getText().toString());
-                assertEquals("0 EXP · Novice", ((TextView)row(a,1).findViewById(R.id.tvExerciseRank)).getText().toString());
+                assertEquals("Chưa mở", ((TextView)row(a,0).findViewById(R.id.tvExerciseRank)).getText().toString());
+                assertEquals("Chưa mở", ((TextView)row(a,1).findViewById(R.id.tvExerciseRank)).getText().toString());
             }); screenshot("achievement-ranks");
             s.recreate(); idle();
             await(s, a -> ranks(a) == 2);
             s.onActivity(a -> {
-                assertEquals("Kết Đan", text(a,R.id.tvSummary));
+                assertEquals("Master", text(a,R.id.tvSummary));
                 replies.setValue(Resource.success(data(15000, 5000)));
                 a.findViewById(R.id.btnRetryBadges).performClick();
-                assertEquals("Nguyên Anh", text(a,R.id.tvSummary));
+                assertEquals("Grandmaster", text(a,R.id.tvSummary));
+            });
+            await(s, a -> ((RecyclerView)a.findViewById(R.id.rvExerciseRanks)).findViewHolderForAdapterPosition(0) != null
+                    && "Đã mở".contentEquals(((TextView)row(a,0).findViewById(R.id.tvExerciseRank)).getText()));
+            s.onActivity(a -> {
+                assertEquals("Master Hít đất", ((TextView) row(a,0).findViewById(R.id.tvExerciseName)).getText().toString());
                 a.findViewById(R.id.btnRankRules).performClick();
             }); idle();
             s.onActivity(a -> {
@@ -125,7 +130,7 @@ public class AchievementFlowTest {
             s.onActivity(a -> inject(a, replies)); idle();
             s.onActivity(a -> a.findViewById(R.id.btnAllBadges).performClick()); idle();
             s.onActivity(a -> {
-                assertEquals("Kết Đan", text(a, R.id.tvSummary)); assertEquals(0, ranks(a));
+                assertEquals("Master", text(a, R.id.tvSummary)); assertEquals(0, ranks(a));
                 assertTrue(text(a,R.id.tvRankStatus).contains("Chưa tải được"));
                 replies.setValue(Resource.success(data(6000,2500))); a.findViewById(R.id.btnRetryBadges).performClick();
             }); await(s, a -> ranks(a) == 2);
@@ -153,8 +158,7 @@ public class AchievementFlowTest {
         });
     }
     @Test public void everyBadgeAssetExistsAndHasTransparentCorners() {
-        for (java.util.List<AchievementRules.Tier> list : java.util.Arrays.asList(AchievementRules.REALMS,AchievementRules.RANKS))
-            for (AchievementRules.Tier tier : list) {
+        for (AchievementRules.Tier tier : AchievementRules.RANKS) {
                 int id=app().getResources().getIdentifier(tier.id,"drawable",app().getPackageName()); assertNotEquals(0,id);
                 android.graphics.Bitmap b=android.graphics.BitmapFactory.decodeResource(app().getResources(),id);
                 assertNotNull(b); assertTrue(b.hasAlpha()); assertEquals(0,android.graphics.Color.alpha(b.getPixel(0,0))); b.recycle();

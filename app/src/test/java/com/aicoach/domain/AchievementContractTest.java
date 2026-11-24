@@ -17,9 +17,9 @@ public class AchievementContractTest {
                 + "{\"exerciseId\":\"pushup\",\"exerciseName\":\"Hít đất\",\"totalXp\":2500},"
                 + "{\"exerciseId\":\"squat\",\"exerciseName\":\"Squat\",\"totalXp\":0}]}", AchievementSummary.class);
         assertTrue(s.isValid());
-        assertEquals("Kết Đan", AchievementRules.realm(s.getTotalXp()).current.name);
-        assertEquals("Expert", AchievementRules.rank(s.getExercises().get(0).getTotalXp()).current.name);
-        assertEquals("Novice", AchievementRules.rank(s.getExercises().get(1).getTotalXp()).current.name);
+        assertEquals("Master", AchievementRules.rank(s.getTotalXp()).current.name);
+        assertFalse(AchievementRules.earnedExerciseBadge(s.getExercises().get(0).getTotalXp()));
+        assertFalse(AchievementRules.earnedExerciseBadge(s.getExercises().get(1).getTotalXp()));
     }
     @Test public void missingOrMalformedExercisesAreNotTreatedAsZeroXp() {
         assertFalse(new Gson().fromJson("{}", AchievementSummary.class).isValid());
