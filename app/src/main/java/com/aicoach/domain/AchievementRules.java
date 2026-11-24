@@ -13,12 +13,6 @@ public final class AchievementRules {
             this.id = id; this.name = name; this.minimumXp = minimumXp;
         }
     }
-    public static final List<Tier> REALMS = Collections.unmodifiableList(Arrays.asList(
-            new Tier("realm_luyen_khi", "Luyện Khí", 0),
-            new Tier("realm_truc_co", "Trúc Cơ", 1000),
-            new Tier("realm_ket_dan", "Kết Đan", 5000),
-            new Tier("realm_nguyen_anh", "Nguyên Anh", 15000),
-            new Tier("realm_hoa_than", "Hóa Thần", 40000)));
     public static final List<Tier> RANKS = Collections.unmodifiableList(Arrays.asList(
             new Tier("rank_novice", "Novice", 0),
             new Tier("rank_intermediate", "Intermediate", 200),
@@ -42,7 +36,8 @@ public final class AchievementRules {
                     / (next.minimumXp - current.minimumXp));
         }
     }
-    public static Progress realm(long totalXp) { return new Progress(REALMS, totalXp); }
-    public static Progress rank(long exerciseXp) { return new Progress(RANKS, exerciseXp); }
+    public static final long MASTER_BADGE_XP = 5000;
+    public static boolean earnedExerciseBadge(long exerciseXp) { return exerciseXp >= MASTER_BADGE_XP; }
+    public static Progress rank(long totalXp) { return new Progress(RANKS, totalXp); }
     private AchievementRules() { }
 }

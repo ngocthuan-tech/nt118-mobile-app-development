@@ -1,6 +1,6 @@
 # Nguồn hình danh hiệu
 
-Bộ 11 PNG tách nền được tạo riêng bằng công cụ ImageGen tích hợp, theo bảng concept người dùng đã duyệt. Không dùng logo trò chơi có sẵn. Ảnh nằm tại `app/src/main/res/drawable-nodpi/`, app dùng Glide lấy mẫu 432 px để tránh giải mã ảnh lớn vào mỗi ô nhỏ. Khung rank có tâm trống; ứng dụng ghép hình bài tập sẵn có, tô trắng thành silhouette để phân biệt các bài.
+Bộ ảnh gốc gồm 11 PNG tách nền được tạo riêng bằng công cụ ImageGen tích hợp, theo bảng concept người dùng đã duyệt. Không dùng logo trò chơi có sẵn. Bản hiện tại chỉ đóng gói 6 khung hạng. Các ảnh cảnh giới bên dưới là tư liệu thiết kế cũ. Ảnh đang dùng nằm tại `app/src/main/res/drawable-nodpi/`, app dùng Glide lấy mẫu 432 px để tránh giải mã ảnh lớn vào mỗi ô nhỏ. Khung rank có tâm trống; ứng dụng ghép hình bài tập sẵn có, tô trắng thành silhouette để phân biệt các bài.
 
 Prompt chung:
 

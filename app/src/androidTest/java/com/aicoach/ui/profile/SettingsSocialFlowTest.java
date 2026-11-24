@@ -209,18 +209,18 @@ public class SettingsSocialFlowTest {
                 assertEquals("offline", text(a, R.id.tvBadgeError));
                 response.setValue(Resource.success(user)); a.findViewById(R.id.btnRetryBadges).performClick();
             });
-            await(scenario, a -> count(a, R.id.rvBadges) == 5);
+            await(scenario, a -> count(a, R.id.rvBadges) == 6);
             screenshot("badges");
             scenario.onActivity(a -> {
-                assertEquals("Kết Đan", text(a, R.id.tvSummary));
+                assertEquals("Master", text(a, R.id.tvSummary));
                 a.findViewById(R.id.btnLocked).performClick();
             }); await(scenario, a -> count(a, R.id.rvBadges) == 2);
             scenario.recreate(); idle();
             await(scenario, a -> count(a, R.id.rvBadges) == 2);
             scenario.onActivity(a -> {
-                response.setValue(Resource.success(new Gson().fromJson("{\"totalXp\":40000}", User.class)));
+                response.setValue(Resource.success(new Gson().fromJson("{}", User.class)));
                 a.findViewById(R.id.btnRetryBadges).performClick();
-                a.findViewById(R.id.btnLocked).performClick();
+                a.findViewById(R.id.btnEarned).performClick();
             }); await(scenario, a -> count(a, R.id.rvBadges) == 0);
             scenario.onActivity(a -> assertEquals(View.VISIBLE, a.findViewById(R.id.tvBadgeEmpty).getVisibility()));
         }

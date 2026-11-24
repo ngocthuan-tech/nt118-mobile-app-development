@@ -11,12 +11,12 @@
 
 Ví dụ rút gọn; response thật có toàn bộ bài tập trong thư viện, theo sortOrder. Bài chưa tập có 0 EXP.
 
-- `totalXp` cấp tài khoản giữ nguyên nguồn `users.total_xp`, dùng cho cảnh giới.
-- `exercises[].totalXp` tổng hợp toàn bộ buổi tập đã lưu theo tài khoản và exerciseId, không giới hạn 50/100 buổi, dùng cho rank riêng.
+- `totalXp` cấp tài khoản giữ nguyên nguồn `users.total_xp`, dùng cho hạng tài khoản.
+- `exercises[].totalXp` tổng hợp toàn bộ buổi tập đã lưu theo tài khoản và exerciseId, không giới hạn 50/100 buổi, dùng cho huy hiệu Master của từng bài.
 - Công thức hiện có không đổi: EXP = 2 × rep đúng + rep sai = totalReps + correctReps. Plank giữ đơn vị giây như luồng lưu buổi tập hiện có.
 - Không cộng EXP khi mở màn, không reset theo tuần, không suy ra rank từ chuỗi ngày, điểm BXH mẫu hoặc dữ liệu trên máy.
 - Đọc cùng snapshot PostgreSQL (REPEATABLE_READ); không thêm bảng/migration, không sửa API ghi buổi tập.
-- Backend cần triển khai trước để app lấy rank từng bài. App không thay thế bằng tổng từ lịch sử bị giới hạn khi endpoint chưa có.
+- Backend cần triển khai trước để app xác định huy hiệu từng bài. App không thay thế bằng tổng từ lịch sử bị giới hạn khi endpoint chưa có.
 
 ## Kiểm thử
 
