@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.aicoach.common.Resource;
+import com.aicoach.common.WorkoutSavedSignal;
 import com.aicoach.data.model.HomeData;
 import com.aicoach.data.repository.HomeRepository;
 
@@ -24,6 +25,8 @@ public class HomeViewModel extends AndroidViewModel {
     private final MediatorLiveData<Resource<HomeData>> home = new MediatorLiveData<>();
     private LiveData<Resource<HomeData>> source;
     private long loadedAt;
+    /** Phiên bản dữ liệu buổi tập lúc tải — vừa lưu buổi tập mới thì tải lại ngay (không chờ 30 giây). */
+    private long loadedVersion;
     private HomeData last;
 
     public HomeViewModel(@NonNull Application app) {
@@ -42,6 +45,7 @@ public class HomeViewModel extends AndroidViewModel {
         if (current != null && current.status == Resource.Status.LOADING) return;
 
         if (source != null) home.removeSource(source);
+        loadedVersion = WorkoutSavedSignal.version();
         source = repo.getHome();
         LiveData<Resource<HomeData>> src = source;
         home.addSource(src, r -> {
@@ -57,6 +61,7 @@ public class HomeViewModel extends AndroidViewModel {
     public void refreshIfStale() {
         Resource<HomeData> r = home.getValue();
         boolean loading = r != null && r.status == Resource.Status.LOADING;
-        if (!loading && loadedAt > 0 && SystemClock.elapsedRealtime() - loadedAt > STALE_MS) load();
+        boolean workoutSaved = WorkoutSavedSignal.version() != loadedVersion;
+        if (!loading && (workoutSaved || (loadedAt > 0 && SystemClock.elapsedRealtime() - loadedAt > STALE_MS))) load();
     }
 }

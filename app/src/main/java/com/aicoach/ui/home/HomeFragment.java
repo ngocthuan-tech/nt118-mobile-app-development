@@ -23,6 +23,7 @@ import com.aicoach.data.model.HomeData;
 import com.aicoach.data.model.Plan;
 import com.aicoach.databinding.FragmentHomeBinding;
 import com.aicoach.ui.exercise.ExerciseUi;
+import com.aicoach.ui.workout.WorkoutLauncher;
 import com.aicoach.ui.plan.PlanUi;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -42,6 +43,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     private ExerciseCardAdapter exerciseAdapter;
     private String firstExerciseId = DEFAULT_EXERCISE;
     private HomeData.ActivePlan activePlan;
+    /** Buổi hôm nay (bài nào của giáo án, bài nào đã tập) — nút "Bắt đầu tập" dùng để tập tiếp đúng bài. */
+    private HomeData.TodayWorkout todayWorkout;
 
     @Override
     protected FragmentHomeBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -58,7 +61,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
                 nav.navigate(HomeFragmentDirections.actionHomeToExerciseDetail(item.exerciseId)));
         binding.rvTodayExercises.setAdapter(exerciseAdapter);
 
-        binding.btnStartWorkout.setOnClickListener(v -> openWorkout(firstExerciseId));
+        binding.btnStartWorkout.setOnClickListener(v -> startToday());
         binding.tvAvatar.setOnClickListener(v -> nav.navigate(R.id.action_global_to_profile));
         binding.btnNotifications.setOnClickListener(v -> nav.navigate(R.id.action_global_to_notifications));
         binding.cardPlan.setOnClickListener(v -> openPlan());
@@ -176,25 +179,44 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     }
 
     private void bindTodayWorkout(@Nullable HomeData.TodayWorkout workout) {
+        todayWorkout = workout;
         List<ExerciseCardItem> cards = new ArrayList<>();
         int minutes = 0;
+        String firstNotDone = null;
         if (workout != null && workout.getExercises() != null) {
+            List<String> done = workout.getDoneExerciseIds();
             for (Plan.PlanItem item : workout.getExercises()) {
                 if (item.getExerciseId() == null) continue;
+                boolean isDone = done.contains(item.getExerciseId());
+                if (!isDone && firstNotDone == null) firstNotDone = item.getExerciseId();
+                // Bài của buổi giáo án đã tập xong → ghi "✓ Đã tập" thay cho khối lượng
                 cards.add(new ExerciseCardItem(item.getExerciseId(),
                         item.getExerciseName() != null ? item.getExerciseName() : item.getExerciseId(),
-                        ExerciseUi.volume(requireContext(), item.getSets(), item.getReps(), item.isTimeBased())));
+                        isDone ? getString(R.string.ai_plan_done_mark)
+                                : ExerciseUi.volume(requireContext(), item.getSets(), item.getReps(), item.isTimeBased())));
             }
             minutes = workout.getEstimatedMinutes();
         }
-        firstExerciseId = cards.isEmpty() ? DEFAULT_EXERCISE : cards.get(0).exerciseId;
+        firstExerciseId = firstNotDone != null ? firstNotDone
+                : cards.isEmpty() ? DEFAULT_EXERCISE : cards.get(0).exerciseId;
         binding.tvTodaySummary.setText(getString(R.string.home_today_summary, cards.size(), minutes));
         exerciseAdapter.submitList(cards);
     }
 
-    /** HỢP ĐỒNG điều hướng: mọi nút "Bắt đầu tập" đều đi qua action_global_to_readiness. */
-    private void openWorkout(@NonNull String exerciseId) {
-        NavHostFragment.findNavController(this).navigate(NavRootDirections.actionGlobalToReadiness(exerciseId));
+    /**
+     * Nút "Bắt đầu tập": đang theo giáo án → tập các bài CÒN LẠI của buổi hôm nay (tự chuyển bài, lưu kèm giáo án);
+     * chưa theo giáo án → tập bài gợi ý đầu tiên.
+     */
+    private void startToday() {
+        NavController nav = NavHostFragment.findNavController(this);
+        HomeData.TodayWorkout w = todayWorkout;
+        if (activePlan != null && !activePlan.isCompleted() && w != null && w.getPlanDayIndex() != null) {
+            boolean started = WorkoutLauncher.startPlanDay(nav, activePlan.getPlanId(), w.getPlanDayIndex(),
+                    w.getExercises(), w.getDoneExerciseIds());
+            if (!started) showError(getString(R.string.ai_plan_day_finished));
+            return;
+        }
+        WorkoutLauncher.startSingle(nav, firstExerciseId);
     }
 
     /** Thẻ giáo án / "Xem tất cả" → 26 Chi tiết giáo án (chưa chọn thì mở giáo án gợi ý mặc định). */

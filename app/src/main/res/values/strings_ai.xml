@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Module AI camera (Trưởng nhóm) — chuỗi mới cho camera thật, ML Kit, giọng nói, kết quả thật -->
+
+    <!-- Màn tập -->
+    <string name="ai_unit_seconds">giây</string>
+    <string name="ai_voice_off">Giọng nói: Tắt</string>
+    <string name="ai_voice_unavailable">Máy chưa có giọng đọc tiếng Việt — AI vẫn nhắc bằng chữ. Cài thêm trong Cài đặt › Chuyển văn bản thành giọng nói.</string>
+    <string name="ai_metric_waiting">Đang nhận diện…</string>
+    <string name="ai_progress_count">%1$d/%2$d</string>
+    <string name="ai_finish_empty">Bạn chưa hoàn thành lần nào. Thoát bây giờ sẽ không lưu buổi tập.</string>
+    <string name="ai_exit">Thoát</string>
+
+    <!-- Buổi giáo án nhiều bài -->
+    <string name="ai_exercise_position">Bài %1$d/%2$d · %3$s</string>
+    <string name="ai_plan_done_mark">✓ Đã tập</string>
+    <string name="ai_plan_continue">Tập tiếp</string>
+    <string name="ai_plan_day_finished">Bạn đã tập xong mọi bài của buổi này</string>
+    <string name="ai_result_meta_plan">Buổi giáo án • %1$d bài • Hôm nay %2$s</string>
+    <string name="ai_stat_exercises">Bài đã tập</string>
+    <string name="ai_note_plan">Đã lưu %1$d bài vào giáo án</string>
+    <string name="ai_note_plan_partial">Đã lưu %1$d bài – lần sau vào buổi này chỉ còn các bài chưa tập</string>
+    <string name="ai_feedback_exercise_reps">%1$s – đúng %2$d/%3$d lần</string>
+    <string name="ai_feedback_exercise_seconds">%1$s – giữ đúng %2$d/%3$d giây</string>
+    <string name="ai_feedback_exercise_errors">Lỗi chính: %1$s (%2$d lần)</string>
+    <string name="ai_share_exercises">%1$d bài</string>
+
+    <!-- Đếm ngược -->
+    <string name="ai_countdown_timed">%1$s • Hiệp %2$d/%3$d • Giữ %4$d giây</string>
+
+    <!-- Kiểm tra sẵn sàng -->
+    <string name="ai_readiness_auto">Giữ nguyên – tự bắt đầu sau 2 giây</string>
+    <string name="ai_orient_front_ok">Đã đứng chính diện với camera</string>
+    <string name="ai_orient_front_warn">Nên quay chính diện với camera</string>
+    <string name="ai_orient_side_ok">Đã quay nghiêng người với camera</string>
+    <string name="ai_orient_side_warn">Nên quay nghiêng người với camera</string>
+    <string name="ai_orient_any_ok">Hướng đứng phù hợp (nghiêng 45° là tốt nhất)</string>
+
+    <!-- Nghỉ giữa hiệp -->
+    <string name="ai_next_title">Hiệp %1$d/%2$d – %3$s</string>
+    <string name="ai_next_reps">%1$d lần • Giữ nhịp đều</string>
+    <string name="ai_next_seconds">Giữ %1$d giây • Thở đều</string>
+
+    <!-- Kết quả -->
+    <string name="ai_result_meta">%1$s • %2$d hiệp • Hôm nay %3$s</string>
+    <string name="ai_stat_seconds">Số giây</string>
+    <string name="ai_stat_completion">Hoàn thành</string>
+    <string name="ai_saving">Đang lưu buổi tập…</string>
+    <string name="ai_save_failed">Chưa lưu được buổi tập: %1$s</string>
+    <string name="ai_note_first">Buổi đầu tiên với bài %1$s – đã lưu làm mốc so sánh</string>
+    <string name="ai_note_better">Tăng %1$d điểm so với lần trước</string>
+    <string name="ai_note_worse">Giảm %1$d điểm so với lần trước – cố lên!</string>
+    <string name="ai_note_same">Bằng điểm lần trước</string>
+    <string name="ai_note_xp">%1$s • +%2$d XP</string>
+    <string name="ai_feedback_count">Xuất hiện %1$d lần</string>
+    <string name="ai_feedback_good_reps">Đúng tư thế %1$d/%2$d lần</string>
+    <string name="ai_feedback_good_seconds">Giữ đúng tư thế %1$d/%2$d giây</string>
+    <string name="ai_feedback_good_detail">AI không phát hiện lỗi ở những lần này</string>
+    <string name="ai_feedback_none">Không phát hiện lỗi tư thế nào</string>
+
+    <!-- Chia sẻ -->
+    <string name="ai_share_did">tập %1$s</string>
+    <string name="ai_share_seconds">%1$d giây</string>
+</resources>

@@ -95,8 +95,13 @@ public class HomeData {
         private Integer planDayIndex;
         private int estimatedMinutes;
         private List<Plan.PlanItem> exercises = new ArrayList<>();
+        /** Các bài của buổi giáo án hôm nay đã tập xong (server tính) — hiện dấu tích, không bắt tập lại. */
+        private List<String> doneExerciseIds = new ArrayList<>();
 
         public Integer getPlanDayIndex() { return planDayIndex; }
+        public List<String> getDoneExerciseIds() {
+            return doneExerciseIds != null ? doneExerciseIds : new ArrayList<>();
+        }
         public int getEstimatedMinutes() { return estimatedMinutes; }
         public List<Plan.PlanItem> getExercises() { return exercises; }
     }

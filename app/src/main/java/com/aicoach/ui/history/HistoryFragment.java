@@ -39,6 +39,10 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding> {
         SegmentGroup.bind(vm.range(), index -> { vm.range(index); render(); }, binding.btnWeek, binding.btnMonth, binding.btnYear);
         vm.state().observe(getViewLifecycleOwner(), result -> { HistoryUi.request(binding.requestState, result); render(); });
     }
+    @Override public void onResume() {
+        super.onResume();
+        vm.refreshIfWorkoutSaved();
+    }
     private void render() {
         LocalDate today = LocalDate.now(HistoryStats.ZONE);
         List<WorkoutSession> sessions = HistoryStats.between(vm.sessions(), HistoryStats.rangeStart(vm.range(), today), today, HistoryStats.ZONE);

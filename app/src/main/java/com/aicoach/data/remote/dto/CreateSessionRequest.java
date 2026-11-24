@@ -19,4 +19,6 @@ public class CreateSessionRequest {
     public Double calories;
     public Map<String, Long> formErrors = new HashMap<>();
     public String planId;
+    /** Ngày của giáo án (dayIndex) mà bài này thuộc về; null nếu tập lẻ. */
+    public Integer planDay;
 }

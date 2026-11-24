@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.aicoach.data.model.Plan;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /** Dữ liệu hiển thị 1 buổi tập (UI model) cho PlanSessionAdapter. */
 public final class PlanSessionItem {
@@ -22,10 +24,20 @@ public final class PlanSessionItem {
     /** true = màn 17 (tên bài làm tiêu đề, hiện 3 ảnh nhỏ); false = màn 26 ("Buổi 5" làm tiêu đề). */
     public final boolean compact;
     public final boolean highlighted;
+    /** Buổi đang tập dở: các bài đã tập xong (hiện "✓ Đã tập", nút đổi thành "Tập tiếp"). */
+    @NonNull public final Set<String> doneExerciseIds;
 
     public PlanSessionItem(int dayIndex, int sessionNumber, @NonNull String dayLabel, @NonNull String exerciseNames,
                            int minutes, @NonNull List<Plan.PlanItem> items, @NonNull State state,
                            boolean compact, boolean highlighted) {
+        this(dayIndex, sessionNumber, dayLabel, exerciseNames, minutes, items, state, compact, highlighted,
+                Collections.emptySet());
+    }
+
+    public PlanSessionItem(int dayIndex, int sessionNumber, @NonNull String dayLabel, @NonNull String exerciseNames,
+                           int minutes, @NonNull List<Plan.PlanItem> items, @NonNull State state,
+                           boolean compact, boolean highlighted, @NonNull Set<String> doneExerciseIds) {
+        this.doneExerciseIds = doneExerciseIds;
         this.dayIndex = dayIndex;
         this.sessionNumber = sessionNumber;
         this.dayLabel = dayLabel;
@@ -44,11 +56,13 @@ public final class PlanSessionItem {
         PlanSessionItem that = (PlanSessionItem) o;
         return dayIndex == that.dayIndex && sessionNumber == that.sessionNumber && minutes == that.minutes
                 && compact == that.compact && highlighted == that.highlighted && state == that.state
-                && dayLabel.equals(that.dayLabel) && exerciseNames.equals(that.exerciseNames);
+                && dayLabel.equals(that.dayLabel) && exerciseNames.equals(that.exerciseNames)
+                && doneExerciseIds.equals(that.doneExerciseIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dayIndex, sessionNumber, dayLabel, exerciseNames, minutes, state, compact, highlighted);
+        return Objects.hash(dayIndex, sessionNumber, dayLabel, exerciseNames, minutes, state, compact, highlighted,
+                doneExerciseIds);
     }
 }

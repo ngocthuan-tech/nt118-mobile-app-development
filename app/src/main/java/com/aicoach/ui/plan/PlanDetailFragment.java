@@ -16,13 +16,17 @@ import com.aicoach.R;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.common.Resource;
 import com.aicoach.data.local.SettingsPrefs;
+import com.aicoach.data.model.HomeData;
 import com.aicoach.data.model.Plan;
 import com.aicoach.databinding.FragmentPlanDetailBinding;
+import com.aicoach.ui.workout.WorkoutLauncher;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Figma 26 Chi tiết giáo án.
@@ -40,6 +44,9 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
     private String planId;
     private int sessionsDone;
     private boolean preview;
+    /** Buổi đang tập dở: dayIndex của buổi và các bài đã tập (server trả về qua GET /home). */
+    private int todayDayIndex = -1;
+    private Set<String> todayDone = new HashSet<>();
 
     @Override
     protected FragmentPlanDetailBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -60,7 +67,10 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
             @Override
             public void onStartSession(@NonNull PlanSessionItem session) {
                 if (preview || session.items.isEmpty()) return;
-                nav.navigate(NavRootDirections.actionGlobalToReadiness(session.items.get(0).getExerciseId()));
+                // Tập các bài CÒN LẠI của buổi, tự chuyển bài, lưu kèm planId + ngày → tiến độ giáo án đúng
+                boolean started = WorkoutLauncher.startPlanDay(nav, planId, session.dayIndex, session.items,
+                        session.doneExerciseIds);
+                if (!started) showError(getString(R.string.ai_plan_day_finished));
             }
 
             @Override
@@ -77,6 +87,7 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
         binding.btnFollow.setOnClickListener(v -> vm.follow());
 
         vm.getPlan().observe(getViewLifecycleOwner(), r -> render());
+        vm.getProgress().observe(getViewLifecycleOwner(), this::applyProgress);
         vm.getSelectedWeek().observe(getViewLifecycleOwner(), w -> render());
         vm.getFollowState().observe(getViewLifecycleOwner(), r -> {
             boolean loading = r != null && r.status == Resource.Status.LOADING;
@@ -94,6 +105,22 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
         });
 
         vm.init(planId, sessionsDone >= 0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!preview) vm.refreshProgressIfStale();
+    }
+
+    /** Số buổi đã xong + bài đã tập hôm nay lấy mới từ server (tham số điều hướng có thể đã cũ). */
+    private void applyProgress(@Nullable HomeData home) {
+        if (home == null || home.getActivePlan() == null || !planId.equals(home.getActivePlan().getPlanId())) return;
+        sessionsDone = home.getActivePlan().getSessionsDone();
+        HomeData.TodayWorkout today = home.getTodayWorkout();
+        todayDayIndex = today != null && today.getPlanDayIndex() != null ? today.getPlanDayIndex() : -1;
+        todayDone = today != null ? new HashSet<>(today.getDoneExerciseIds()) : new HashSet<>();
+        render();
     }
 
     private void render() {
@@ -176,9 +203,11 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
             else if (global < sessionsDone) state = PlanSessionItem.State.DONE;
             else if (global == sessionsDone && !preview) state = PlanSessionItem.State.TODAY;
             else state = PlanSessionItem.State.LOCKED;
+            Set<String> done = state == PlanSessionItem.State.TODAY && d.getDayIndex() == todayDayIndex
+                    ? new HashSet<>(todayDone) : new HashSet<>();
             out.add(new PlanSessionItem(d.getDayIndex(), global + 1, PlanUi.dayLabel(days, perWeek, i),
                     PlanUi.exerciseNames(d), PlanUi.dayMinutes(d),
-                    d.getItems() != null ? d.getItems() : new ArrayList<>(), state, false, false));
+                    d.getItems() != null ? d.getItems() : new ArrayList<>(), state, false, false, done));
         }
         return out;
     }

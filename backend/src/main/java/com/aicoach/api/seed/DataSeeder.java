@@ -288,7 +288,7 @@ public class DataSeeder implements ApplicationRunner {
                         ? Map.of("knee_over_toe", (long) (total - correct))
                         : Map.of();
                 sessionService.create(u.getId(), new CreateSessionRequest(exerciseId,
-                        start.plusSeconds(j * 420L), 360, target, total, correct, null, errors, "fat-burn-4w"));
+                        start.plusSeconds(j * 420L), 360, target, total, correct, null, errors, "fat-burn-4w", null));
             }
         }
     }

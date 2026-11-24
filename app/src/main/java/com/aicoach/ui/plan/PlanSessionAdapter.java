@@ -97,6 +97,7 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
             }
         }
         b.btnStart.setVisibility(!s.compact && today ? View.VISIBLE : View.GONE);
+        if (today) b.btnStart.setText(s.doneExerciseIds.isEmpty() ? R.string.plan_start_session : R.string.ai_plan_continue);
         b.btnStart.setOnClickListener(v -> listener.onStartSession(s));
         boolean showStatus = !s.compact && (s.state == PlanSessionItem.State.DONE
                 || s.state == PlanSessionItem.State.LOCKED);
@@ -117,7 +118,11 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
             for (Plan.PlanItem item : s.items) {
                 ItemPlanExerciseRowBinding row = ItemPlanExerciseRowBinding.inflate(inf, b.exercises, true);
                 row.tvName.setText(item.getExerciseName());
-                row.tvVolume.setText(ExerciseUi.volume(c, item.getSets(), item.getReps(), item.isTimeBased()));
+                boolean done = item.getExerciseId() != null && s.doneExerciseIds.contains(item.getExerciseId());
+                row.tvVolume.setText(done ? c.getString(R.string.ai_plan_done_mark)
+                        : ExerciseUi.volume(c, item.getSets(), item.getReps(), item.isTimeBased()));
+                row.tvVolume.setTextColor(color(c, done ? R.color.state_success : R.color.text_secondary));
+                row.getRoot().setAlpha(done ? 0.6f : 1f);
                 bindImage(row.img, item);
                 row.getRoot().setOnClickListener(v -> listener.onExercise(item));
             }
