@@ -5,6 +5,7 @@ import com.aicoach.api.auth.AuthDtos.LoginRequest;
 import com.aicoach.api.auth.AuthDtos.RegisterRequest;
 import com.aicoach.api.common.ApiException;
 import com.aicoach.api.security.JwtService;
+import com.aicoach.api.social.NotificationService;
 import com.aicoach.api.user.UserAccount;
 import com.aicoach.api.user.UserRepository;
 import com.aicoach.api.user.UserService;
@@ -25,11 +26,14 @@ public class AuthService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final NotificationService notifications;
     /** Hash giả để thời gian phản hồi như nhau dù email có tồn tại hay không (chống dò email). */
     private final String dummyHash;
 
     public AuthService(UserRepository users, UserService userService,
-                       PasswordEncoder passwordEncoder, JwtService jwtService) {
+                       PasswordEncoder passwordEncoder, JwtService jwtService,
+                       NotificationService notifications) {
+        this.notifications = notifications;
         this.users = users;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -56,6 +60,7 @@ public class AuthService {
         } catch (DataIntegrityViolationException e) {
             throw ApiException.conflict("Email này đã được đăng ký");
         }
+        notifications.welcome(u.getId());
         return toResponse(u);
     }
 

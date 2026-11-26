@@ -92,10 +92,12 @@
 
             <!-- Mã mời -->
             <TextView
+                android:id="@+id/tvCodeLabel"
                 style="@style/Widget.AICoach.Auth.Label"
                 android:text="@string/social_invite_code" />
 
             <LinearLayout
+                android:id="@+id/boxCode"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginTop="@dimen/space_8"
@@ -115,7 +117,7 @@
                     android:textColor="@color/brand_primary"
                     android:textSize="@dimen/b_code_size"
                     android:textStyle="bold"
-                    tools:text="AIC-7Q2K" />
+                    tools:text="7Q2KX9" />
 
                 <ImageButton
                     android:id="@+id/btnCopyCode"
@@ -137,6 +139,7 @@
 
             <!-- Cách chia sẻ -->
             <LinearLayout
+                android:id="@+id/rowShare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_12"

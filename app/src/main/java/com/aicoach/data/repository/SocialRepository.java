@@ -1,155 +1,111 @@
 package com.aicoach.data.repository;
 
+import android.content.Context;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
 import com.aicoach.common.Resource;
-import com.aicoach.data.mock.MockSocialData;
 import com.aicoach.data.model.Challenge;
-import java.time.LocalDate;
-import java.util.*;
+import com.aicoach.data.model.Social;
+import com.aicoach.data.remote.ApiClient;
+import com.aicoach.data.remote.api.SocialApi;
+import com.aicoach.data.remote.dto.SocialDtos.CreateChallengeRequest;
+import com.aicoach.data.remote.dto.SocialDtos.InviteRequest;
+import com.aicoach.data.remote.dto.SocialDtos.JoinRequest;
+import com.aicoach.data.remote.dto.SocialDtos.RespondRequest;
+import java.util.Collection;
+import java.util.List;
 
-/** Midterm data is process-local. No remote invitations, membership, or XP are changed. */
-public final class SocialRepository extends BaseRepository {
-    public static final class ChallengeItem extends Challenge {
-        public final String id, name, exercise;
-        public final int target, days;
-        public final boolean privateGroup;
-        public final Set<String> invited;
+/**
+ * Cộng đồng — mọi dữ liệu lấy từ server (không giữ bản sao trên máy, nên đăng xuất / đổi tài khoản
+ * không bao giờ thấy dữ liệu của người trước). Mỗi hàm trả LiveData: LOADING → SUCCESS / ERROR.
+ */
+public class SocialRepository extends BaseRepository {
 
-        public ChallengeItem(String id, String name, String exercise, int target, int days,
-                boolean privateGroup, Set<String> invited) {
-            this(id, name, exercise, target, days, privateGroup, invited, LocalDate.now());
-        }
+    public static final String SCOPE_FRIENDS = "friends";
+    public static final String SCOPE_NATIONAL = "national";
 
-        private ChallengeItem(String id, String name, String exercise, int target, int days,
-                boolean privateGroup, Set<String> invited, LocalDate start) {
-            super(id, name, "Bạn (mẫu)", exercise, target, start.toString(),
-                    start.plusDays(days - 1).toString(), Collections.emptyList());
-            this.id = id; this.name = name; this.exercise = exercise;
-            this.target = target; this.days = days; this.privateGroup = privateGroup;
-            this.invited = Collections.unmodifiableSet(new HashSet<>(invited));
-        }
+    private final SocialApi api;
+
+    public SocialRepository(Context context) {
+        api = ApiClient.create(context.getApplicationContext(), SocialApi.class);
     }
 
-    public static String invitationCode(ChallengeItem challenge) {
-        return codeFromId(challenge.id);
+    // ---------------------------------------------------------------- Thử thách
+
+    public LiveData<Resource<List<Challenge>>> challenges() {
+        return execute(api.getChallenges());
     }
 
-    private static String codeFromId(String id) {
-        return id.replace("-", "").substring(0, 6).toUpperCase(Locale.ROOT);
+    public LiveData<Resource<Challenge>> challenge(String id) {
+        return execute(api.getChallenge(id));
     }
 
-    public static final class Friend {
-        public final String id, name;
-        public final int points;
-        public Friend(String id, String name, int points) {
-            this.id = id; this.name = name; this.points = points;
-        }
+    public LiveData<Resource<Challenge>> create(String title, String exerciseId, int dailyTarget, int days,
+                                                boolean privateGroup) {
+        return execute(api.createChallenge(
+                new CreateChallengeRequest(title, exerciseId, dailyTarget, days, privateGroup)));
     }
 
-    public static final class Notice {
-        public final String id, title, body;
-        public final boolean challenge, read, accepted, declined;
-        public Notice(String id, String title, String body, boolean challenge,
-                boolean read, boolean accepted, boolean declined) {
-            this.id = id; this.title = title; this.body = body; this.challenge = challenge;
-            this.read = read; this.accepted = accepted; this.declined = declined;
-        }
-        Notice update(boolean read, boolean accepted, boolean declined) {
-            return new Notice(id, title, body, challenge, read, accepted, declined);
-        }
+    public LiveData<Resource<Challenge>> join(String code) {
+        return execute(api.join(new JoinRequest(code)));
     }
 
-    public static final class Snapshot {
-        public final List<ChallengeItem> challenges;
-        public final List<Notice> notices;
-        Snapshot(List<ChallengeItem> challenges, List<Notice> notices) {
-            this.challenges = Collections.unmodifiableList(new ArrayList<>(challenges));
-            this.notices = Collections.unmodifiableList(new ArrayList<>(notices));
-        }
+    public LiveData<Resource<List<Social.Candidate>>> candidates(String challengeId, @Nullable String query) {
+        String q = query == null || query.trim().isEmpty() ? null : query.trim();
+        return execute(api.getCandidates(challengeId, q));
     }
 
-    private static final SocialRepository INSTANCE = new SocialRepository();
-    public static SocialRepository get() { return INSTANCE; }
-    private final List<ChallengeItem> challenges = new ArrayList<>(MockSocialData.challenges());
-    private final List<Friend> friends = MockSocialData.friends();
-    private final List<Notice> notices = new ArrayList<>(MockSocialData.notices());
-    private final MutableLiveData<Resource<Snapshot>> state;
-
-    private SocialRepository() { state = new MutableLiveData<>(mock(snapshot()).getValue()); }
-    private Snapshot snapshot() { return new Snapshot(challenges, notices); }
-    public LiveData<Resource<Snapshot>> changes() { return state; }
-    private void changed() { state.setValue(Resource.success(snapshot())); }
-    public List<ChallengeItem> challenges() { return new ArrayList<>(challenges); }
-    public ChallengeItem find(String id) {
-        for (ChallengeItem c : challenges) if (c.id.equals(id)) return c;
-        return null;
-    }
-    public List<Friend> friends() { return new ArrayList<>(friends); }
-    public List<Friend> leaderboard(boolean national) {
-        List<Friend> result = new ArrayList<>(friends);
-        if (national) result.addAll(MockSocialData.nationalLeaders());
-        result.sort((a, b) -> Integer.compare(b.points, a.points));
-        return result;
-    }
-    public List<Notice> notices() { return new ArrayList<>(notices); }
-
-    public String create(String name, String exercise, int target, int days, boolean privateGroup) {
-        if (name == null || name.trim().length() < 3 || name.trim().length() > 50
-                || target < 10 || target > 1000 || !Arrays.asList(3, 7, 14, 30).contains(days)
-                || !Arrays.asList("squat", "pushup", "lunge", "jumping_jack").contains(exercise)) {
-            throw new IllegalArgumentException("Invalid challenge");
-        }
-        Set<String> usedCodes = new HashSet<>();
-        for (ChallengeItem challenge : challenges) usedCodes.add(invitationCode(challenge));
-        String id;
-        do {
-            id = UUID.randomUUID().toString();
-        } while (usedCodes.contains(codeFromId(id)));
-        challenges.add(0, new ChallengeItem(id, name.trim(), exercise, target, days,
-                privateGroup, Collections.emptySet()));
-        changed();
-        return id;
+    public LiveData<Resource<Social.InviteResult>> invite(String challengeId, Collection<String> userIds) {
+        return execute(api.invite(challengeId, new InviteRequest(userIds)));
     }
 
-    public void invite(String id, Set<String> ids) {
-        ChallengeItem current = find(id);
-        if (current == null) throw new IllegalArgumentException("Unknown challenge");
-        Set<String> invited = new HashSet<>(current.invited);
-        for (Friend friend : friends) if (ids.contains(friend.id)) invited.add(friend.id);
-        challenges.set(challenges.indexOf(current), new ChallengeItem(current.id, current.name,
-                current.exercise, current.target, current.days, current.privateGroup, invited,
-                LocalDate.parse(current.getStartAt())));
-        changed();
+    // ---------------------------------------------------------------- Xếp hạng
+
+    public LiveData<Resource<Social.Leaderboard>> leaderboard(String scope) {
+        return execute(api.getLeaderboard(scope));
     }
 
-    /** Clear process-local user-entered demo data on explicit logout. */
-    public void resetDemoData() {
-        challenges.clear(); challenges.addAll(MockSocialData.challenges());
-        notices.clear(); notices.addAll(MockSocialData.notices());
-        changed();
+    // ---------------------------------------------------------------- Thông báo
+
+    /** type = all | challenge | system */
+    public LiveData<Resource<Social.NoticePage>> notifications(String type) {
+        return execute(api.getNotifications(type));
     }
 
-    public void readAll() {
-        for (int i = 0; i < notices.size(); i++) {
-            Notice n = notices.get(i);
-            notices.set(i, n.update(true, n.accepted, n.declined));
-        }
-        changed();
+    /** Đánh dấu đã đọc hết rồi tải lại danh sách (một luồng duy nhất để màn hình không nhấp nháy). */
+    public LiveData<Resource<Social.NoticePage>> readAllThenList(String type) {
+        return then(execute(api.readAll()), () -> notifications(type));
     }
 
-    /** Opening an invitation marks it read, without accepting or declining it. */
-    public void markRead(String id) { updateNotice(id, null); }
-    public void resolve(String id, boolean accept) { updateNotice(id, accept); }
-    private void updateNotice(String id, Boolean accept) {
-        for (int i = 0; i < notices.size(); i++) {
-            Notice n = notices.get(i);
-            if (!n.id.equals(id)) continue;
-            boolean canResolve = n.challenge && !n.accepted && !n.declined && accept != null;
-            notices.set(i, n.update(true, canResolve ? accept : n.accepted,
-                    canResolve ? !accept : n.declined));
-            changed();
-            return;
-        }
+    public LiveData<Resource<Social.NoticePage>> markReadThenList(String id, String type) {
+        return then(execute(api.markRead(id)), () -> notifications(type));
+    }
+
+    public LiveData<Resource<Social.Notice>> respond(String noticeId, boolean accept) {
+        return execute(api.respond(noticeId, new RespondRequest(accept)));
+    }
+
+    /** Chạy {@code first}; xong thì chạy {@code next} và trả kết quả của {@code next}. first lỗi → trả lỗi đó. */
+    private static <A, B> LiveData<Resource<B>> then(@NonNull LiveData<Resource<A>> first,
+                                                     @NonNull java.util.function.Supplier<LiveData<Resource<B>>> next) {
+        MediatorLiveData<Resource<B>> out = new MediatorLiveData<>();
+        out.setValue(Resource.loading());
+        out.addSource(first, a -> {
+            if (a == null || a.status == Resource.Status.LOADING) return;
+            out.removeSource(first);
+            if (a.status == Resource.Status.ERROR) {
+                out.setValue(Resource.error(a.message));
+                return;
+            }
+            LiveData<Resource<B>> second = next.get();
+            out.addSource(second, b -> {
+                if (b == null || b.status == Resource.Status.LOADING) return;
+                out.removeSource(second);
+                out.setValue(b);
+            });
+        });
+        return out;
     }
 }

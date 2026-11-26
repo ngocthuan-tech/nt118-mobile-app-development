@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Figma 40 Thử thách & Bảng xếp hạng (tab "Thử thách") — Thành viên B.
-    B tự viết: SocialRepository.mock(MockSocialData…), đổ thẻ thử thách, 3 cột bục (tvFirst…, tvSecond…, tvThird…),
-    adapter cho rvLeaderboard (item_leaderboard_row). "+ Tạo" → 41, chạm thẻ thử thách → 42 Mời bạn đã nối sẵn.
+    Dữ liệu thật từ API: GET /challenges (thẻ + tiến độ hôm nay), GET /social/leaderboard (bục + rvLeaderboard).
+    "+ Tạo" → 41; chạm thẻ → chọn thử thách khác / nhập mã mời; "Mời thêm bạn" → 42.
 -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

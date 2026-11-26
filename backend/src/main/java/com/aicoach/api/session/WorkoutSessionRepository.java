@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,8 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
     List<WorkoutSession> findByUserIdAndPlanIdAndStartedAtGreaterThanEqual(String userId, String planId, Instant from);
 
     Optional<WorkoutSession> findByIdAndUserId(String id, String userId);
+
+    /** Tiến độ thử thách: buổi tập của các thành viên, cùng bài, trong khoảng thời gian [from, to). */
+    List<WorkoutSession> findByUserIdInAndExerciseIdAndStartedAtGreaterThanEqualAndStartedAtLessThan(
+            Collection<String> userIds, String exerciseId, Instant from, Instant to);
 }

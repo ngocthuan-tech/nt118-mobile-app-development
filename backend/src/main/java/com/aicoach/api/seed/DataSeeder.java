@@ -48,10 +48,11 @@ public class DataSeeder implements ApplicationRunner {
     private final PasswordEncoder passwordEncoder;
     private final Clock clock;
     private final boolean seedDemo;
+    private final SocialDemoSeeder socialDemo;
 
     public DataSeeder(ExerciseRepository exercises, PlanRepository plans, UserRepository users,
                       SessionService sessionService, PasswordEncoder passwordEncoder, Clock clock,
-                      @Value("${app.seed.demo:true}") boolean seedDemo) {
+                      @Value("${app.seed.demo:true}") boolean seedDemo, SocialDemoSeeder socialDemo) {
         this.exercises = exercises;
         this.plans = plans;
         this.users = users;
@@ -59,6 +60,7 @@ public class DataSeeder implements ApplicationRunner {
         this.passwordEncoder = passwordEncoder;
         this.clock = clock;
         this.seedDemo = seedDemo;
+        this.socialDemo = socialDemo;
     }
 
     @Override
@@ -71,6 +73,10 @@ public class DataSeeder implements ApplicationRunner {
         if (seedDemo && !users.existsByEmail(DEMO_EMAIL)) {
             seedDemoUser();
             log.info("Đã tạo tài khoản demo {}", DEMO_EMAIL);
+        }
+        if (seedDemo) {
+            // Bạn bè, thử thách, lời mời mẫu — không tạo trùng, hết hạn thì làm mới (xem SocialDemoSeeder)
+            users.findByEmail(DEMO_EMAIL).ifPresent(socialDemo::seed);
         }
     }
 
