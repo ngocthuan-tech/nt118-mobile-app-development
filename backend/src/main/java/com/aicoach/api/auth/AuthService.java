@@ -21,6 +21,7 @@ import java.util.Optional;
 public class AuthService {
 
     private static final String WRONG_CREDENTIALS = "Email hoặc mật khẩu không đúng";
+    public static final String ACCOUNT_LOCKED = "Tài khoản đã bị khoá. Liên hệ quản trị viên.";
 
     private final UserRepository users;
     private final UserService userService;
@@ -75,6 +76,8 @@ public class AuthService {
         if (!passwordEncoder.matches(req.password(), u.getPasswordHash())) {
             throw ApiException.unauthorized(WRONG_CREDENTIALS);
         }
+        // Kiểm tra SAU mật khẩu: người không biết mật khẩu không dò được tài khoản nào đang bị khoá
+        if (u.isLocked()) throw ApiException.forbidden(ACCOUNT_LOCKED);
         return toResponse(u);
     }
 

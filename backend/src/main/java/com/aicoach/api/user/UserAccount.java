@@ -59,11 +59,29 @@ public class UserAccount {
     /** Lần đổi/đặt lại mật khẩu gần nhất, giữ để kiểm tra token từ phiên bản server cũ. */
     private Instant passwordChangedAt;
 
+    // ---- Quản trị (V7) ----
+    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ADMIN";
+
+    /** USER | ADMIN — chỉ server đặt (seed admin từ biến môi trường), không có API nào cho người dùng tự đổi. */
+    @Column(nullable = false, length = 10)
+    private String role = ROLE_USER;
+    /** Admin khoá: không đăng nhập được, token đang dùng bị từ chối ngay. */
+    @Column(nullable = false)
+    private boolean locked;
+
     // Written only by the atomic repository UPDATE; unrelated profile/workout saves cannot roll it back.
     @Column(nullable = false, insertable = false, updatable = false)
     private long sessionVersion;
 
     public long getSessionVersion() { return sessionVersion; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+    public boolean isAdmin() { return ROLE_ADMIN.equals(role); }
+
+    public boolean isLocked() { return locked; }
+    public void setLocked(boolean locked) { this.locked = locked; }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

@@ -34,13 +34,26 @@ services:
       MAIL_USERNAME: ${MAIL_USERNAME:-}
       MAIL_PASSWORD: ${MAIL_PASSWORD:-}
       MAIL_FROM: ${MAIL_FROM:-}
+      # Tài khoản quản trị đầu tiên cho web admin (để trống = không tạo)
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       JAVA_OPTS: -Xms128m -Xmx384m
+
+  # Web admin React: build ra file tĩnh, chép vào volume admin_static rồi tự thoát (Caddy phục vụ ở /admin/)
+  admin-web:
+    build: ../admin-web
+    restart: "no"
+    volumes:
+      - admin_static:/srv/admin
 
   caddy:
     image: caddy:2
     restart: unless-stopped
     depends_on:
-      - api
+      api:
+        condition: service_started
+      admin-web:
+        condition: service_completed_successfully
     ports:
       - "80:80"
       - "443:443"
@@ -48,10 +61,12 @@ services:
       API_DOMAIN: ${API_DOMAIN:?Thieu API_DOMAIN trong file .env}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - admin_static:/srv/admin:ro
       - caddy_data:/data
       - caddy_config:/config
 
 volumes:
   pgdata:
+  admin_static:
   caddy_data:
   caddy_config:

@@ -36,6 +36,9 @@ public class Exercise {
     private int defaultReps;
     private double caloriesPerRep;  // với bài tính giây: kcal mỗi giây
     private int sortOrder;
+    /** Admin đã sửa trên web → DataSeeder không ghi đè bằng nội dung mặc định khi khởi động lại (V7). */
+    @Column(name = "admin_edited", nullable = false)
+    private boolean adminEdited;
 
     @ElementCollection
     @CollectionTable(name = "exercise_steps", joinColumns = @JoinColumn(name = "exercise_id"))
@@ -87,6 +90,9 @@ public class Exercise {
 
     public int getSortOrder() { return sortOrder; }
     public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+
+    public boolean isAdminEdited() { return adminEdited; }
+    public void setAdminEdited(boolean adminEdited) { this.adminEdited = adminEdited; }
 
     public List<String> getSteps() { return steps; }
     public void setSteps(List<String> steps) { this.steps = steps; }

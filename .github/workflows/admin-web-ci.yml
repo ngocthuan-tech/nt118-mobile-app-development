@@ -1,0 +1,72 @@
+name: Admin Web CI
+
+on:
+  push:
+    branches: [main, develop, "release/**", "feature/**", "codex/**"]
+    paths:
+      - "admin-web/**"
+      - "backend/Caddyfile"
+      - "backend/docker-compose.yml"
+      - ".github/workflows/admin-web-ci.yml"
+  pull_request:
+    branches: [main, develop, "release/**", "codex/**"]
+    paths:
+      - "admin-web/**"
+      - "backend/Caddyfile"
+      - "backend/docker-compose.yml"
+      - ".github/workflows/admin-web-ci.yml"
+
+concurrency:
+  group: admin-web-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Test + build web admin
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: admin-web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: admin-web/package-lock.json
+
+      - name: Cài thư viện (đúng phiên bản trong package-lock.json)
+        run: npm ci --no-audit --no-fund
+
+      - name: Unit test
+        run: npm test
+
+      - name: Kiểm tra kiểu TypeScript + build
+        run: npm run build
+
+  deploy-config:
+    name: Kiểm tra Docker + Caddy + docker compose
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image web admin
+        run: docker build -t aicoach-admin-web admin-web
+
+      - name: Kiểm tra cú pháp Caddyfile
+        run: >-
+          docker run --rm -e API_DOMAIN=example.com
+          -v "$PWD/backend/Caddyfile:/etc/caddy/Caddyfile:ro"
+          caddy:2 caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+
+      - name: Kiểm tra docker-compose.yml
+        working-directory: backend
+        env:
+          API_DOMAIN: example.com
+          DB_PASSWORD: ci-only
+          JWT_SECRET: ci-only-secret-0123456789-abcdefghijklmnop
+        run: docker compose config --quiet

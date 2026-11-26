@@ -11,9 +11,10 @@ App dùng camera điện thoại + ML Kit Pose Detection để **tự đếm s�
 | Ngôn ngữ / giao diện | Java 11, XML View, Material 3 |
 | Kiến trúc | MVVM (Fragment → ViewModel → Repository), Single Activity + Navigation Component, ViewBinding |
 | Backend | REST API Spring Boot 3 + PostgreSQL + JWT, chạy Docker trên Azure VM (thư mục [`backend/`](backend/README.md)) |
+| Web admin | React 18 + Vite + TypeScript + Ant Design + Recharts, phục vụ tại `/admin/` cùng tên miền với API (thư mục [`admin-web/`](admin-web/README.md), hướng dẫn [`docs/WEB_ADMIN.md`](docs/WEB_ADMIN.md)) |
 | Gọi API | Retrofit + OkHttp, mỗi nhóm API một interface trong `data/remote/api/` |
 | AI | CameraX + ML Kit Pose Detection (chạy trên máy, không gửi hình lên mạng) |
-| Khác | Glide, MPAndroidChart, GitHub Actions (tự build APK) |
+| Khác | Glide, MPAndroidChart, WorkManager (nhắc tập), GitHub Actions: Android CI, Backend CI, Admin Web CI |
 
 ## Chạy project lần đầu
 
@@ -31,13 +32,14 @@ app/src/main/java/com/aicoach
 ├── data/remote/      ApiClient, AuthInterceptor, ApiResponse, api/*Api, dto/   (Trưởng nhóm)
 ├── data/local/       TokenManager, SessionEvents, SettingsPrefs                (Trưởng nhóm)
 ├── data/repository/  BaseRepository (Trưởng nhóm) · mỗi người Repository riêng   (A, B)
-├── data/mock/        Dữ liệu mẫu cho màn chưa có API (A, B)
+├── data/mock/        Dữ liệu mẫu cũ của giữa kỳ (không còn màn nào dùng)        (A)
 ├── domain/           BadgeRules — luật huy hiệu                                (B)
 ├── pose/             PoseOverlayView, bộ phân tích tư thế 9 bài                (Trưởng nhóm)
 ├── ui/auth, home, exercise, plan                                               (A)
 ├── ui/workout                                                                  (Trưởng nhóm)
 └── ui/profile, history, stats, social, challenge                               (B)
 backend/              REST API Spring Boot                                      (Trưởng nhóm)
+admin-web/            Web quản trị React (Đăng nhập, Tổng quan, Người dùng, Bài tập, Giáo án)
 ```
 
 Tài liệu phân công chi tiết: [`docs/PHAN_CONG_THANH_VIEN_A.md`](docs/PHAN_CONG_THANH_VIEN_A.md), [`docs/PHAN_CONG_THANH_VIEN_B.md`](docs/PHAN_CONG_THANH_VIEN_B.md).

@@ -31,6 +31,9 @@ public class Plan {
     @Column(length = 60)
     private String coverImageName;
     private int sortOrder;
+    /** Admin đã sửa khối lượng bài trên web → DataSeeder không ghi đè giáo án này khi khởi động lại (V7). */
+    @Column(name = "admin_edited", nullable = false)
+    private boolean adminEdited;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("dayIndex ASC, sortOrder ASC")
@@ -73,6 +76,9 @@ public class Plan {
 
     public int getSortOrder() { return sortOrder; }
     public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+
+    public boolean isAdminEdited() { return adminEdited; }
+    public void setAdminEdited(boolean adminEdited) { this.adminEdited = adminEdited; }
 
     public List<PlanItem> getItems() { return items; }
     public void setItems(List<PlanItem> items) { this.items = items; }

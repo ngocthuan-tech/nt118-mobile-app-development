@@ -25,8 +25,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Nạp dữ liệu nền: 9 bài tập, 3 giáo án (ghi đè mỗi lần khởi động).
+ * Nạp dữ liệu nền: 9 bài tập, 3 giáo án (ghi đè mỗi lần khởi động — trừ bài / giáo án admin đã sửa trên web).
  * Bật app.seed.demo thì tạo thêm tài khoản demo@aicoach.vn / Demo1234 có sẵn lịch sử tập để demo Trang chủ.
+ * Có ADMIN_EMAIL + ADMIN_PASSWORD (biến môi trường) thì tạo tài khoản quản trị đầu tiên cho web admin.
  */
 @Component
 public class DataSeeder implements ApplicationRunner {
@@ -49,10 +50,14 @@ public class DataSeeder implements ApplicationRunner {
     private final Clock clock;
     private final boolean seedDemo;
     private final SocialDemoSeeder socialDemo;
+    private final String adminEmail;
+    private final String adminPassword;
 
     public DataSeeder(ExerciseRepository exercises, PlanRepository plans, UserRepository users,
                       SessionService sessionService, PasswordEncoder passwordEncoder, Clock clock,
-                      @Value("${app.seed.demo:true}") boolean seedDemo, SocialDemoSeeder socialDemo) {
+                      @Value("${app.seed.demo:true}") boolean seedDemo, SocialDemoSeeder socialDemo,
+                      @Value("${app.admin.email:}") String adminEmail,
+                      @Value("${app.admin.password:}") String adminPassword) {
         this.exercises = exercises;
         this.plans = plans;
         this.users = users;
@@ -61,6 +66,8 @@ public class DataSeeder implements ApplicationRunner {
         this.clock = clock;
         this.seedDemo = seedDemo;
         this.socialDemo = socialDemo;
+        this.adminEmail = adminEmail == null ? "" : adminEmail.trim().toLowerCase(java.util.Locale.ROOT);
+        this.adminPassword = adminPassword == null ? "" : adminPassword;
     }
 
     @Override
@@ -70,6 +77,7 @@ public class DataSeeder implements ApplicationRunner {
         seedExercises();
         seedPlans();
         log.info("Đã đồng bộ 9 bài tập và 3 giáo án");
+        seedAdmin();
         if (seedDemo && !users.existsByEmail(DEMO_EMAIL)) {
             seedDemoUser();
             log.info("Đã tạo tài khoản demo {}", DEMO_EMAIL);
@@ -80,67 +88,101 @@ public class DataSeeder implements ApplicationRunner {
         }
     }
 
+    // ------------------------------------------------------------------ Tài khoản quản trị
+
+    /**
+     * Admin đầu tiên lấy từ biến môi trường ADMIN_EMAIL / ADMIN_PASSWORD (không bao giờ ghi mật khẩu trong code).
+     * Email đã có người đăng ký bằng app thì KHÔNG tự nâng quyền — tránh ai đó đăng ký trước email admin để chiếm quyền.
+     */
+    private void seedAdmin() {
+        if (adminEmail.isEmpty() || adminPassword.isEmpty()) return;
+        if (adminPassword.length() < 8) {
+            log.warn("ADMIN_PASSWORD cần ít nhất 8 ký tự — bỏ qua tạo tài khoản quản trị");
+            return;
+        }
+        users.findByEmail(adminEmail).ifPresentOrElse(existing -> {
+            if (!existing.isAdmin()) {
+                log.warn("Email quản trị {} đã được đăng ký như người dùng thường — không tự nâng quyền", adminEmail);
+            }
+        }, () -> {
+            UserAccount admin = new UserAccount();
+            admin.setEmail(adminEmail);
+            admin.setPasswordHash(passwordEncoder.encode(adminPassword));
+            admin.setDisplayName("Quản trị viên");
+            admin.setRole(UserAccount.ROLE_ADMIN);
+            admin.setProfileCompleted(true);
+            users.save(admin);
+            log.info("Đã tạo tài khoản quản trị {}", adminEmail);
+        });
+    }
+
     // ------------------------------------------------------------------ Bài tập
+
+    /** Ghi nội dung mặc định — bỏ qua bài admin đã sửa trên web. */
+    private void saveExercise(Exercise fresh) {
+        boolean editedByAdmin = exercises.findById(fresh.getId()).map(Exercise::isAdminEdited).orElse(false);
+        if (!editedByAdmin) exercises.save(fresh);
+    }
 
     private void seedExercises() {
         int order = 0;
-        exercises.save(ex(order++, "squat", "Squat", "legs", "easy", "reps", 3, 15, 0.32,
+        saveExercise(ex(order++, "squat", "Squat", "legs", "easy", "reps", 3, 15, 0.32,
                 "Bài tập nền tảng cho đùi và mông, AI theo dõi góc gối và độ thẳng lưng.",
                 List.of("Đứng thẳng, hai chân rộng bằng vai, mũi chân hơi mở ra ngoài",
                         "Đẩy hông ra sau và hạ người như ngồi xuống ghế",
                         "Hạ đến khi đùi song song mặt sàn rồi đạp gót đứng lên"),
                 List.of("Giữ ngực mở, mắt nhìn thẳng", "Dồn lực vào gót chân"),
                 List.of("Đầu gối đổ vào trong", "Gù lưng khi xuống thấp")));
-        exercises.save(ex(order++, "pushup", "Hít đất", "chest_arms", "medium", "reps", 3, 12, 0.36,
+        saveExercise(ex(order++, "pushup", "Hít đất", "chest_arms", "medium", "reps", 3, 12, 0.36,
                 "Tăng sức mạnh ngực, vai và tay sau. AI kiểm tra độ thẳng của thân người.",
                 List.of("Chống hai tay rộng hơn vai một chút, thân người thẳng từ đầu đến gót",
                         "Gập khuỷu tay hạ ngực xuống gần sàn",
                         "Đẩy mạnh lên về tư thế ban đầu"),
                 List.of("Siết cơ bụng suốt động tác", "Mới tập có thể chống gối"),
                 List.of("Võng hông xuống sàn", "Chỉ hạ nửa chừng")));
-        exercises.save(ex(order++, "plank", "Plank", "core", "easy", "seconds", 3, 45, 0.08,
+        saveExercise(ex(order++, "plank", "Plank", "core", "easy", "seconds", 3, 45, 0.08,
                 "Giữ tư thế tĩnh để siết cơ bụng và lưng dưới. Tính theo số giây giữ đúng tư thế.",
                 List.of("Chống hai khuỷu tay ngay dưới vai",
                         "Duỗi thẳng chân, kiễng mũi chân",
                         "Giữ thân người thành một đường thẳng"),
                 List.of("Thở đều, không nín thở", "Nhìn xuống sàn để cổ thẳng"),
                 List.of("Nhô mông quá cao", "Võng lưng")));
-        exercises.save(ex(order++, "lunge", "Lunge", "legs", "medium", "reps", 3, 12, 0.30,
+        saveExercise(ex(order++, "lunge", "Lunge", "legs", "medium", "reps", 3, 12, 0.30,
                 "Bài một chân giúp đùi, mông khoẻ và cải thiện thăng bằng.",
                 List.of("Đứng thẳng, bước một chân lên phía trước",
                         "Hạ người đến khi hai gối gập khoảng 90 độ",
                         "Đạp chân trước để trở về, đổi chân"),
                 List.of("Thân trên giữ thẳng", "Bước đủ dài để gối không vượt mũi chân"),
                 List.of("Gối trước vượt quá mũi chân", "Gối sau đập xuống sàn")));
-        exercises.save(ex(order++, "glute_bridge", "Cầu mông", "legs", "easy", "reps", 3, 15, 0.25,
+        saveExercise(ex(order++, "glute_bridge", "Cầu mông", "legs", "easy", "reps", 3, 15, 0.25,
                 "Tập trung vào cơ mông và đùi sau, nhẹ cho khớp gối.",
                 List.of("Nằm ngửa, co gối, bàn chân đặt sát mông",
                         "Siết mông nâng hông lên đến khi thân thẳng từ vai đến gối",
                         "Giữ 1 giây rồi hạ xuống chậm"),
                 List.of("Đẩy lực bằng gót chân", "Siết mông ở điểm cao nhất"),
                 List.of("Ưỡn lưng thay vì dùng mông", "Hạ người quá nhanh")));
-        exercises.save(ex(order++, "chair_dip", "Chống ghế", "chest_arms", "medium", "reps", 3, 10, 0.30,
+        saveExercise(ex(order++, "chair_dip", "Chống ghế", "chest_arms", "medium", "reps", 3, 10, 0.30,
                 "Dùng ghế chắc chắn để tập tay sau và vai.",
                 List.of("Ngồi mép ghế, hai tay chống cạnh hông",
                         "Trượt mông ra khỏi ghế, gập khuỷu tay hạ người xuống",
                         "Đẩy tay duỗi thẳng để nâng người lên"),
                 List.of("Khuỷu tay hướng ra sau", "Dùng ghế không có bánh xe"),
                 List.of("Mở khuỷu tay sang hai bên", "Nhún vai lên tai")));
-        exercises.save(ex(order++, "jumping_jack", "Bật nhảy", "cardio", "easy", "reps", 3, 30, 0.20,
+        saveExercise(ex(order++, "jumping_jack", "Bật nhảy", "cardio", "easy", "reps", 3, 30, 0.20,
                 "Bài khởi động toàn thân, tăng nhịp tim nhanh.",
                 List.of("Đứng thẳng, hai tay xuôi theo người",
                         "Bật nhảy dang hai chân, đồng thời vung tay qua đầu",
                         "Bật nhảy về tư thế ban đầu"),
                 List.of("Tiếp đất nhẹ bằng mũi chân", "Giữ nhịp đều"),
                 List.of("Tay không đưa lên hết", "Tiếp đất nặng bằng gót")));
-        exercises.save(ex(order++, "high_knees", "Nâng gối", "cardio", "easy", "reps", 3, 30, 0.18,
+        saveExercise(ex(order++, "high_knees", "Nâng gối", "cardio", "easy", "reps", 3, 30, 0.18,
                 "Chạy tại chỗ nâng cao gối, đốt calo và tăng sức bền.",
                 List.of("Đứng thẳng, hai tay để trước bụng",
                         "Nâng cao gối trái chạm tay rồi hạ xuống",
                         "Đổi gối phải, lặp lại liên tục"),
                 List.of("Nâng gối ngang hông", "Đánh tay theo nhịp"),
                 List.of("Ngả người ra sau", "Gối nâng quá thấp")));
-        exercises.save(ex(order, "toe_touch", "Chạm chân", "core", "easy", "reps", 3, 15, 0.15,
+        saveExercise(ex(order, "toe_touch", "Chạm chân", "core", "easy", "reps", 3, 15, 0.15,
                 "Gập người chạm mũi chân, kéo giãn đùi sau và siết cơ bụng.",
                 List.of("Đứng thẳng, hai chân rộng bằng hông",
                         "Gập người từ hông, đưa tay chạm mũi chân",
@@ -172,6 +214,12 @@ public class DataSeeder implements ApplicationRunner {
 
     // ------------------------------------------------------------------ Giáo án
 
+    /** Ghi nội dung mặc định — bỏ qua giáo án admin đã sửa trên web. */
+    private void savePlan(Plan fresh) {
+        boolean editedByAdmin = plans.findById(fresh.getId()).map(Plan::isAdminEdited).orElse(false);
+        if (!editedByAdmin) plans.save(fresh);
+    }
+
     private void seedPlans() {
         Plan fatBurn = plan(0, "fat-burn-4w", "Đốt mỡ toàn thân – 4 tuần",
                 "Kết hợp cardio và sức mạnh, 3 buổi mỗi tuần cho người mới bắt đầu.",
@@ -199,7 +247,7 @@ public class DataSeeder implements ApplicationRunner {
                 }
             }
         }
-        plans.save(fatBurn);
+        savePlan(fatBurn);
 
         Plan strength = plan(1, "strength-4w", "Sức mạnh cơ bản – 4 tuần",
                 "Tăng sức mạnh chân, ngực, tay với số rep tăng dần.",
@@ -224,7 +272,7 @@ public class DataSeeder implements ApplicationRunner {
                 }
             }
         }
-        plans.save(strength);
+        savePlan(strength);
 
         Plan core = plan(2, "core-2w", "Bụng săn chắc – 2 tuần",
                 "15 phút mỗi buổi, 4 buổi mỗi tuần, tập trung cơ bụng và lưng.",
@@ -241,7 +289,7 @@ public class DataSeeder implements ApplicationRunner {
                 core.addItem(day, "toe_touch", 3, 20);
             }
         }
-        plans.save(core);
+        savePlan(core);
     }
 
     private static Plan plan(int order, String id, String title, String description, String level,

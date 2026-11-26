@@ -11,3 +11,7 @@ app:
     secret: test-secret-for-ci-only-0123456789-abcdefghijklmnop
   seed:
     demo: true
+  # Chỉ dùng cho test tự động (CI), không phải tài khoản thật trên server
+  admin:
+    email: admin@aicoach.vn
+    password: Admin1234

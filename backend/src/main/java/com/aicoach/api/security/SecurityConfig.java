@@ -1,5 +1,6 @@
 package com.aicoach.api.security;
 
+import com.aicoach.api.auth.AuthService;
 import com.aicoach.api.common.ApiResponse;
 import com.aicoach.api.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,17 +45,23 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_PATHS).permitAll()
+                        // Web admin: chặn ở server theo vai trò trong DB — ẩn menu trên web không phải là bảo mật
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((req, res, e) -> writeError(res, mapper,
                                 HttpServletResponse.SC_UNAUTHORIZED,
-                                JwtAuthFilter.PASSWORD_CHANGED.equals(res.getHeader(JwtAuthFilter.REASON_HEADER))
-                                        ? "Mật khẩu đã thay đổi. Vui lòng đăng nhập lại."
-                                        : "Phiên đăng nhập không hợp lệ hoặc đã hết hạn"))
+                                sessionMessage(res.getHeader(JwtAuthFilter.REASON_HEADER))))
                         .accessDeniedHandler((req, res, e) -> writeError(res, mapper,
                                 HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền thực hiện thao tác này")))
                 .addFilterBefore(new JwtAuthFilter(jwtService, users), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    private static String sessionMessage(String reason) {
+        if (JwtAuthFilter.PASSWORD_CHANGED.equals(reason)) return "Mật khẩu đã thay đổi. Vui lòng đăng nhập lại.";
+        if (JwtAuthFilter.ACCOUNT_LOCKED.equals(reason)) return AuthService.ACCOUNT_LOCKED;
+        return "Phiên đăng nhập không hợp lệ hoặc đã hết hạn";
     }
 
     @Bean

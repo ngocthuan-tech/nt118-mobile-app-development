@@ -13,12 +13,13 @@ REST API cho app AI Coach — Spring Boot 3 (Java 17), PostgreSQL, JWT, Swagger.
         │ HTTPS 443
         ▼
 ☁️ Azure VM (Ubuntu, Korea Central)
-   ├─ caddy    : HTTPS Let's Encrypt, chuyển tiếp vào api:8080
+   ├─ caddy    : HTTPS Let's Encrypt; /admin/* → web admin (file tĩnh), còn lại → api:8080
+   ├─ admin-web: build web React rồi chép file tĩnh vào volume cho Caddy (chạy 1 lần mỗi lần deploy)
    ├─ api      : Spring Boot — controller → service → repository (JPA)
    └─ db       : PostgreSQL 16 (không mở ra Internet), cấu trúc bảng do Flyway tạo
 ```
 
-Mỗi module một package: `auth`, `user`, `home`, `exercise`, `plan`, `session`, `progress` (luật streak/XP), `security` (JWT), `common` (envelope, xử lý lỗi).
+Mỗi module một package: `auth`, `user`, `home`, `exercise`, `plan`, `session`, `progress` (luật streak/XP), `social` (thử thách, bạn bè, thông báo), `admin` (web quản trị), `security` (JWT + phân quyền), `common` (envelope, xử lý lỗi).
 
 ## Database
 
@@ -27,6 +28,9 @@ PostgreSQL 16, 11 bảng. Cấu trúc nằm trong `src/main/resources/db/migrati
 - `V1__init_schema.sql` — tạo bảng
 - `V2__relations.sql` — khoá ngoại, ràng buộc, index
 - `V3__password_reset.sql` — bảng mã quên mật khẩu, mốc đổi mật khẩu
+- `V4`, `V5` — phiên đăng nhập (đổi mật khẩu đăng xuất thiết bị khác), ngày giáo án của buổi tập
+- `V6__social.sql` — thử thách, bạn bè, lời mời, thông báo
+- `V7__admin_role.sql` — vai trò ADMIN, khoá tài khoản, đánh dấu nội dung admin đã sửa
 
 Hibernate chạy ở chế độ `validate`: entity Java lệch với bảng thì server không khởi động. Sơ đồ quan hệ: [`docs/DATABASE.md`](../docs/DATABASE.md). Muốn đổi cấu trúc → thêm file `V3__...sql`, **không sửa file đã chạy**.
 
@@ -63,7 +67,19 @@ Các API (trừ auth, health, swagger) cần header `Authorization: Bearer <acce
 | POST | `/api/v1/notifications/read-all` · `/{id}/read` | Đánh dấu đã đọc |
 | POST | `/api/v1/notifications/{id}/respond` | Trả lời lời mời `{accept: true\|false}` — chấp nhận thì vào thử thách và thành bạn với người mời |
 
-Mã lỗi: 400 dữ liệu sai · 401 chưa đăng nhập / sai mật khẩu / token hết hạn · 404 không tìm thấy · 409 email đã tồn tại · 500 lỗi server.
+**Web admin** — chỉ tài khoản `role = ADMIN` (server chặn: chưa đăng nhập 401, người dùng thường 403):
+
+| Method | Path | Mô tả |
+|---|---|---|
+| GET | `/api/v1/admin/me` | Tài khoản admin đang đăng nhập |
+| GET | `/api/v1/admin/stats?days=30` | Tổng quan 7–90 ngày: người dùng, buổi tập theo ngày (giờ VN), bài phổ biến, lỗi tư thế AI hay gặp, tỉ lệ làm đúng, thử thách còn hạn |
+| GET | `/api/v1/admin/users?q=&page=0&size=20` | Danh sách người dùng, tìm email / tên không dấu |
+| GET | `/api/v1/admin/users/{id}` | Chi tiết + 10 buổi tập gần nhất |
+| PUT | `/api/v1/admin/users/{id}/lock` | `{locked}` — khoá thì token đang dùng mất hiệu lực ngay; không tự khoá mình / admin khác |
+| GET · PUT | `/api/v1/admin/exercises` · `/{id}` | Xem / sửa tên, mô tả, số hiệp, số lần, kcal (app thấy ngay) |
+| GET · PUT | `/api/v1/admin/plans` · `/{planId}/items/{itemId}` | Xem giáo án / sửa số hiệp × lần từng bài |
+
+Mã lỗi: 400 dữ liệu sai · 401 chưa đăng nhập / sai mật khẩu / token hết hạn · 403 không có quyền / tài khoản bị khoá · 404 không tìm thấy · 409 email đã tồn tại · 500 lỗi server.
 
 Quy tắc dữ liệu: mật khẩu 8–64 ký tự có chữ và số · `goal`: `lose_weight|build_muscle|stay_fit` · `level`: `beginner|intermediate|advanced` · chiều cao 100–250 cm · cân nặng 30–250 kg.
 
@@ -73,7 +89,7 @@ Quy tắc dữ liệu: mật khẩu 8–64 ký tự có chữ và số · `goal`
 git clone https://github.com/ngocthuan-tech/nt118-mobile-app-development.git
 cd nt118-mobile-app-development/backend
 cp .env.example .env
-nano .env            # điền DB_PASSWORD và JWT_SECRET (lệnh tạo chuỗi ngẫu nhiên có trong file)
+nano .env            # điền DB_PASSWORD, JWT_SECRET (lệnh tạo chuỗi ngẫu nhiên có trong file), ADMIN_EMAIL, ADMIN_PASSWORD
 docker compose up -d --build
 docker compose logs -f api   # chờ dòng "Started AiCoachApiApplication"
 ```
@@ -90,6 +106,7 @@ cd backend && docker compose up -d --build
 - Mật khẩu băm BCrypt, không lưu bản gốc; đăng nhập sai trả cùng một câu lỗi để không lộ email nào đã đăng ký.
 - JWT HS256 hết hạn sau 7 ngày, khoá ký đọc từ biến môi trường, không nằm trong code.
 - Database chỉ nằm trong mạng nội bộ Docker; cổng SSH của VM chỉ mở cho IP của Trưởng nhóm.
+- Phân quyền web admin chặn ở server: quyền `ROLE_ADMIN` đọc từ cột `users.role` mỗi request (không tin dữ liệu trong token); tài khoản bị khoá bị từ chối ngay. Mật khẩu admin chỉ nằm trong `.env` trên server.
 
 ## Gửi email (quên mật khẩu)
 
