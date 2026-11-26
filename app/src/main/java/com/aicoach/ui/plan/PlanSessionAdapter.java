@@ -21,7 +21,14 @@ import com.aicoach.databinding.ItemPlanExerciseRowBinding;
 import com.aicoach.databinding.ItemPlanSessionBinding;
 import com.aicoach.ui.exercise.ExerciseUi;
 
-/** Danh sách buổi tập của giáo án — dùng cho 17 (tuần 1, dạng gọn) và 26 (từng tuần, có trạng thái). */
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Danh sách buổi tập của giáo án — dùng cho 17 (tuần 1, dạng gọn) và 26 (từng tuần, có trạng thái).
+ * Màn 26: buổi hôm nay luôn bung danh sách bài; chạm buổi khác (đã tập / sắp tới) để bung / thu gọn
+ * danh sách bài của buổi đó, chạm từng bài để xem chi tiết bài.
+ */
 public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSessionAdapter.Holder> {
 
     public interface Listener {
@@ -31,10 +38,17 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
     }
 
     private final Listener listener;
+    /** dayIndex các buổi đang bung (giữ trong ViewModel để xoay màn không mất). */
+    private final Set<Integer> expanded;
 
     public PlanSessionAdapter(@NonNull Listener listener) {
+        this(listener, new HashSet<>());
+    }
+
+    public PlanSessionAdapter(@NonNull Listener listener, @NonNull Set<Integer> expanded) {
         super(DIFF);
         this.listener = listener;
+        this.expanded = expanded;
     }
 
     @NonNull
@@ -109,16 +123,16 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
                     done ? R.color.state_success : R.color.text_secondary)));
         }
 
-        // Buổi hôm nay (26): bung danh sách bài
+        // Buổi hôm nay (26) luôn bung danh sách bài; buổi khác bung khi người dùng chạm vào
         b.exercises.removeAllViews();
-        boolean expand = !s.compact && today;
+        boolean expand = !s.compact && (today || expanded.contains(s.dayIndex));
         b.exercises.setVisibility(expand ? View.VISIBLE : View.GONE);
         if (expand) {
             LayoutInflater inf = LayoutInflater.from(c);
             for (Plan.PlanItem item : s.items) {
                 ItemPlanExerciseRowBinding row = ItemPlanExerciseRowBinding.inflate(inf, b.exercises, true);
                 row.tvName.setText(item.getExerciseName());
-                boolean done = item.getExerciseId() != null && s.doneExerciseIds.contains(item.getExerciseId());
+                boolean done = today && item.getExerciseId() != null && s.doneExerciseIds.contains(item.getExerciseId());
                 row.tvVolume.setText(done ? c.getString(R.string.ai_plan_done_mark)
                         : ExerciseUi.volume(c, item.getSets(), item.getReps(), item.isTimeBased()));
                 row.tvVolume.setTextColor(color(c, done ? R.color.state_success : R.color.text_secondary));
@@ -127,8 +141,12 @@ public class PlanSessionAdapter extends ListAdapter<PlanSessionItem, PlanSession
                 row.getRoot().setOnClickListener(v -> listener.onExercise(item));
             }
         }
-        b.getRoot().setOnClickListener(s.compact || s.state == PlanSessionItem.State.LOCKED ? null
-                : v -> { if (!s.items.isEmpty()) listener.onExercise(s.items.get(0)); });
+        // Chạm buổi (không phải hôm nay) → bung / thu gọn để xem buổi đó gồm những bài nào
+        b.getRoot().setOnClickListener(s.compact || today || s.items.isEmpty() ? null : v -> {
+            if (!expanded.remove(s.dayIndex)) expanded.add(s.dayIndex);
+            int pos = h.getBindingAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) notifyItemChanged(pos);
+        });
     }
 
     private static void bindImage(@NonNull ImageView view, @NonNull Plan.PlanItem item) {
