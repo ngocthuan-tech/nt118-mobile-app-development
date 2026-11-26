@@ -166,7 +166,10 @@ public class LiveWorkoutFragment extends BaseFragment<FragmentLiveWorkoutBinding
         if (c == null || !c.consume()) return;
         switch (c.type) {
             case SPEAK:
-                if (c.text != null) voice.say(c.text, c.urgent);
+                if (c.text != null && !voice.say(c.text, c.urgent, c.kind) && c.fallback != null
+                        && !voice.allowed(c.kind)) {
+                    voice.say(c.fallback, c.urgent, VoiceCoach.Kind.COUNT);
+                }
                 break;
             case GO_REST:
                 sessionVm.setLastSet(vm.lastSet());
@@ -268,7 +271,8 @@ public class LiveWorkoutFragment extends BaseFragment<FragmentLiveWorkoutBinding
         int done = percent(s.doneReps, s.totalTarget);
         boolean empty = s.attemptedReps == 0 && !sessionVm.hasResults();
         binding.finishConfirm.tvConfirmBody.setText(empty ? getString(R.string.ai_finish_empty)
-                : getString(R.string.workout_finish_confirm_body, s.doneReps, s.totalTarget, done));
+                : getString(sessionVm.isPlanRun() ? R.string.workout_finish_confirm_body_plan
+                        : R.string.workout_finish_confirm_body, s.doneReps, s.totalTarget, done));
         binding.finishConfirm.btnFinishSave.setText(empty ? R.string.ai_exit : R.string.workout_finish_and_save);
         binding.finishConfirm.progressSession.setProgress(done);
         binding.finishConfirm.tvProgressCount.setText(getString(R.string.ai_progress_count, s.doneReps, s.totalTarget));
