@@ -100,10 +100,14 @@ public class SettingsSocialFlowTest {
             assertEquals("Valid name", repo.find(id).getTitle());
             assertTrue(repo.find(id).privateGroup);
             SocialRepository.ChallengeItem previous = repo.find(id);
+            String code = SocialRepository.invitationCode(previous);
+            assertTrue(code.matches("[A-Z0-9]{6}"));
             repo.invite(id, new HashSet<>(Arrays.asList("an", "unknown")));
             repo.invite(id, Collections.singleton("an"));
             assertEquals(1, repo.find(id).invited.size());
             assertTrue(previous.invited.isEmpty());
+            assertEquals(code, SocialRepository.invitationCode(repo.find(id)));
+            assertEquals(previous.getEndAt(), repo.find(id).getEndAt());
             assertThrows(IllegalArgumentException.class, () -> repo.invite("missing", Collections.emptySet()));
             SocialRepository.Notice invitation = repo.notices().get(0);
             repo.markRead(invitation.id);

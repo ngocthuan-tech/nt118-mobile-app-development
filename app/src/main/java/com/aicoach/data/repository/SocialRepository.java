@@ -18,8 +18,13 @@ public final class SocialRepository extends BaseRepository {
 
         public ChallengeItem(String id, String name, String exercise, int target, int days,
                 boolean privateGroup, Set<String> invited) {
-            super(id, name, "Bạn (mẫu)", exercise, target, LocalDate.now().toString(),
-                    LocalDate.now().plusDays(days - 1).toString(), Collections.emptyList());
+            this(id, name, exercise, target, days, privateGroup, invited, LocalDate.now());
+        }
+
+        private ChallengeItem(String id, String name, String exercise, int target, int days,
+                boolean privateGroup, Set<String> invited, LocalDate start) {
+            super(id, name, "Bạn (mẫu)", exercise, target, start.toString(),
+                    start.plusDays(days - 1).toString(), Collections.emptyList());
             this.id = id; this.name = name; this.exercise = exercise;
             this.target = target; this.days = days; this.privateGroup = privateGroup;
             this.invited = Collections.unmodifiableSet(new HashSet<>(invited));
@@ -27,7 +32,11 @@ public final class SocialRepository extends BaseRepository {
     }
 
     public static String invitationCode(ChallengeItem challenge) {
-        return challenge.id.replace("-", "").substring(0, 8).toUpperCase(Locale.ROOT);
+        return codeFromId(challenge.id);
+    }
+
+    private static String codeFromId(String id) {
+        return id.replace("-", "").substring(0, 6).toUpperCase(Locale.ROOT);
     }
 
     public static final class Friend {
@@ -91,7 +100,12 @@ public final class SocialRepository extends BaseRepository {
                 || !Arrays.asList("squat", "pushup", "lunge", "jumping_jack").contains(exercise)) {
             throw new IllegalArgumentException("Invalid challenge");
         }
-        String id = UUID.randomUUID().toString();
+        Set<String> usedCodes = new HashSet<>();
+        for (ChallengeItem challenge : challenges) usedCodes.add(invitationCode(challenge));
+        String id;
+        do {
+            id = UUID.randomUUID().toString();
+        } while (usedCodes.contains(codeFromId(id)));
         challenges.add(0, new ChallengeItem(id, name.trim(), exercise, target, days,
                 privateGroup, Collections.emptySet()));
         changed();
@@ -104,7 +118,8 @@ public final class SocialRepository extends BaseRepository {
         Set<String> invited = new HashSet<>(current.invited);
         for (Friend friend : friends) if (ids.contains(friend.id)) invited.add(friend.id);
         challenges.set(challenges.indexOf(current), new ChallengeItem(current.id, current.name,
-                current.exercise, current.target, current.days, current.privateGroup, invited));
+                current.exercise, current.target, current.days, current.privateGroup, invited,
+                LocalDate.parse(current.getStartAt())));
         changed();
     }
 
