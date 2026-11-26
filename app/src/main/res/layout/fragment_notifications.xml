@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Figma 22 Thông báo (mở từ chuông ở Trang chủ) — Thành viên B.
-    B tự viết: SocialRepository.mock(MockSocialData.notifications()), lọc theo 3 nút trên,
-    adapter rvNotifications (item_notification), "Đọc tất cả", trạng thái rỗng emptyState.
+    Dữ liệu thật từ API: GET /notifications?type=all|challenge|system, lọc theo 3 nút trên,
+    adapter rvNotifications (item_notification), "Đọc tất cả" (POST /notifications/read-all), trạng thái rỗng emptyState.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

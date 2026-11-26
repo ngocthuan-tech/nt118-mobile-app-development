@@ -38,7 +38,6 @@ public class LogoutDialogFragment extends BottomSheetDialogFragment {
         binding.btnCancel.setOnClickListener(v -> dismiss());
         binding.btnConfirm.setOnClickListener(v -> {
             TokenManager.getInstance(requireContext()).clear();
-            com.aicoach.data.repository.SocialRepository.get().resetDemoData();
             NavHostFragment.findNavController(this)
                     .navigate(NavRootDirections.actionGlobalToAuth());
         });

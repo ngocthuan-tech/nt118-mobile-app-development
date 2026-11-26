@@ -9,6 +9,9 @@ Cấu trúc bảng nằm trong code, không tạo tay: Flyway chạy các file S
 | `V1__init_schema.sql` | Tạo 10 bảng, khoá chính, khoá ngoại bảng con, unique email, index `(user_id, started_at)` |
 | `V2__relations.sql` | Khoá ngoại giữa bảng chính, ràng buộc `correct_reps ≤ total_reps`, index cho lịch sử và giáo án |
 | `V3__password_reset.sql` | Bảng `password_reset_codes` (quên mật khẩu), cột `users.password_changed_at` |
+| `V4__session_version.sql` | Cột `users.session_version`: đổi mật khẩu thì tăng, token cũ hết hiệu lực |
+| `V5__session_plan_day.sql` | Cột `workout_sessions.plan_day`: bài thuộc ngày nào của giáo án — buổi chỉ xong khi đủ mọi bài (≥ 50% mục tiêu) |
+| `V6__social.sql` | Cộng đồng: `friendships` (bạn bè, lưu 2 chiều), `challenges`, `challenge_members`, `challenge_invites` (PENDING / ACCEPTED / DECLINED), `notifications`. Tiến độ thử thách **không lưu riêng** — tính từ `workout_sessions` cùng bài trong khoảng ngày của thử thách |
 
 ## Sơ đồ quan hệ (ERD)
 

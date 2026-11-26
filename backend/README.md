@@ -52,6 +52,16 @@ Các API (trừ auth, health, swagger) cần header `Authorization: Bearer <acce
 | GET | `/api/v1/plans` · `/api/v1/plans/{id}` | Giáo án và các buổi |
 | POST | `/api/v1/sessions` | Lưu buổi tập → server tự tính streak, XP |
 | GET | `/api/v1/sessions?limit=20` · `/api/v1/sessions/{id}` | Lịch sử buổi tập |
+| GET | `/api/v1/challenges` · `/api/v1/challenges/{id}` | Thử thách mình tham gia (đang diễn ra trước), tiến độ mọi thành viên tính từ buổi tập |
+| POST | `/api/v1/challenges` | Tạo thử thách `{title, exerciseId, dailyTarget, days, privateGroup}` — 3/7/14/30 ngày, 10–1000 lần/ngày (201) |
+| GET | `/api/v1/challenges/{id}/candidates?q=` | Người có thể mời: bạn bè (lọc tên không dấu) hoặc đúng email một người dùng |
+| POST | `/api/v1/challenges/{id}/invites` | Mời `{userIds:[...]}` (tối đa 20) → người được mời nhận thông báo có nút Tham gia / Từ chối |
+| POST | `/api/v1/challenges/join` | Tham gia bằng mã mời `{code:"7Q2KX9"}` (6 ký tự, không phân biệt hoa thường) |
+| GET | `/api/v1/social/friends` | Bạn bè (kết bạn khi cùng tham gia thử thách) |
+| GET | `/api/v1/social/leaderboard?scope=friends\|national` | Bảng xếp hạng theo XP tích luỹ; luôn kèm hạng của mình |
+| GET | `/api/v1/notifications?type=all\|challenge\|system` | Thông báo mới nhất trước + số chưa đọc |
+| POST | `/api/v1/notifications/read-all` · `/{id}/read` | Đánh dấu đã đọc |
+| POST | `/api/v1/notifications/{id}/respond` | Trả lời lời mời `{accept: true\|false}` — chấp nhận thì vào thử thách và thành bạn với người mời |
 
 Mã lỗi: 400 dữ liệu sai · 401 chưa đăng nhập / sai mật khẩu / token hết hạn · 404 không tìm thấy · 409 email đã tồn tại · 500 lỗi server.
 
