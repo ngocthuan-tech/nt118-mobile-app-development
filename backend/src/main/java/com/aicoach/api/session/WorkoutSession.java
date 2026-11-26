@@ -41,6 +41,8 @@ public class WorkoutSession {
     private double calories;
     @Column(length = 64)
     private String planId;
+    /** Ngày nào của giáo án (plan_items.day_index); null = tập lẻ hoặc dữ liệu trước V5. */
+    private Integer planDay;
     @Column(nullable = false)
     private Instant createdAt = Instant.now();
 
@@ -84,6 +86,8 @@ public class WorkoutSession {
 
     public String getPlanId() { return planId; }
     public void setPlanId(String planId) { this.planId = planId; }
+    public Integer getPlanDay() { return planDay; }
+    public void setPlanDay(Integer planDay) { this.planDay = planDay; }
 
     public Instant getCreatedAt() { return createdAt; }
 

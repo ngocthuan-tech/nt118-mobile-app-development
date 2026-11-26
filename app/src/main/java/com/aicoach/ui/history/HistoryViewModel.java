@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
 import com.aicoach.R;
 import com.aicoach.common.Resource;
+import com.aicoach.common.WorkoutSavedSignal;
 import com.aicoach.data.model.WorkoutSession;
 import com.aicoach.data.repository.HistoryRepository;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class HistoryViewModel extends AndroidViewModel {
     private final HistoryLoad<List<WorkoutSession>> load = new HistoryLoad<>();
     private final Supplier<LiveData<Resource<List<WorkoutSession>>>> loader;
     private final SavedStateHandle saved;
+    private long loadedVersion;
 
     public HistoryViewModel(Application app, SavedStateHandle saved) {
         this(app, saved, new HistoryRepository(app)::getSessions);
@@ -28,7 +30,12 @@ public class HistoryViewModel extends AndroidViewModel {
     public LiveData<Resource<List<WorkoutSession>>> state() { return load.state; }
     public List<WorkoutSession> sessions() { return HistoryStats.sorted(load.data); }
     public boolean hasData() { return load.data != null; }
-    public void refresh() { load.run(loader, getApplication().getString(R.string.progress_response_empty)); }
+    public void refresh() {
+        loadedVersion = WorkoutSavedSignal.version();
+        load.run(loader, getApplication().getString(R.string.progress_response_empty));
+    }
+    /** Vừa lưu buổi tập AI mới (Trưởng nhóm) thì tải lại lịch sử khi quay lại màn Tiến độ. */
+    public void refreshIfWorkoutSaved() { if (WorkoutSavedSignal.version() != loadedVersion) refresh(); }
     public int range() { Integer value = saved.get("range"); return value == null ? 0 : value; }
     public void range(int value) { saved.set("range", value); }
     public YearMonth month() {

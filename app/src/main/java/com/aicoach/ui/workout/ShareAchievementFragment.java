@@ -18,6 +18,13 @@ import com.aicoach.R;
 import com.aicoach.common.BaseFragment;
 import com.aicoach.databinding.FragmentShareAchievementBinding;
 import com.aicoach.databinding.ViewShareActionBinding;
+import com.aicoach.pose.WorkoutSummary;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Figma 36 "Chia sẻ thành tích" (Trưởng nhóm).
@@ -48,17 +55,49 @@ public class ShareAchievementFragment extends BaseFragment<FragmentShareAchievem
         binding.actionSend.getRoot().setOnClickListener(shareText);
         binding.actionMore.getRoot().setOnClickListener(shareText);
 
-        bindDemoData();
+        bindSession();
     }
 
-    /** Dữ liệu mẫu giống Figma 36. */
-    private void bindDemoData() {
-        binding.tvShareDate.setText("10/10/2026");
-        binding.tvShareHeadline.setText(getString(R.string.share_today_did, "squat"));
-        binding.tvShareReps.setText(getString(R.string.share_reps, 45));
-        binding.tvShareScore.setText("92");
-        binding.tvShareTime.setText("08:24");
-        binding.tvShareStreak.setText(getString(R.string.share_streak_days, 7));
+    /** Số liệu lượt vừa tập (dùng chung WorkoutSessionViewModel với màn Kết quả). */
+    private void bindSession() {
+        WorkoutSessionViewModel vm = WorkoutSessionViewModel.of(this);
+        List<WorkoutSessionViewModel.Entry> entries = vm.entries();
+
+        binding.tvShareDate.setText(LocalDate.now(ZoneId.of("Asia/Ho_Chi_Minh"))
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.US)));
+        if (entries.isEmpty()) {
+            binding.tvShareHeadline.setText(R.string.share_footer);
+            binding.tvShareReps.setText("—");
+            binding.tvShareScore.setText("—");
+            binding.tvShareTime.setText("—");
+        } else {
+            int attempts = 0, correct = 0, seconds = 0;
+            for (WorkoutSessionViewModel.Entry e : entries) {
+                attempts += e.summary.totalReps;
+                correct += e.summary.correctReps;
+                seconds += e.summary.durationSec;
+            }
+            WorkoutSummary s = entries.get(0).summary;
+            if (entries.size() == 1) {
+                binding.tvShareHeadline.setText(getString(R.string.share_today_did,
+                        getString(R.string.ai_share_did, s.exerciseName.toLowerCase(new Locale("vi", "VN")))));
+                binding.tvShareReps.setText(s.timed ? getString(R.string.ai_share_seconds, s.correctReps)
+                        : getString(R.string.share_reps, s.correctReps));
+            } else {
+                String count = getString(R.string.ai_share_exercises, entries.size());
+                binding.tvShareHeadline.setText(getString(R.string.share_today_did,
+                        getString(R.string.ai_share_did, count)));
+                binding.tvShareReps.setText(count);
+            }
+            binding.tvShareScore.setText(String.valueOf(attempts == 0 ? 0 : Math.round(correct * 100f / attempts)));
+            binding.tvShareTime.setText(String.format(Locale.US, "%02d:%02d", seconds / 60, seconds % 60));
+        }
+        binding.tvShareStreak.setText("—");
+        vm.streak().observe(getViewLifecycleOwner(), streak -> {
+            if (streak != null && binding != null) {
+                binding.tvShareStreak.setText(getString(R.string.share_streak_days, streak));
+            }
+        });
     }
 
     private void bindAction(ViewShareActionBinding action, @DrawableRes int icon, @StringRes int label,

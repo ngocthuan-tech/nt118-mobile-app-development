@@ -15,6 +15,21 @@
         android:name="exerciseId"
         android:defaultValue="squat"
         app:argType="string" />
+    <!-- Tập theo giáo án (WorkoutLauncher): các bài còn lại của buổi + giáo án + ngày của giáo án -->
+    <argument
+        android:name="queue"
+        android:defaultValue="@null"
+        app:argType="string"
+        app:nullable="true" />
+    <argument
+        android:name="planId"
+        android:defaultValue="@null"
+        app:argType="string"
+        app:nullable="true" />
+    <argument
+        android:name="planDay"
+        android:defaultValue="-1"
+        app:argType="integer" />
 
     <!-- 18 Xin quyền camera (đã có quyền thì tự chuyển tiếp) -->
     <fragment
@@ -69,6 +84,12 @@
         <action
             android:id="@+id/action_live_to_rest"
             app:destination="@id/restFragment" />
+        <!-- Giáo án: xong 1 bài → sang Kiểm tra sẵn sàng của bài kế tiếp (bài mới có thể cần đứng hướng khác) -->
+        <action
+            android:id="@+id/action_live_to_next_exercise"
+            app:destination="@id/readinessFragment"
+            app:popUpTo="@id/readinessFragment"
+            app:popUpToInclusive="true" />
         <!-- Tập xong: sang Kết quả, bỏ các màn tập khỏi back stack -->
         <action
             android:id="@+id/action_live_to_result"

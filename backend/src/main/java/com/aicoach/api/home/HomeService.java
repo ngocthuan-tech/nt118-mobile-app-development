@@ -47,7 +47,9 @@ public class HomeService {
                              boolean completed) {
     }
 
-    public record TodayWorkout(Integer planDayIndex, int estimatedMinutes, List<PlanItemDto> exercises) {
+    /** doneExerciseIds: các bài của buổi giáo án hôm nay đã tập xong — app hiện dấu tích và không bắt tập lại. */
+    public record TodayWorkout(Integer planDayIndex, int estimatedMinutes, List<PlanItemDto> exercises,
+                               List<String> doneExerciseIds) {
     }
 
     public record HomeDto(String displayName, String avatarUrl, int streak, long weeklyXp, WeekProgress week,
@@ -109,13 +111,12 @@ public class HomeService {
         Plan plan = user.getActivePlanId() == null ? null : plans.findById(user.getActivePlanId()).orElse(null);
         if (plan != null) {
             LocalDate start = user.getPlanStartDate() != null ? user.getPlanStartDate() : today;
-            // Một buổi của giáo án = một ngày có tập theo giáo án (một ngày có thể lưu nhiều bài).
-            int done = (int) sessions.findByUserIdAndPlanIdAndStartedAtGreaterThanEqual(
-                            userId, plan.getId(), VnTime.startOf(start)).stream()
-                    .map(s -> VnTime.dateOf(s.getStartedAt()))
-                    .distinct()
-                    .count();
+            // Buổi giáo án chỉ XONG khi tập đủ mọi bài của buổi đó (xem PlanProgress).
             List<PlanDayDto> planDays = PlanService.days(plan, exerciseById);
+            PlanProgress.Result progressOfPlan = PlanProgress.compute(planDays,
+                    sessions.findByUserIdAndPlanIdAndStartedAtGreaterThanEqual(
+                            userId, plan.getId(), VnTime.startOf(start)));
+            int done = progressOfPlan.sessionsDone();
             int total = planDays.size();
             int totalWeeks = Math.max(1, (int) Math.ceil(plan.getDurationDays() / 7.0));
             int currentWeek = Math.min(totalWeeks, done / Math.max(1, plan.getSessionsPerWeek()) + 1);
@@ -125,7 +126,8 @@ public class HomeService {
                     totalWeeks, Math.min(done, total), total, plan.getMinutesPerSession(), percent, completed);
             if (total > 0) {
                 PlanDayDto next = planDays.get(Math.min(done, total - 1));
-                todayWorkout = new TodayWorkout(next.dayIndex(), plan.getMinutesPerSession(), next.items());
+                todayWorkout = new TodayWorkout(next.dayIndex(), plan.getMinutesPerSession(), next.items(),
+                        completed ? List.of() : progressOfPlan.doneExerciseIds());
             }
         }
         if (todayWorkout == null) {
@@ -150,7 +152,7 @@ public class HomeService {
             int perSet = "seconds".equals(e.getMeasureType()) ? e.getDefaultReps() : e.getDefaultReps() * 3;
             seconds += e.getDefaultSets() * (perSet + 30);
         }
-        return new TodayWorkout(null, (int) Math.ceil(seconds / 60.0), items);
+        return new TodayWorkout(null, (int) Math.ceil(seconds / 60.0), items, List.of());
     }
 
     private static double round1(double v) {

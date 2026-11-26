@@ -66,7 +66,7 @@
     <string name="workout_last_set">HIỆP VỪA RỒI</string>
     <string name="workout_stat_reps">số lần</string>
     <string name="workout_stat_score">điểm tư thế</string>
-    <string name="workout_stat_errors">lỗi gối chụm</string>
+    <string name="workout_stat_errors">lỗi tư thế</string>
     <string name="workout_next_up">TIẾP THEO</string>
     <string name="workout_breath_tip">Hít sâu bằng mũi, thở ra bằng miệng để nhịp tim hồi phục nhanh hơn</string>
 

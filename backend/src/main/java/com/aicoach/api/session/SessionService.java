@@ -3,6 +3,7 @@ package com.aicoach.api.session;
 import com.aicoach.api.common.ApiException;
 import com.aicoach.api.exercise.Exercise;
 import com.aicoach.api.exercise.ExerciseRepository;
+import com.aicoach.api.plan.Plan;
 import com.aicoach.api.plan.PlanRepository;
 import com.aicoach.api.progress.ProgressService;
 import com.aicoach.api.user.UserAccount;
@@ -43,7 +44,9 @@ public class SessionService {
             Double calories,
             @Size(max = 20, message = "Quá nhiều loại lỗi tư thế")
             Map<String, Long> formErrors,
-            String planId) {
+            String planId,
+            /** Ngày của giáo án (dayIndex) mà bài này thuộc về; null nếu tập lẻ. */
+            Integer planDay) {
     }
 
     public record SessionDto(
@@ -59,6 +62,7 @@ public class SessionService {
             double calories,
             Map<String, Long> formErrors,
             String planId,
+            Integer planDay,
             long xpEarned) {
     }
 
@@ -93,8 +97,15 @@ public class SessionService {
             throw ApiException.badRequest("Thời điểm bắt đầu không được ở tương lai");
         }
         String planId = req.planId() == null || req.planId().isBlank() ? null : req.planId().trim();
-        if (planId != null && !plans.existsById(planId)) {
-            throw ApiException.notFound("Không tìm thấy giáo án");
+        Integer planDay = req.planDay();
+        if (planId != null) {
+            Plan plan = plans.findById(planId).orElseThrow(() -> ApiException.notFound("Không tìm thấy giáo án"));
+            if (planDay != null && plan.getItems().stream().noneMatch(i ->
+                    i.getDayIndex() == planDay && ex.getId().equals(i.getExerciseId()))) {
+                throw ApiException.badRequest("Bài tập không thuộc buổi này của giáo án");
+            }
+        } else if (planDay != null) {
+            throw ApiException.badRequest("Thiếu mã giáo án cho buổi tập theo giáo án");
         }
 
         WorkoutSession s = new WorkoutSession();
@@ -119,6 +130,7 @@ public class SessionService {
         }
         s.setFormErrors(errors);
         s.setPlanId(planId);
+        s.setPlanDay(planId == null ? null : planDay);
         sessions.save(s);
 
         progress.applySession(user, startedAt, req.totalReps(), req.correctReps());
@@ -141,7 +153,7 @@ public class SessionService {
     public static SessionDto toDto(WorkoutSession s) {
         return new SessionDto(s.getId(), s.getExerciseId(), s.getExerciseName(), s.getStartedAt(),
                 s.getDurationSec(), s.getTargetReps(), s.getTotalReps(), s.getCorrectReps(), s.getAccuracy(),
-                s.getCalories(), Map.copyOf(s.getFormErrors()), s.getPlanId(),
+                s.getCalories(), Map.copyOf(s.getFormErrors()), s.getPlanId(), s.getPlanDay(),
                 ProgressService.xpFor(s.getTotalReps(), s.getCorrectReps()));
     }
 

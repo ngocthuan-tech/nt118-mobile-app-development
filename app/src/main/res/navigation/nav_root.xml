@@ -48,13 +48,28 @@
         android:id="@+id/action_global_to_notifications"
         app:destination="@id/nav_notifications" />
 
-    <!-- HỢP ĐỒNG: mọi nút "Bắt đầu tập" (Trang chủ, Chi tiết bài tập, Kế hoạch, Lịch sử) gọi action này kèm exerciseId -->
+    <!-- HỢP ĐỒNG: mọi nút "Bắt đầu tập" (Trang chủ, Chi tiết bài tập, Kế hoạch, Lịch sử) gọi action này kèm exerciseId.
+         Tập theo giáo án thì gọi qua WorkoutLauncher: thêm queue (các bài còn lại của buổi), planId, planDay. -->
     <action
         android:id="@+id/action_global_to_readiness"
         app:destination="@id/nav_workout">
         <argument
             android:name="exerciseId"
             app:argType="string" />
+        <argument
+            android:name="queue"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="planId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="planDay"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </action>
 
 </navigation>
