@@ -22,6 +22,7 @@ import java.util.Locale;
 /**
  * Figma 32 "Nghỉ giữa hiệp" (Trưởng nhóm): đếm ngược 30 giây, hết giờ tự quay lại màn tập.
  * Số liệu hiệp vừa rồi lấy từ WorkoutSessionViewModel (màn Tập ghi vào trước khi chuyển sang đây).
+ * Giọng nói "Còn 10 giây", "3, 2, 1" chỉ đọc khi bật "Đếm ngược & giờ nghỉ" trong Cài đặt giọng nói.
  */
 public class RestFragment extends BaseFragment<FragmentRestBinding> {
 
@@ -31,6 +32,14 @@ public class RestFragment extends BaseFragment<FragmentRestBinding> {
     private CountDownTimer timer;
     private long remainingMs = REST_SECONDS * 1000L;
     private int totalSeconds = REST_SECONDS;
+    private VoiceCoach voice;
+    private long lastSpokenSec = -1;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        voice = new VoiceCoach(requireContext(), null);
+    }
 
     @Override
     protected FragmentRestBinding inflate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -95,6 +104,7 @@ public class RestFragment extends BaseFragment<FragmentRestBinding> {
                 long sec = (msLeft + 999) / 1000;
                 binding.tvRestTime.setText(String.format(Locale.US, "%02d:%02d", sec / 60, sec % 60));
                 binding.progressRest.setProgress((int) msLeft);
+                speakCountdown(sec);
             }
 
             @Override
@@ -102,6 +112,16 @@ public class RestFragment extends BaseFragment<FragmentRestBinding> {
                 if (binding != null) backToWorkout();
             }
         }.start();
+    }
+
+    private void speakCountdown(long sec) {
+        if (sec == lastSpokenSec) return;
+        lastSpokenSec = sec;
+        if (sec == 10) {
+            voice.say("Còn 10 giây", false, VoiceCoach.Kind.REST);
+        } else if (sec >= 1 && sec <= 3) {
+            voice.say(String.valueOf(sec), true, VoiceCoach.Kind.REST);
+        }
     }
 
     private void backToWorkout() {
@@ -112,5 +132,11 @@ public class RestFragment extends BaseFragment<FragmentRestBinding> {
     public void onDestroyView() {
         if (timer != null) timer.cancel();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        voice.shutdown();
+        super.onDestroy();
     }
 }

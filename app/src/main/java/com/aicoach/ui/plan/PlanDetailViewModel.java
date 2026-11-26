@@ -28,6 +28,8 @@ public class PlanDetailViewModel extends AndroidViewModel {
     private boolean progressLoading;
     private final MediatorLiveData<Resource<Plan>> plan = new MediatorLiveData<>();
     private final MutableLiveData<Integer> selectedWeek = new MutableLiveData<>();
+    /** Các buổi người dùng đang bung xem danh sách bài (theo dayIndex), giữ qua xoay màn. */
+    private final java.util.Set<Integer> expandedDays = new java.util.HashSet<>();
     private final RequestTracker<User> follow = new RequestTracker<>();
     private String loadedId;
     private boolean following;
@@ -59,6 +61,8 @@ public class PlanDetailViewModel extends AndroidViewModel {
     public LiveData<Resource<Plan>> getPlan() { return plan; }
 
     public LiveData<Integer> getSelectedWeek() { return selectedWeek; }
+
+    public java.util.Set<Integer> expandedDays() { return expandedDays; }
 
     public LiveData<Resource<User>> getFollowState() { return follow.getState(); }
 

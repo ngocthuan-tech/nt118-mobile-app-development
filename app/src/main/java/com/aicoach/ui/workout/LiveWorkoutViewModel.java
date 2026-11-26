@@ -81,12 +81,23 @@ public class LiveWorkoutViewModel extends ViewModel {
         public final Type type;
         @Nullable public final String text;
         public final boolean urgent;
+        /** Loại câu nói, để làm theo Cài đặt giọng nói (tắt "Đếm từng lần lặp" thì không đếm…). */
+        public final VoiceCoach.Kind kind;
+        /** Câu thay thế khi loại {@link #kind} bị tắt (vd. tắt khen ngợi thì vẫn đếm số), có thể null. */
+        @Nullable public final String fallback;
         private boolean handled;
 
         private Command(Type type, @Nullable String text, boolean urgent) {
+            this(type, text, urgent, VoiceCoach.Kind.INFO, null);
+        }
+
+        private Command(Type type, @Nullable String text, boolean urgent, VoiceCoach.Kind kind,
+                        @Nullable String fallback) {
             this.type = type;
             this.text = text;
             this.urgent = urgent;
+            this.kind = kind;
+            this.fallback = fallback;
         }
 
         /** Trả về true đúng 1 lần — tránh chạy lại lệnh khi xoay màn / quay lại từ màn khác. */
@@ -96,6 +107,9 @@ public class LiveWorkoutViewModel extends ViewModel {
             return true;
         }
     }
+
+    /** Cứ mỗi bấy nhiêu lần đúng thì khen một câu (nếu bật "Làm đúng – khen ngợi"). */
+    private static final int PRAISE_EVERY = 5;
 
     private final MutableLiveData<State> state = new MutableLiveData<>();
     private final MutableLiveData<Command> command = new MutableLiveData<>();
@@ -154,15 +168,20 @@ public class LiveWorkoutViewModel extends ViewModel {
         switch (u.event) {
             case REP_GOOD:
                 setFeedback(Feedback.GOOD, null, u.repNumber, "Tốt lắm, giữ nhịp!");
-                speak(String.valueOf(u.repNumber), false);
+                if (u.repNumber % PRAISE_EVERY == 0) {
+                    // Mỗi 5 lần đúng thì khen; người dùng tắt khen ngợi thì vẫn đếm số như bình thường
+                    speak(u.repNumber + ", rất tốt!", false, VoiceCoach.Kind.PRAISE, String.valueOf(u.repNumber));
+                } else {
+                    speak(String.valueOf(u.repNumber), false, VoiceCoach.Kind.COUNT, null);
+                }
                 break;
             case REP_BAD:
                 setFeedback(Feedback.BAD, u.issue, u.repNumber, u.issue == null ? "" : u.issue.voice);
-                if (u.issue != null) speak(u.issue.voice, true);
+                if (u.issue != null) speak(u.issue.voice, true, VoiceCoach.Kind.FORM, null);
                 break;
             case LIVE_ISSUE:
                 setFeedback(Feedback.BAD, u.issue, u.repNumber, u.issue == null ? "" : u.issue.voice);
-                if (u.issue != null) speak(u.issue.voice, true);
+                if (u.issue != null) speak(u.issue.voice, true, VoiceCoach.Kind.FORM, null);
                 break;
             case SECOND_TICK:
                 if (engine.holdIssue() == null && feedback == Feedback.BAD) {
@@ -170,9 +189,9 @@ public class LiveWorkoutViewModel extends ViewModel {
                 }
                 int left = rule.target - u.repNumber;
                 if (left > 0 && left <= 3) {
-                    speak(String.valueOf(left), false);
+                    speak(String.valueOf(left), false, VoiceCoach.Kind.COUNT, null);
                 } else if (u.repNumber % 10 == 0) {
-                    speak(u.repNumber + " giây", false);
+                    speak(u.repNumber + " giây", false, VoiceCoach.Kind.COUNT, null);
                 }
                 break;
             case SET_DONE:
@@ -260,6 +279,10 @@ public class LiveWorkoutViewModel extends ViewModel {
 
     private void speak(String text, boolean urgent) {
         command.setValue(new Command(Command.Type.SPEAK, text, urgent));
+    }
+
+    private void speak(String text, boolean urgent, VoiceCoach.Kind kind, @Nullable String fallback) {
+        command.setValue(new Command(Command.Type.SPEAK, text, urgent, kind, fallback));
     }
 
     private void publish(@Nullable PoseFrame frame) {

@@ -64,7 +64,7 @@ public class CountdownFragment extends BaseFragment<FragmentCountdownBinding> {
                 binding.tvCountdown.setText(String.valueOf(sec));
                 if (sec != lastSpoken) {
                     lastSpoken = sec;
-                    voice.say(String.valueOf(sec), true);
+                    voice.say(String.valueOf(sec), true, VoiceCoach.Kind.REST);
                 }
                 binding.progressCountdown.setProgress((int) msLeft);
             }

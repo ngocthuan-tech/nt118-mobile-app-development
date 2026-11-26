@@ -82,7 +82,8 @@
 
     <!-- 34 Xác nhận kết thúc -->
     <string name="workout_finish_confirm_title">Kết thúc buổi tập?</string>
-    <string name="workout_finish_confirm_body">Bạn đã hoàn thành %1$d/%2$d lần (%3$d%%). Kết quả vẫn được lưu, nhưng chuỗi ngày chỉ được tính khi đạt từ 50%% giáo án trở lên.</string>
+    <string name="workout_finish_confirm_body">Bạn đã hoàn thành %1$d/%2$d lần (%3$d%%). Kết quả vẫn được lưu và tính vào chuỗi ngày tập của bạn.</string>
+    <string name="workout_finish_confirm_body_plan">Bạn đã hoàn thành %1$d/%2$d lần (%3$d%%). Kết quả vẫn được lưu và tính vào chuỗi ngày. Riêng giáo án: bài chỉ được đánh dấu “đã tập” khi đạt từ 50%% mục tiêu.</string>
     <string name="workout_keep_going">Tập tiếp</string>
     <string name="workout_finish_and_save">Kết thúc &amp; lưu kết quả</string>
 

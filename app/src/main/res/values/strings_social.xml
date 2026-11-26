@@ -102,6 +102,9 @@
     <!-- "Đã tham gia · 5 phút trước" -->
     <string name="social_notification_time">%1$s · %2$s</string>
     <string name="social_declined_done">Đã từ chối lời mời</string>
+    <string name="social_close">Đóng</string>
+    <string name="social_open_challenges">Xem thử thách</string>
+    <string name="social_notice_received">Nhận lúc %1$s</string>
 
     <!-- Tên bài trong thử thách -->
     <string name="social_exercise_squat">Squat</string>

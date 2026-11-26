@@ -78,7 +78,7 @@ public class PlanDetailFragment extends BaseFragment<FragmentPlanDetailBinding> 
                 if (preview || item.getExerciseId() == null) return;
                 nav.navigate(PlanDetailFragmentDirections.actionPlanDetailToExerciseDetail(item.getExerciseId()));
             }
-        });
+        }, vm.expandedDays());
         binding.rvSessions.setAdapter(adapter);
         binding.aiNote.tvNote.setText(R.string.plan_detail_ai_note);
 

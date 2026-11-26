@@ -75,6 +75,9 @@ dependencies {
     implementation(libs.camerax.view)
     implementation(libs.mlkit.pose)
 
+    // Nhắc tập hằng ngày chạy nền (vẫn nhắc khi đã tắt app / khởi động lại máy)
+    implementation(libs.work.runtime)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)

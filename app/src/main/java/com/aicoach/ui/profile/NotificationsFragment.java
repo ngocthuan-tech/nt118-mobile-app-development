@@ -20,7 +20,9 @@ import com.aicoach.ui.challenge.SocialFormat;
 import com.aicoach.ui.challenge.SocialRows;
 import com.aicoach.ui.challenge.SocialViewModel;
 import com.aicoach.ui.history.SegmentGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,13 +31,16 @@ import java.util.Objects;
 
 /**
  * 22 Thông báo (mở từ chuông ở Trang chủ): lời mời thử thách có nút Tham gia / Từ chối, thông báo hệ thống;
- * chia nhóm theo ngày, chưa đọc có nền nổi bật. Dữ liệu từ GET /notifications.
+ * chia nhóm theo ngày, chưa đọc có nền nổi bật. Chạm một thông báo → đánh dấu đã đọc và mở chi tiết.
+ * Dữ liệu từ GET /notifications.
  */
 public class NotificationsFragment extends BaseFragment<FragmentNotificationsBinding> {
     private static final DateTimeFormatter DAY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter WHEN = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy");
 
     private SocialViewModel vm;
     private SocialRows<Row> adapter;
+    @Nullable private androidx.appcompat.app.AlertDialog detail;
 
     /** Một dòng đã tính sẵn tiêu đề nhóm ngày, để adapter không phải nhìn sang dòng bên cạnh. */
     static final class Row {
@@ -94,11 +99,35 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         b.btnDecline.setEnabled(idle);
         b.btnJoin.setOnClickListener(v -> respond(n, true));
         b.btnDecline.setOnClickListener(v -> respond(n, false));
-        b.content.setOnClickListener(v -> {
-            if (!n.isRead()) vm.markRead(n.getId());
-            // Lời mời đang chờ phải bấm Tham gia / Từ chối; thông báo thử thách khác mở tab Thử thách.
-            if (n.isChallenge() && !n.isPendingInvite()) openChallenges();
-        });
+        b.content.setOnClickListener(v -> openDetail(n));
+    }
+
+    /** Mở thông báo: đánh dấu đã đọc, hiện đầy đủ nội dung + thời gian, kèm nút phù hợp với loại thông báo. */
+    private void openDetail(Social.Notice n) {
+        if (!n.isRead()) vm.markRead(n.getId());
+        StringBuilder message = new StringBuilder(n.getBody());
+        String status = inviteStatus(requireContext(), n);
+        if (status != null) message.append("\n\n").append(status);
+        long ms = SocialFormat.epochMillis(n.getCreatedAt());
+        if (ms >= 0) {
+            message.append(status != null ? "\n" : "\n\n").append(getString(R.string.social_notice_received,
+                    Instant.ofEpochMilli(ms).atZone(SocialFormat.ZONE).format(WHEN)));
+        }
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(n.getTitle())
+                .setMessage(message.toString());
+        if (n.isPendingInvite()) {
+            builder.setPositiveButton(R.string.social_join, (d, w) -> respond(n, true))
+                    .setNegativeButton(R.string.social_decline, (d, w) -> respond(n, false))
+                    .setNeutralButton(R.string.social_close, null);
+        } else if (n.isChallenge()) {
+            builder.setPositiveButton(R.string.social_open_challenges, (d, w) -> openChallenges())
+                    .setNegativeButton(R.string.social_close, null);
+        } else {
+            builder.setPositiveButton(R.string.social_close, null);
+        }
+        if (detail != null) detail.dismiss();
+        detail = builder.show();
     }
 
     @Nullable
@@ -122,7 +151,7 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
 
     private void respond(Social.Notice n, boolean accept) {
         vm.respond(n.getId(), accept);
-        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+        if (adapter != null) adapter.notifyItemRangeChanged(0, adapter.getItemCount());
     }
 
     private void onResponded(@Nullable Resource<Social.Notice> r) {
@@ -176,6 +205,10 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
     }
 
     @Override public void onDestroyView() {
+        if (detail != null) {
+            detail.dismiss();
+            detail = null;
+        }
         binding.rvNotifications.setAdapter(null);
         adapter = null;
         super.onDestroyView();
