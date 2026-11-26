@@ -2,7 +2,7 @@
 
 ## Kiểm tra trên bản cài
 
-- [ ] Hồ sơ: sửa cân nặng rồi đóng và mở lại ứng dụng. Đối chiếu cân nặng với GET users/me. Nhập chiều cao 999 để kiểm tra báo lỗi. Tắt mạng rồi thử tải lại khi có mạng.
+- [x] Hồ sơ: sửa cân nặng rồi đóng và mở lại ứng dụng. Đối chiếu cân nặng với GET users/me. Nhập chiều cao 999 để kiểm tra báo lỗi. Tắt mạng rồi thử tải lại khi có mạng.
 - [ ] Trên hai thiết bị dùng cùng tài khoản thử riêng, đổi mật khẩu trên thiết bị thứ nhất. Thử một yêu cầu cần đăng nhập trên thiết bị thứ hai và kiểm tra thông báo hết phiên. Thử đăng nhập bằng mật khẩu mới.
 - [ ] Tắt/bật giọng, nghe thử tiếng Việt và mở lại cài đặt. Kiểm tra trên điện thoại có cài dữ liệu giọng Việt. Xác nhận giọng miền Nam bằng nghe thực tế.
 - [ ] Tiến độ: kiểm tra một tài khoản trống và một tài khoản có buổi tập. So ngày, tổng rep trên biểu đồ với lịch tháng. Chọn một buổi, xem chi tiết và bấm Tập lại.
