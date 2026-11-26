@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import jakarta.persistence.LockModeType;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,17 @@ public interface UserRepository extends JpaRepository<UserAccount, String> {
 
     /** Hạng của một người = số người có XP cao hơn + 1. */
     long countByTotalXpGreaterThan(long totalXp);
+
+    // ---- Web admin ----
+    long countByRole(String role);
+
+    long countByRoleAndCreatedAtGreaterThanEqual(String role, Instant from);
+
+    List<UserAccount> findByRoleAndCreatedAtGreaterThanEqual(String role, Instant from);
+
+    long countByActivePlanId(String activePlanId);
+
+    List<UserAccount> findAllByOrderByCreatedAtDesc();
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select u from UserAccount u where u.id = :id")

@@ -33,6 +33,31 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
 
     Optional<WorkoutSession> findByIdAndUserId(String id, String userId);
 
+    // ---- Web admin: thống kê toàn hệ thống ----
+    long countByUserId(String userId);
+
+    List<WorkoutSession> findByStartedAtGreaterThanEqual(Instant from);
+
+    interface FormErrorCount {
+        String getCode();
+        long getTotal();
+    }
+
+    /** Lỗi tư thế AI bắt được nhiều nhất từ thời điểm from (cộng dồn bảng session_form_errors). */
+    @Query(value = "SELECT fe.error_code AS code, CAST(SUM(fe.error_count) AS BIGINT) AS total "
+            + "FROM session_form_errors fe JOIN workout_sessions s ON s.id = fe.session_id "
+            + "WHERE s.started_at >= :from AND fe.error_count > 0 "
+            + "GROUP BY fe.error_code ORDER BY total DESC LIMIT 10", nativeQuery = true)
+    List<FormErrorCount> topFormErrors(@Param("from") Instant from);
+
+    interface ExerciseCount {
+        String getExerciseId();
+        long getSessions();
+    }
+
+    @Query("select s.exerciseId as exerciseId, count(s) as sessions from WorkoutSession s group by s.exerciseId")
+    List<ExerciseCount> countByExercise();
+
     /** Tiến độ thử thách: buổi tập của các thành viên, cùng bài, trong khoảng thời gian [from, to). */
     List<WorkoutSession> findByUserIdInAndExerciseIdAndStartedAtGreaterThanEqualAndStartedAtLessThan(
             Collection<String> userIds, String exerciseId, Instant from, Instant to);

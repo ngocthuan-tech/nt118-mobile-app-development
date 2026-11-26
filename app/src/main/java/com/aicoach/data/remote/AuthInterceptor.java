@@ -38,8 +38,11 @@ public class AuthInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         if (response.code() == 401 && !isAuthCall && token != null) {
-            com.aicoach.data.local.SessionEndReason reason = "PASSWORD_CHANGED".equals(response.header("X-Session-Reason"))
-                    ? com.aicoach.data.local.SessionEndReason.PASSWORD_CHANGED : com.aicoach.data.local.SessionEndReason.EXPIRED;
+            String header = response.header("X-Session-Reason");
+            com.aicoach.data.local.SessionEndReason reason = "PASSWORD_CHANGED".equals(header)
+                    ? com.aicoach.data.local.SessionEndReason.PASSWORD_CHANGED
+                    : "ACCOUNT_LOCKED".equals(header) ? com.aicoach.data.local.SessionEndReason.ACCOUNT_LOCKED
+                    : com.aicoach.data.local.SessionEndReason.EXPIRED;
             if (tokenManager.expireIfMatches(token, reason)) SessionEvents.notifyExpired();
         }
         return response;

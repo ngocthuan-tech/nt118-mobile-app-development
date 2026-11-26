@@ -11,6 +11,7 @@ Cấu trúc bảng nằm trong code, không tạo tay: Flyway chạy các file S
 | `V3__password_reset.sql` | Bảng `password_reset_codes` (quên mật khẩu), cột `users.password_changed_at` |
 | `V4__session_version.sql` | Cột `users.session_version`: đổi mật khẩu thì tăng, token cũ hết hiệu lực |
 | `V5__session_plan_day.sql` | Cột `workout_sessions.plan_day`: bài thuộc ngày nào của giáo án — buổi chỉ xong khi đủ mọi bài (≥ 50% mục tiêu) |
+| `V7__admin_role.sql` | Web admin: `users.role` (USER / ADMIN), `users.locked` (admin khoá tài khoản), `exercises.admin_edited`, `plans.admin_edited` (admin đã sửa trên web → khởi động lại server không ghi đè), index cho thống kê |
 | `V6__social.sql` | Cộng đồng: `friendships` (bạn bè, lưu 2 chiều), `challenges`, `challenge_members`, `challenge_invites` (PENDING / ACCEPTED / DECLINED), `notifications`. Tiến độ thử thách **không lưu riêng** — tính từ `workout_sessions` cùng bài trong khoảng ngày của thử thách |
 
 ## Sơ đồ quan hệ (ERD)
@@ -128,7 +129,7 @@ erDiagram
 
 ## Dữ liệu nền
 
-Mỗi lần khởi động, server nạp (ghi đè) 9 bài tập và 3 giáo án. Lần đầu tạo thêm tài khoản `demo@aicoach.vn` / `Demo1234` có 8 ngày tập để demo Trang chủ. Bảng `users`, `workout_sessions` của người dùng thật không bao giờ bị ghi đè.
+Mỗi lần khởi động, server nạp (ghi đè) 9 bài tập và 3 giáo án — **trừ** bài / giáo án admin đã sửa trên web (`admin_edited = true`). Có biến môi trường `ADMIN_EMAIL` + `ADMIN_PASSWORD` thì tạo tài khoản quản trị đầu tiên (không tự nâng quyền email đã đăng ký bằng app). Lần đầu tạo thêm tài khoản `demo@aicoach.vn` / `Demo1234` có 8 ngày tập để demo Trang chủ. Bảng `users`, `workout_sessions` của người dùng thật không bao giờ bị ghi đè.
 
 ## Quy tắc khi cần đổi cấu trúc bảng
 

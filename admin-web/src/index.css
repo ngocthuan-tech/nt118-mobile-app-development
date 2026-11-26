@@ -1,0 +1,62 @@
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { background: #f4f6fb; -webkit-font-smoothing: antialiased; }
+
+.center-screen { min-height: 100vh; display: grid; place-items: center; }
+
+/* Đăng nhập */
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(34, 195, 238, 0.25), transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, rgba(30, 94, 255, 0.35), transparent 60%),
+    #0b1b3f;
+}
+.login-card { width: 100%; max-width: 420px; box-shadow: 0 24px 60px rgba(4, 12, 34, 0.45); }
+.login-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.login-note { margin: 16px 0 0; font-size: 12px; }
+
+.brand-mark {
+  width: 48px; height: 48px; border-radius: 14px; flex: none;
+  display: grid; place-items: center;
+  color: #fff; font-weight: 800; letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #1e5eff, #22c3ee);
+}
+.brand-mark.small { width: 36px; height: 36px; border-radius: 10px; font-size: 13px; }
+
+/* Khung trang */
+.admin-sider { position: sticky; top: 0; height: 100vh; overflow: auto; }
+.sider-brand {
+  height: 64px; display: flex; align-items: center; gap: 10px; padding: 0 18px;
+  color: #fff; font-weight: 700; white-space: nowrap;
+}
+.admin-header {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 20px; border-bottom: 1px solid #e9edf5;
+}
+.admin-user {
+  display: flex; align-items: center; gap: 10px;
+  background: none; border: 0; padding: 4px 8px; border-radius: 10px; cursor: pointer;
+}
+.admin-user:hover { background: #f4f6fb; }
+.admin-user-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
+.admin-content { padding: 24px; max-width: 1440px; width: 100%; margin: 0 auto; }
+
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* Thẻ số liệu */
+.stat-card { height: 100%; }
+.stat-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.stat-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; flex: none; }
+
+/* Giáo án */
+.plan-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.plan-day .ant-card-head { min-height: 40px; }
+
+@media (max-width: 640px) {
+  .admin-content { padding: 16px; }
+}

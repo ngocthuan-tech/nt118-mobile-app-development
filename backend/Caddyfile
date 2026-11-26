@@ -1,5 +1,27 @@
 # Caddy tự xin và gia hạn chứng chỉ HTTPS (Let's Encrypt) cho tên miền trong biến API_DOMAIN.
+#   /admin/*  → web quản trị React (file tĩnh trong volume admin_static, build từ thư mục admin-web/)
+#   còn lại   → Spring Boot (API cho app Android và web admin, cùng tên miền nên không cần CORS)
 {$API_DOMAIN} {
 	encode gzip
-	reverse_proxy api:8080
+
+	redir /admin /admin/
+	handle /admin/* {
+		root * /srv
+		header {
+			X-Frame-Options DENY
+			X-Content-Type-Options nosniff
+			Referrer-Policy no-referrer
+		}
+		@assets path /admin/assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		@html not path /admin/assets/*
+		header @html Cache-Control "no-cache"
+		# Ứng dụng 1 trang: đường dẫn không phải file (vd. /admin/users) trả về index.html để React Router xử lý
+		try_files {path} /admin/index.html
+		file_server
+	}
+
+	handle {
+		reverse_proxy api:8080
+	}
 }
